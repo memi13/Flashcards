@@ -6,6 +6,7 @@ package model;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -197,8 +198,11 @@ public class Card implements IDBFunctions {
 		String sql = "Insert into Card (sText, dText, boxNumber, createdOn) Values ('"+this.sText+"', '"+this.dText+"', "+this.boxNumber+", " + (int)new utilDate().getTime() + ")";
 		String sql2 = "";
 		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstmt.executeUpdate();
+			ResultSet keys = pstmt.getGeneratedKeys();
+			int newID = (int)keys.getLong(1);
 			Statement stmt = conn.createStatement();
-			int newID = stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 			if(newID != 0) {
 				setId(newID);
 				sql2 = "Insert into CardStatistic (fkCard, countLearned, countWrong, highestBox, lastCorrect, lastLearned ) Values " +
@@ -218,6 +222,7 @@ public class Card implements IDBFunctions {
 				System.out.println("Record not created");
 				return false;
 			}
+			
 		}catch(SQLException e) {
 			closeConnection(conn);
 			System.out.println(e.getMessage());
