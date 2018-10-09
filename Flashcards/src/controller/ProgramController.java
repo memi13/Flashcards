@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 
 import model.User;
+import view.frmHome;
 import view.frmLogin;
 import model.Card;
 import model.IDBFunctions;
@@ -22,6 +23,7 @@ public class ProgramController {
 		lb = null;
 	}
 	
+//Start---------------------------------------------------------------------------------------------------------------
 	/**
 	 * Initializes GUI with Login Form
 	 */
@@ -31,6 +33,9 @@ public class ProgramController {
 		System.out.println("LOGIN FORM");
 	
 	}
+//-------------------------------------------------------------------------------------------------------------------
+	
+//Login--------------------------------------------------------------------------------------------------------------
 	/**
 	 * Called from GUI "LOGIN" -> checks login data and opens the HOME Form
 	 * @param user
@@ -50,6 +55,10 @@ public class ProgramController {
 			return false;
 		}		
 	}
+	
+//-------------------------------------------------------------------------------------------------------------------
+	
+//HOME---------------------------------------------------------------------------------------------------------------
 	/**
 	 * Opens the STATISTICS Form
 	 */
@@ -59,20 +68,56 @@ public class ProgramController {
 	}
 	
 	/**
-	 * opens the HOME menu (Please close the open JFrame)
-	 */
-	public void openHome() {
-		//Open HOME Form
-		//frmHome fHome = new frmHome(this);
-		System.out.println("HOME FORM");
-	}
-	
-	/**
 	 * Retruns the LanguageBoxes connected to the logged in User
 	 * @return
 	 */
 	public ArrayList<LanguageBox> loadLanguageBoxes() {
 		return dataHelper.getLanguageBoxes(u.getId());
+	}
+
+	/**
+	 * opens the OVERVIEW Form
+	 */
+	public void openOverview() {
+		//Open Overview Form
+		System.out.println("OVERVIEW FORM");
+	}
+	
+	/**
+	 * opens the NEWLANGUAGEBOX Form
+	 */
+	public void openNewLanguageBox() {
+		//Open newLangaugeBox Form
+		System.out.println("NEWLANGUAGEBOX FORM");
+	}
+
+	/**
+	 * opens the SETTING Form
+	 */
+	public void openSettings() {
+		//Open Settings Form
+		System.out.println("SETTINGS FORM");
+	}
+	
+	/**
+	 * opens the ALLCARDS Form
+	 */
+	public void openAllCards() {
+		//Open AllCards Form
+		System.out.println("ALLCARDS FORM");
+	}
+
+
+//--------------------------------------------------------------------------------------------------------------------
+	
+	
+	/**
+	 * opens the HOME menu (Please close the open JFrame)
+	 */
+	public void openHome() {
+		//Open HOME Form
+		frmHome fHome = new frmHome(this);
+		System.out.println("HOME FORM");
 	}
 	
 	/**
@@ -91,29 +136,6 @@ public class ProgramController {
 	
 	public void loadCards(int comp) {
 		ArrayList<Card> cards = dataHelper.getCards(this.lb.getId(), comp);
-	}
-	
-	
-	/**
-	 * opens the OVERVIEW Form
-	 */
-	public void openOverview() {
-		//Open Overview Form
-		System.out.println("OVERVIEW FORM");
-	}
-	
-	
-	
-	
-	public void openForm(String form) {
-		switch(form) {
-		case "Login": 
-			break;
-		case "Home":
-			break;
-		default:
-			break;
-		}
 	}
 	
 	
