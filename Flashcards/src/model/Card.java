@@ -81,7 +81,7 @@ public class Card implements IDBFunctions {
 	}
 
 	/**
-	 * 
+	 * Gets Data from DB to fill the Object
 	 * @param idCard Id of the Card
 	 * @return true if successful
 	 */
@@ -115,13 +115,14 @@ public class Card implements IDBFunctions {
 		}
 	}
 	
-	/* (non-Javadoc)
+	/**
+	 * Saves (Updates) Object data to DB
 	 * @see model.IDBFunctions#save()
 	 */
 	@Override
 	public boolean save() {
 		Connection conn = connectDB(connURL);
-		String sql = "Update Card set sText = '" + this.sText + "', dText = '" + this.dText + "', boxNumber = " + this.boxNumber;
+		String sql = "Update Card set sText = '" + this.sText + "', dText = '" + this.dText + "', boxNumber = " + this.boxNumber + " where Card.id = " + this.id;
 		try {
 			Statement stmt = conn.createStatement();
 			if(stmt.executeUpdate(sql) == 1) {
@@ -138,7 +139,8 @@ public class Card implements IDBFunctions {
 		}
 	}
 
-	/* (non-Javadoc)
+	/**
+	 * Deletes this Card from the DB
 	 * @see model.IDBFunctions#delete()
 	 */
 	@Override
@@ -162,6 +164,68 @@ public class Card implements IDBFunctions {
 		}
 	}
 
+	/**
+	 * Updates Statistic Data in DB
+	 * @return
+	 */
+	public boolean updateStatistic() {
+		Connection conn = connectDB(connURL);
+		String sql = "Update CardStatistic set countLearned = " + this.countLearned + ", countWrong = " + this.countWrong + ", highestBox = " + this.highestBox + ", lastCorrect = " + this.lastCorrect + ", lastLearned = " + this.lastLearned + " where fkCard = " + this.id;
+		try {
+			Statement stmt = conn.createStatement();
+			if(stmt.executeUpdate(sql) == 1) {
+				closeConnection(conn);
+				return true;
+			}else {
+				closeConnection(conn);
+				return false;
+			}
+			
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+		
+	}
+	
+	/**
+	 * Create a new DB Record from Object
+	 * @return
+	 */
+	public boolean createRecord() {
+		Connection conn = connectDB(connURL);
+		String sql = "Insert into Card (sText, dText, boxNumber, createdOn) Values ('"+this.sText+"', '"+this.dText+"', "+this.boxNumber+", " + (int)new utilDate().getTime() + ")";
+		String sql2 = "";
+		try {
+			Statement stmt = conn.createStatement();
+			int newID = stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+			if(newID != 0) {
+				setId(newID);
+				sql2 = "Insert into CardStatistic (fkCard, countLearned, countWrong, highestBox, lastCorrect, lastLearned ) Values " +
+						"(" + this.id + ", " + this.countLearned + ", " + this.countWrong + ", " + this.highestBox + ", " + this.lastCorrect + ", " + this.lastLearned + ")";
+						
+				if(stmt.executeUpdate(sql2) == 1) {
+					closeConnection(conn);
+					System.out.println("Record created");
+					return true;	
+				}else {
+					closeConnection(conn);
+					System.out.println("Records not created");
+					return false;
+				}
+			}else {
+				closeConnection(conn);
+				System.out.println("Record not created");
+				return false;
+			}
+		}catch(SQLException e) {
+			closeConnection(conn);
+			System.out.println(e.getMessage());
+			return false;
+		}
+	}
+	
+	
 	public int getId() {
 		return id;
 	}
