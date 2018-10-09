@@ -15,7 +15,7 @@ public class DataHelper {
 	public static void connect() {
         Connection conn = null;
         try {
-            // db parameters
+            // db parameters asdfasdfasdf
             String url = "jdbc:sqlite:C:/sqlite/db/CardDB.db";
             //
             // create a connection to the database
