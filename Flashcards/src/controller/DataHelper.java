@@ -68,6 +68,11 @@ public class DataHelper implements IDataHelper{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	public void getUser() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
     
