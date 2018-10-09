@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 
 import model.User;
+import view.frmLogin;
+import model.Card;
 import model.IDBFunctions;
 import model.LanguageBox;
 
@@ -12,9 +14,12 @@ public class ProgramController {
 
 	private DataHelper dataHelper;
 	private User u;
+	private LanguageBox lb;
 	
 	public ProgramController(DataHelper dh) {
 		this.dataHelper = dh;
+		u = null;
+		lb = null;
 	}
 	
 	/**
@@ -22,6 +27,7 @@ public class ProgramController {
 	 */
 	public void initGUI() {
 		//start with LoginGUI
+		frmLogin fLogin = new frmLogin(this);
 		System.out.println("LOGIN FORM");
 	
 	}
@@ -30,15 +36,18 @@ public class ProgramController {
 	 * @param user
 	 * @param pw
 	 */
-	public void login(String user, String pw) {
+	public boolean login(String user, String pw) {
 		if(dataHelper.checkLogin(user, pw)) {
 			//open HOME Form and close LOGIN Form
 			System.out.println("Login succesful");
 			dataHelper.getUser(user);
 			System.out.println("USER ID: " + u.getId());
+			openHome();
+			return true;
 		}else{
-			//Show errormessage
+			//show error on form
 			System.out.println("Login not correct");
+			return false;
 		}		
 	}
 	/**
@@ -54,12 +63,36 @@ public class ProgramController {
 	 */
 	public void openHome() {
 		//Open HOME Form
+		//frmHome fHome = new frmHome(this);
 		System.out.println("HOME FORM");
 	}
 	
+	/**
+	 * Retruns the LanguageBoxes connected to the logged in User
+	 * @return
+	 */
 	public ArrayList<LanguageBox> loadLanguageBoxes() {
 		return dataHelper.getLanguageBoxes(u.getId());
 	}
+	
+	/**
+	 * Returns Statisticsdata from the choosen box (per user)
+	 * @param box
+	 * @return
+	 */
+	public String loadBoxStatistics(int comp) {
+		return dataHelper.getStatisticDataBox(u.getId(), comp);
+	}
+	
+	public void openLearning() {
+		//Opens Learning Form 
+		System.out.println("LEARNING FORM");
+	}
+	
+	public void loadCards(int comp) {
+		ArrayList<Card> cards = dataHelper.getCards(this.lb.getId(), comp);
+	}
+	
 	
 	/**
 	 * opens the OVERVIEW Form
@@ -72,7 +105,16 @@ public class ProgramController {
 	
 	
 	
-	
+	public void openForm(String form) {
+		switch(form) {
+		case "Login": 
+			break;
+		case "Home":
+			break;
+		default:
+			break;
+		}
+	}
 	
 	
 }
