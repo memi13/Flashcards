@@ -25,7 +25,7 @@ public class Card implements IDBFunctions {
 	private int countWrong;
 	private int countLearned;
 	private Date lastLearned;
-	private Date lastCorrected;
+	private Date lastCorrect;
 	private int highestBox;
 	
 	/**
@@ -34,8 +34,15 @@ public class Card implements IDBFunctions {
 	public Card() {
 		// TODO Auto-generated constructor stub
 		id = -1;
-		sText
-		
+		sText = "";
+		dText = "";
+		boxNumber = 0;
+		createdOn = new Date(1999,01,01);
+		countWrong = 0;
+		countLearned = 0;
+		lastLearned = new Date(1999,01,01);
+		lastCorrected = new Date(1999,01,01);
+		highestBox = 0;		
 	}
 	public Card(int idCard) {
 		//gets Card with id idCard
@@ -44,7 +51,7 @@ public class Card implements IDBFunctions {
 		//creates Record on DB
 	}
 
-	public Connection connectDB(String connURL) {
+	public static Connection connectDB(String connURL) {
         Connection conn = null;
         try {
             // connection String
@@ -71,27 +78,34 @@ public class Card implements IDBFunctions {
             return false;
         }
 	}
+
 	
-	/*	String sql = "SELECT id, sText FROM Card";
-        
-        try (
-             Statement stmt  = conn.createStatement();
-             ResultSet rs    = stmt.executeQuery(sql)){
-            
-            // loop through the result set
-            while (rs.next()) {
-                System.out.println(rs.getInt("id") +  "\t" + 
-                                   rs.getString("sText"));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        
-        System.out.println("Connection to SQLite has been established.");
-        
-    } catch (SQLException e) {
-        System.out.println(e.getMessage());
-    }*/
+	public boolean setData(int idCard) {
+		Connection conn = connectDB(connURL);
+		String sql = "select Card.id, Card.sText, Card.dText, Card.boxNumber, Card.createdOn, CardStatistic.countLearned, CardStatistic.countWrong, CardStatistic.highestBox, CardStatistic.lastCorrect, CardStatistic.lastLearned from Card LEFT Join CardStatistic on Card.id = CardStatistic.fkCard where Card.id = " + idCard;
+		try {
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			this.id = rs.getInt("id");
+			this.sText = rs.getString("sText");
+			this.dText = rs.getString("dText");
+			this.boxNumber = rs.getInt("boxNumber");
+			this.createdOn = rs.getDate("createdOn");
+			this.countWrong = rs.getInt("countWrong");
+			this.countLearned = rs.getInt("countLearned");
+			this.lastLearned = rs.getDate("lastLearned");
+			this.lastCorrect = rs.getDate("lastCorrect");
+			this.highestBox = rs.getInt("highestBox");
+			
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		System.out.println(id + " - " + sText);
+		
+		closeConnection(conn);
+		return true;
+	}
 	
 	/* (non-Javadoc)
 	 * @see model.IDBFunctions#save()
