@@ -17,7 +17,7 @@ public class DataHelper {
         try {
             // db parameters
             String url = "jdbc:sqlite:/CardDB.db";
-            
+            //
             // create a connection to the database
             conn = DriverManager.getConnection(url);
             
