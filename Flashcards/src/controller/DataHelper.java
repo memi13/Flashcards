@@ -7,7 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import model.Card;
 import model.IDBFunctions;
+import model.LanguageBox;
 
 public class DataHelper implements IDataHelper{
 
@@ -22,13 +24,13 @@ public class DataHelper implements IDataHelper{
 	}
 
 	@Override
-	public ArrayList<IDBFunctions> getLanguageBoxes(int idUser) {
+	public ArrayList<LanguageBox> getLanguageBoxes(int idUser) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<IDBFunctions> getCards(int languageBox, int comp) {
+	public ArrayList<Card> getCards(int languageBox, int comp) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -40,7 +42,7 @@ public class DataHelper implements IDataHelper{
 	}
 
 	@Override
-	public ArrayList<IDBFunctions> getStatisticData(int idUser) {
+	public ArrayList<Card> getStatisticData(int idUser) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -69,7 +71,7 @@ public class DataHelper implements IDataHelper{
 		return false;
 	}
 
-	public void getUser() {
+	public void getUser(String username) {
 		// TODO Auto-generated method stub
 		
 	}
