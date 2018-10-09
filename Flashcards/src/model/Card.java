@@ -41,11 +41,11 @@ public class Card implements IDBFunctions {
 		countWrong = 0;
 		countLearned = 0;
 		lastLearned = new Date(1999,01,01);
-		lastCorrected = new Date(1999,01,01);
+		lastCorrect = new Date(1999,01,01);
 		highestBox = 0;		
 	}
 	public Card(int idCard) {
-		//gets Card with id idCard
+		setData(idCard);
 	}
 	public Card(String sT, String dT, int bNumber) {
 		//creates Record on DB
@@ -79,7 +79,11 @@ public class Card implements IDBFunctions {
         }
 	}
 
-	
+	/**
+	 * 
+	 * @param idCard Id of the Card
+	 * @return true if successful
+	 */
 	public boolean setData(int idCard) {
 		Connection conn = connectDB(connURL);
 		String sql = "select Card.id, Card.sText, Card.dText, Card.boxNumber, Card.createdOn, CardStatistic.countLearned, CardStatistic.countWrong, CardStatistic.highestBox, CardStatistic.lastCorrect, CardStatistic.lastLearned from Card LEFT Join CardStatistic on Card.id = CardStatistic.fkCard where Card.id = " + idCard;
@@ -96,15 +100,18 @@ public class Card implements IDBFunctions {
 			this.lastLearned = rs.getDate("lastLearned");
 			this.lastCorrect = rs.getDate("lastCorrect");
 			this.highestBox = rs.getInt("highestBox");
-			
 		}catch(SQLException e) {
 			System.out.println(e.getMessage());
+			return false;
 		}
 		
 		System.out.println(id + " - " + sText);
 		
-		closeConnection(conn);
-		return true;
+		if(closeConnection(conn)) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 	/* (non-Javadoc)
@@ -121,8 +128,21 @@ public class Card implements IDBFunctions {
 	 */
 	@Override
 	public boolean delete() {
-		// TODO Auto-generated method stub
-		return false;
+		Connection conn = connectDB(connURL);
+		String sql = "delete from Card where id = " + this.id;
+		try {
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate(sql);
+			System.out.println("Record deleted");
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+		if(closeConnection(conn)) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 
 	public int getId() {
@@ -190,11 +210,11 @@ public class Card implements IDBFunctions {
 	}
 
 	public Date getLastCorrected() {
-		return lastCorrected;
+		return lastCorrect;
 	}
 
 	public void setLastCorrected(Date lastCorrected) {
-		this.lastCorrected = lastCorrected;
+		this.lastCorrect = lastCorrected;
 	}
 
 	public int getHighestBox() {
