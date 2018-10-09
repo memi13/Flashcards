@@ -48,7 +48,8 @@ public class Card implements IDBFunctions {
 		setData(idCard);
 	}
 	public Card(String sT, String dT, int bNumber) {
-		//creates Record on DB
+		//creates Record on DB 		String sql = "insert into card (sText, dText, boxNumber) Values ('" + this.sText + "', '" + this.dText+ "', " + this.boxNumber + ")";
+
 	}
 
 	public static Connection connectDB(String connURL) {
@@ -119,8 +120,22 @@ public class Card implements IDBFunctions {
 	 */
 	@Override
 	public boolean save() {
-		// TODO Auto-generated method stub
-		return false;
+		Connection conn = connectDB(connURL);
+		String sql = "Update Card set sText = '" + this.sText + "', dText = '" + this.dText + "', boxNumber = " + this.boxNumber;
+		try {
+			Statement stmt = conn.createStatement();
+			if(stmt.executeUpdate(sql) == 1) {
+				closeConnection(conn);
+				return true;
+			}else {
+				closeConnection(conn);
+				return false;
+			}
+			
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
 	}
 
 	/* (non-Javadoc)
@@ -132,15 +147,17 @@ public class Card implements IDBFunctions {
 		String sql = "delete from Card where id = " + this.id;
 		try {
 			Statement stmt = conn.createStatement();
-			stmt.executeUpdate(sql);
-			System.out.println("Record deleted");
+			if(stmt.executeUpdate(sql) == 1) {
+				closeConnection(conn);
+				System.out.println("Record deleted");
+				return true;
+			}else {
+				closeConnection(conn);
+				System.out.println("Record not deleted");
+				return false;
+			}
 		}catch(SQLException e) {
 			System.out.println(e.getMessage());
-			return false;
-		}
-		if(closeConnection(conn)) {
-			return true;
-		}else {
 			return false;
 		}
 	}
