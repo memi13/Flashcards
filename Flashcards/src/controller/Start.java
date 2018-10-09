@@ -9,7 +9,7 @@ public class Start {
 		Card c = new Card(3);
 		c.setCountWrong(99);
 		c.setsText("22CREATEDinclSSTatistik");
-		c.createRecord();
+		//c.createRecord();
 	}
 
 }

@@ -55,7 +55,12 @@ public class Card implements IDBFunctions {
 		this.boxNumber = bNumber;
 		createRecord();
 	}
-
+	
+	/**
+	 * Opens Connection to DB
+	 * @param connURL
+	 * @return
+	 */
 	public static Connection connectDB(String connURL) {
         Connection conn = null;
         try {
@@ -70,6 +75,11 @@ public class Card implements IDBFunctions {
         	return conn;
         }
     }
+	/**
+	 * Closes Connection
+	 * @param conn
+	 * @return
+	 */
 	public boolean closeConnection(Connection conn) {
 		try {
             if (conn != null) {
@@ -89,7 +99,7 @@ public class Card implements IDBFunctions {
 	 * @param idCard Id of the Card
 	 * @return true if successful
 	 */
-	public boolean setData(int idCard) {
+	private boolean setData(int idCard) {
 		Connection conn = connectDB(connURL);
 		String sql = "select Card.id, Card.sText, Card.dText, Card.boxNumber, Card.createdOn, CardStatistic.countLearned, CardStatistic.countWrong, CardStatistic.highestBox, CardStatistic.lastCorrect, CardStatistic.lastLearned from Card LEFT Join CardStatistic on Card.id = CardStatistic.fkCard where Card.id = " + idCard;
 		try {
@@ -196,7 +206,7 @@ public class Card implements IDBFunctions {
 	 * Create a new DB Record from Object
 	 * @return
 	 */
-	public boolean createRecord() {
+	private boolean createRecord() {
 		Connection conn = connectDB(connURL);
 		String sql = "Insert into Card (sText, dText, boxNumber, createdOn) Values ('"+this.sText+"', '"+this.dText+"', "+this.boxNumber+", " + (int)new utilDate().getTime() + ")";
 		String sql2 = "";
