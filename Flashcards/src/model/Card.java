@@ -50,7 +50,10 @@ public class Card implements IDBFunctions {
 	}
 	public Card(String sT, String dT, int bNumber) {
 		//creates Record on DB 		String sql = "insert into card (sText, dText, boxNumber) Values ('" + this.sText + "', '" + this.dText+ "', " + this.boxNumber + ")";
-
+		this.sText = sT;
+		this.dText = dT;
+		this.boxNumber = bNumber;
+		createRecord();
 	}
 
 	public static Connection connectDB(String connURL) {
