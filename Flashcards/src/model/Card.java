@@ -33,6 +33,9 @@ public class Card implements IDBFunctions {
 	 */
 	public Card() {
 		// TODO Auto-generated constructor stub
+		id = -1;
+		sText
+		
 	}
 	public Card(int idCard) {
 		//gets Card with id idCard
@@ -56,6 +59,19 @@ public class Card implements IDBFunctions {
         }
     }
 	public boolean closeConnection(Connection conn) {
+		try {
+            if (conn != null) {
+            	conn.close();
+            	System.out.println("Closed");
+            }
+            return true;
+    	}catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("Connection not closed");
+            return false;
+        }
+	}
+	
 	/*	String sql = "SELECT id, sText FROM Card";
         
         try (
@@ -75,18 +91,7 @@ public class Card implements IDBFunctions {
         
     } catch (SQLException e) {
         System.out.println(e.getMessage());
-    } finally {
-        try {
-            if (conn != null) {
-            	conn.close();
-            	System.out.println("Closed");
-            }
-    	}catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
     }*/
-	}
-	
 	
 	/* (non-Javadoc)
 	 * @see model.IDBFunctions#save()
