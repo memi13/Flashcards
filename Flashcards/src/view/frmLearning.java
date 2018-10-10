@@ -41,7 +41,7 @@ public class frmLearning extends JFrame implements ActionListener {
 		this.pController = pc;
 		if(c == null || c.isEmpty()) {
 			System.out.println("No Cards in Array");
-			dispose();
+			c = new ArrayList<Card>();
 		}
 		this.cards = c;
 		initComponents();

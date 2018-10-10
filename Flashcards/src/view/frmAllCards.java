@@ -42,8 +42,10 @@ public class frmAllCards extends JFrame implements ActionListener {
 	private void initComponents() {
 		btnCancle = new JButton("Cancle");
 		txtFields = new JTextField[6];
-		for(JTextField txt : txtFields) {
-			txt = new JTextField("-");
+		for(int i = 0; i < txtFields.length; i++) {
+			System.out.println("TEXTFIELD Initialized");
+			txtFields[i] = new JTextField("-");
+			
 		}
 	}
 	
@@ -60,7 +62,11 @@ public class frmAllCards extends JFrame implements ActionListener {
 		mainPanel.add(btnCancle, BorderLayout.NORTH);
 	
 		//Grid Control
-		GridLayout dynGrid = new GridLayout(txtFields.length, 2);
+		int numRows = 0;
+		if((txtFields.length % 2) == 0) {
+			
+		}
+		GridLayout dynGrid = new GridLayout(txtFields.length/2, 2);
 		tablePanel.setLayout(dynGrid);
 		tablePanel.setBorder(new EmptyBorder(0,0,0,0));
 		this.validate();
