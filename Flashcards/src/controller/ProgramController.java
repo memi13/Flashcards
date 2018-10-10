@@ -172,8 +172,11 @@ public class ProgramController {
 	 * @param comp Compartment with Cards
 	 * @return Returns a String with Infos about this compartment
 	 */
-	public String[] loadBoxStatistics(int comp) {
-		return dataHelper.getStatisticDataBox(u.getId(), comp);
+	public String loadBoxStatistics(int comp) {
+		String data = "";
+				//dataHelper.getStatisticDataBox(u.getId(), comp);
+		
+		return "test";
 	}
 	
 	/**
