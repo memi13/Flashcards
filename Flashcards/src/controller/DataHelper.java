@@ -36,8 +36,8 @@ public class DataHelper implements IDataHelper{
 
 	@Override
 	public ArrayList<LanguageBox> getLanguageBoxes(int idUser) {
-		// TODO Auto-generated method stub
-		return null;
+		User u= new User(idUser);
+		return u.getLanguageBoxes();
 	}
 
 	@Override
