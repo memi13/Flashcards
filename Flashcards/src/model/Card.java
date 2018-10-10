@@ -325,6 +325,6 @@ public class Card implements IDBFunctions {
 	}
 	@Override
 	public String toString() {
-		return "Card [sText=" + sText + "]";
+		return sText;
 	}
 }
