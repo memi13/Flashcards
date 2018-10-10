@@ -73,7 +73,7 @@ public class DataHelper implements IDataHelper{
 					nowDateComp=addDays(nowDate, 90);
 					break;
 				default:
-					break;
+					break; 
 				}
 				
 				Date lastLenredDay =card.getLastLearned();	
