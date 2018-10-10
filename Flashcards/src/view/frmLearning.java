@@ -39,6 +39,10 @@ public class frmLearning extends JFrame implements ActionListener {
 	public frmLearning(ProgramController pc, ArrayList<Card> c) throws HeadlessException {
 		super("Learning");
 		this.pController = pc;
+		if(c == null || c.isEmpty()) {
+			System.out.println("No Cards in Array");
+			dispose();
+		}
 		this.cards = c;
 		initComponents();
 		bindListener();

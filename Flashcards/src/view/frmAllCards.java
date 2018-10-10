@@ -64,8 +64,10 @@ public class frmAllCards extends JFrame implements ActionListener {
 		tablePanel.setLayout(dynGrid);
 		tablePanel.setBorder(new EmptyBorder(0,0,0,0));
 		this.validate();
-		for(JTextField txt : txtFields) {
-			tablePanel.add(txt);
+		for(int i = 0; i < txtFields.length; i++) {
+			System.out.println("TEXTFIELD");
+			tablePanel.add(txtFields[i]);
+			
 		}
 		
 		mainPanel.add(tablePanel, BorderLayout.CENTER);
