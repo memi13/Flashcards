@@ -72,6 +72,7 @@ public class ProgramController {
 	 * @return
 	 */
 	public ArrayList<LanguageBox> loadLanguageBoxes() {
+		
 		ArrayList<LanguageBox> alL = new ArrayList<LanguageBox>();
 		alL.add(new LanguageBox("hallo", 1));
 		alL.add(new LanguageBox("hallo2", 1));
