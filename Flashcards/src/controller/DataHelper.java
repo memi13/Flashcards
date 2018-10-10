@@ -8,7 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javafx.scene.chart.PieChart.Data;
 import model.Card;
@@ -46,11 +48,34 @@ public class DataHelper implements IDataHelper{
 	public ArrayList<Card> getCards(int languageBox, int comp) 
 	{
 		ArrayList<Card> cards=new ArrayList<Card>();
+		Date nowDate = java.util.Calendar.getInstance().getTime();
 		for(Card card:getAllCards(languageBox, comp))
 		{
-			Date nowDate = java.util.Calendar.getInstance().getTime();
-			Date lastLenredDay =card.getLastLearned();		
-			if(lastLenredDay==null|| nowDate.getTime()>lastLenredDay.getTime())
+			Date nowDateComp=nowDate;
+		
+			switch (card.getBoxNumber()) {
+			case 1:
+				nowDateComp=addDays(nowDate, 1);
+				break;
+			case 2:
+				nowDateComp=addDays(nowDate, 2);
+				break;
+			case 3:
+				nowDateComp=addDays(nowDate, 10);
+				break;
+			case 4:
+				nowDateComp=addDays(nowDate, 30);
+				break;
+			case 5:
+				nowDateComp=addDays(nowDate, 90);
+				break;
+			default:
+				break;
+			}
+			
+			Date lastLenredDay =card.getLastLearned();	
+			
+			if(lastLenredDay==null|| nowDateComp.getTime()>lastLenredDay.getTime())
 			{
 				cards.add(card);
 			}
@@ -86,9 +111,18 @@ public class DataHelper implements IDataHelper{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	public String[]  getStatisticDataBox(int idUser, int box) {
-		// TODO Auto-generated method stub
-		return null;
+	public String[]  getStatisticDataBox(int languageBox, int comp) {
+		ArrayList<Card> allCards=getAllCards(languageBox, comp);
+		ArrayList<Card> toLearn=getCards(languageBox, comp);
+		if(allCards==null)
+			allCards=new ArrayList<Card>();
+		if(toLearn==null)
+			toLearn=new ArrayList<Card>();
+		String [] data=new String[3];
+		data[0]="In this Box: "+ allCards.size();
+		data[1]="Learning today: "+ toLearn.size();
+		data[2]="Next lernTime: "+ Learning(allCards);
+		return data;
 	}
 	
 	@Override
@@ -143,11 +177,63 @@ public class DataHelper implements IDataHelper{
 		}
 		return "";
 	}
-	
-    
-	
-	
-	
+	private String Learning(ArrayList<Card> cards)
+	{
+		Date nextLearnigTime=null;
+		Date nowDate = java.util.Calendar.getInstance().getTime();
+		for(Card card:cards)
+		{
+			Date cardDay=card.getLastLearned();
+			if(cardDay!=null)
+			{
+				switch (card.getBoxNumber()) 
+				{
+				case 1:
+					cardDay=addDays(cardDay, 1);
+					break;
+				case 2:
+					cardDay=addDays(cardDay, 2);
+					break;
+				case 3:
+					cardDay=addDays(cardDay, 10);
+					break;
+				case 4:
+					cardDay=addDays(cardDay, 30);
+					break;
+				case 5:
+					cardDay=addDays(cardDay, 90);
+					break;
+				default:
+					break;
+				}
+			}
+			else
+			{
+				cardDay=nowDate;
+			}
+			if(nextLearnigTime==null ||nowDate.getTime()>=cardDay.getTime())
+			{
+				if(nextLearnigTime==null || nextLearnigTime.getTime()>cardDay.getTime())
+				{
+					nextLearnigTime=cardDay;
+				}
+			}
+		}
+		return nextLearnigTime.toString();
+	}
+	public static Date addDays(Date date, int days) {
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTime(date);
+		cal.add(Calendar.DATE, days);			
+		return cal.getTime();
+	}
+	public static Date subtractDays(Date date, int days) {
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTime(date);
+		cal.add(Calendar.DATE, -days);
+				
+		return cal.getTime();
+	}
 
 }
 
