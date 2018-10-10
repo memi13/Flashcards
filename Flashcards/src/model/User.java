@@ -33,12 +33,14 @@ public class User implements IDBFunctions
 		id=-1;
 		username="";
 		password=createMd5("123456");
+		languageBoxes=new ArrayList<LanguageBox>();
 	}
 	/**
 	 * create a object wiht the value from DB value of this user
 	 * @param idUser id to search
 	 */
 	public User(int idUser) {
+		this.id=idUser;
 		getUser(idUser);
 	}
 	/**
@@ -46,13 +48,14 @@ public class User implements IDBFunctions
 	 * @param username usernmae to search
 	 */
 	public User(String username) {
+		this.username=username;
 		getUser(username);
 	}
 	
 	@Override
 	public boolean save() {
 		Connection conn = connectDB(connURL);
-		String sql = "Update LanguageBox set name = '" + 
+		String sql = "Update User set password = '" + 
 					this.password+"', pwCounter = "+this.pwCounter+",enabled = "+this.enabled+ 
 					" where id="+this.id;
 		try {
@@ -261,11 +264,11 @@ public class User implements IDBFunctions
 	}
 	private boolean getUser(String user)
 	{
-		return setData("select id,username,password,pwCounter,enabled from User where username='+"+this.username+"'");
+		return setData("select id,username,password,pwCounter,enabled from User where username='"+user+"'");
 	}
 	private boolean getUser(int user)
 	{
-		return setData("select id,username,password,pwCounter,enabled from User where id=+"+this.id);
+		return setData("select id,username,password,pwCounter,enabled from User where id="+user);
 	}
 	
 	private boolean setData(String sqlStatment)
