@@ -9,10 +9,10 @@ public class Start {
 		//Start ------------------------------------------------------
 		DataHelper dh = new DataHelper();
 		ProgramController pc = new ProgramController(dh);
-		//pc.initGUI();
+		pc.initGUI();
 		//End --------------------------------------------------------
 	
-		pc.openHome();
+		//pc.openHome();
 		
 	}
 }

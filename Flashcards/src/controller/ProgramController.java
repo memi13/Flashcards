@@ -44,14 +44,17 @@ public class ProgramController {
 //Login--------------------------------------------------------------------------------------------------------------
 	/**
 	 * Called from GUI "LOGIN" -> checks login data and opens the HOME Form
-	 * @param user
-	 * @param pw
+	 * @param user Username from Login
+	 * @param pw Password from Login
 	 */
 	public boolean login(String user, String pw) {
+		openHome();
+		return true;
+		/*
 		if(dataHelper.checkLogin(user, pw)) {
 			//open HOME Form and close LOGIN Form
 			System.out.println("Login succesful");
-			dataHelper.getUser(user);
+			u = dataHelper.getUser(user);
 			System.out.println("USER ID: " + u.getId());
 			openHome();
 			return true;
@@ -60,6 +63,7 @@ public class ProgramController {
 			System.out.println("Login not correct");
 			return false;
 		}		
+		*/
 	}
 	
 //-------------------------------------------------------------------------------------------------------------------
@@ -75,7 +79,7 @@ public class ProgramController {
 	
 	/**
 	 * Retruns the LanguageBoxes connected to the logged in User
-	 * @return
+	 * @return Returns an ArrayList with LanguageBoxes
 	 */
 	public ArrayList<LanguageBox> loadLanguageBoxes() {
 		
@@ -128,9 +132,18 @@ public class ProgramController {
 	
 //New Language Box Dialog --------------------------------------------------------------------------------------------
 
+	/**
+	 * Create a new LanguageBox
+	 * @param n Name of the new LanguageBox 
+	 * @return
+	 */
 	public boolean createNewLanguageBox(String n) {
-		dataHelper.newLanguageBox(n);
-		return true;
+		//check if name already exists -> in dataHelper?
+		if(dataHelper.newLanguageBox(n)) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 //--------------------------------------------------------------------------------------------------------------------
@@ -146,18 +159,25 @@ public class ProgramController {
 	
 	/**
 	 * Returns Statisticsdata from the choosen box (per user)
-	 * @param box
-	 * @return
+	 * @param comp Compartment with Cards
+	 * @return Returns a String with Infos about this compartment
 	 */
 	public String loadBoxStatistics(int comp) {
 		return dataHelper.getStatisticDataBox(u.getId(), comp);
 	}
 	
+	/**
+	 * Opens the Main Learning Form
+	 */
 	public void openLearning() {
 		//Opens Learning Form 
 		System.out.println("LEARNING FORM");
 	}
 	
+	/**
+	 * Load all Cards in a Compartment
+	 * @param comp witch compartment (-1 = all compartments)
+	 */
 	public void loadCards(int comp) {
 		ArrayList<Card> cards = dataHelper.getCards(this.lb.getId(), comp);
 	}
