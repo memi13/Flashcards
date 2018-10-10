@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -32,10 +33,10 @@ public class frmLearning extends JFrame implements ActionListener {
 	private JLabel lblResult;
 	
 	private ArrayList<Card> cards;
-	private int cardCount = 0;
+	private int cardCount = -1;
+	private int correctAnswers = 0;
 
 	public frmLearning(ProgramController pc, ArrayList<Card> c) throws HeadlessException {
-		// TODO Auto-generated constructor stub
 		super("Learning");
 		this.pController = pc;
 		this.cards = c;
@@ -46,7 +47,7 @@ public class frmLearning extends JFrame implements ActionListener {
 	
 	private void initComponents() {
 		btnCheck = new JButton("Check");
-		txtAnswer = new JTextField("Enter Answer");
+		txtAnswer = new JTextField("");
 		lblCorrrectAnswer = new JLabel("-Answer-");
 		lblOrigin = new JLabel("Origin Word");
 		nextCard();
@@ -58,7 +59,8 @@ public class frmLearning extends JFrame implements ActionListener {
 			cardCount++;
 			lblOrigin.setText(cards.get(cardCount).getsText());
 		}else {
-			//finish programm
+			//finish program
+			showEndScreen();
 		}
 	}
 	
@@ -92,16 +94,45 @@ public class frmLearning extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		JButton btn = (JButton)e.getSource();
 		if(btn.getText() == "Check"){
-			if(pController.checkCardAnswer(cards.get(cardCount).getdText(), txtAnswer.getText())) {
-				System.out.println("CORRECT");
+			resetLabels();
+			if(cards.get(cardCount).getdText() == null) {
+				System.out.println("EMPTY STRING");
 			}else {
-				System.out.println("FALSE");
+				if(pController.checkCardAnswer(cards.get(cardCount).getdText(), txtAnswer.getText())) {
+					System.out.println("CORRECT");
+					correctAnswers++;
+					nextCard();
+					//send statistics correct
+				}else {
+					System.out.println("FALSE");
+					lblCorrrectAnswer.setText("Correct Answer: \n" + cards.get(cardCount).getdText());
+					btnCheck.setText("Next");
+					//send statistics false
+				}
 			}
-			nextCard();
 			System.out.println("Check - " + cardCount);
 			
+		}else if(btn.getText() == "Next") {
+			btnCheck.setText("Check");
+			resetLabels();
+			nextCard();
 		}
 		
+	}
+	
+	private void resetLabels() {
+		this.lblCorrrectAnswer.setText("");
+		this.lblResult.setText("");
+		this.txtAnswer.setText("");
+	}
+	
+	/**
+	 * EndScreen after all Cards are learned
+	 */
+	private void showEndScreen() {
+		JOptionPane.showMessageDialog(this, "Congratulations!\n You completed the learning phase! \n You answered " + correctAnswers + "/" + cards.size() + " correctly!", "Congratulations!", JOptionPane.PLAIN_MESSAGE);
+		this.dispose();
+		pController.openHome();
 	}
 
 }
