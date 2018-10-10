@@ -12,6 +12,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import com.sun.corba.se.impl.orbutil.RepositoryIdUtility;
+
 import javafx.scene.chart.PieChart.Data;
 import model.Card;
 import model.IDBFunctions;
@@ -130,7 +132,7 @@ public class DataHelper implements IDataHelper{
 	{
 		Date nowDate = java.util.Calendar.getInstance().getTime();
 		Card card=new Card(idCard);
-		if(card!=null)
+		if(card!=null  && card.isNotEmpty())
 		{
 			if(card.getBoxNumber()>=5)
 				card.setBoxNumber(card.getBoxNumber()+100);
@@ -158,7 +160,7 @@ public class DataHelper implements IDataHelper{
 	{
 		Date nowDate = java.util.Calendar.getInstance().getTime();
 		Card card=new Card(idCard);
-		if(card!=null)
+		if(card!=null && card.isNotEmpty())
 		{
 			card.setBoxNumber(1);
 			card.setCountLearned(card.getCountLearned()+1);
@@ -199,14 +201,29 @@ public class DataHelper implements IDataHelper{
 	}
 	
 	@Override
-	public boolean updateCard(IDBFunctions card) {
-		// TODO Auto-generated method stub
+	public boolean updateCard(Card card) 
+	{
+		Card cardDB=new Card(card.getId());
+		if(card.staticNoUpdate(cardDB))
+		{
+			cardDB.setsText(card.getsText());
+			cardDB.setdText(card.getdText());
+			cardDB.save();
+			return true;
+		}
 		return false;
 	}
 
 	@Override
-	public boolean deleteCard(IDBFunctions card) {
+	public boolean deleteCard(Card card) {
 		// TODO Auto-generated method stub
+		Card dbCard=new Card(card.getId());
+		if(dbCard.isNotEmpty())
+			return false;
+		dbCard.delete();
+		dbCard=new Card(card.getId());
+		if(dbCard.isNotEmpty())
+			return true;	
 		return false;
 	}
 

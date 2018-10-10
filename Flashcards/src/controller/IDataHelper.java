@@ -13,8 +13,8 @@ public interface IDataHelper {
 	public ArrayList<Card> getCards(int languageBox, int comp);
 	public boolean moveCard(boolean correct,int idCard); //if card was correct "correct" = 1
 	public ArrayList<Card> getStatisticData(int idUser);
-	public boolean updateCard(IDBFunctions card);
-	public boolean deleteCard(IDBFunctions card);
+	public boolean updateCard(Card card);
+	public boolean deleteCard(Card card);
 	public boolean newLanguageBox(String name,int user);
 	public boolean saveSetting(IDBFunctions user);
 	
