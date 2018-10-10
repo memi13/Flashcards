@@ -5,12 +5,18 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 
 import model.User;
+import view.dlgNewLanguageBox;
 import view.frmHome;
 import view.frmLogin;
 import model.Card;
 import model.IDBFunctions;
 import model.LanguageBox;
 
+/**
+ * ProgramController controlls all Forms and uses the DataHelper to get Data from the DB to the Forms
+ * @author linus
+ *
+ */
 public class ProgramController {
 
 	private DataHelper dataHelper;
@@ -94,8 +100,9 @@ public class ProgramController {
 	/**
 	 * opens the NEWLANGUAGEBOX Form
 	 */
-	public void openNewLanguageBox() {
+	public void openNewLanguageBox(JFrame jf) {
 		//Open newLangaugeBox Form
+		dlgNewLanguageBox dlg = new dlgNewLanguageBox(jf, this);
 		System.out.println("NEWLANGUAGEBOX FORM");
 	}
 
@@ -118,6 +125,15 @@ public class ProgramController {
 
 //--------------------------------------------------------------------------------------------------------------------
 	
+	
+//New Language Box Dialog --------------------------------------------------------------------------------------------
+
+	public boolean createNewLanguageBox(String n) {
+		dataHelper.newLanguageBox(n);
+		return true;
+	}
+	
+//--------------------------------------------------------------------------------------------------------------------
 	
 	/**
 	 * opens the HOME menu (Please close the open JFrame)

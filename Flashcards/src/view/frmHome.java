@@ -112,8 +112,7 @@ public class frmHome extends JFrame implements ActionListener {
 			break;
 		case "New Language Box":
 			System.out.println("click - " + btn.getText());
-			pController.openNewLanguageBox();
-			this.dispose();
+			pController.openNewLanguageBox(this);
 			break;
 		case "Modify Cards":
 			System.out.println("click - " + btn.getText());
