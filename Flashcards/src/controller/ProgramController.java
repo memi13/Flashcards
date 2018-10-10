@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 
 import model.User;
 import view.dlgNewLanguageBox;
+import view.frmAllCards;
 import view.frmHome;
 import view.frmLearning;
 import view.frmLogin;
@@ -118,7 +119,7 @@ public class ProgramController {
 	 */
 	public void openAllCards() {
 		//Open AllCards Form
-		
+		frmAllCards frmA = new frmAllCards(this);
 		System.out.println("ALLCARDS FORM");
 	}
 	
@@ -182,10 +183,15 @@ public class ProgramController {
 	 */
 	public String loadBoxStatistics(int comp) {
 		String data = "";
-		/*for(String line : dataHelper.getStatisticDataBox(u.getId(), comp)) {
-			data = data + line + "/n";
-		}*/
+		for(String line : dataHelper.getStatisticDataBox(languageBoxId, comp)) {
+			data = data + line + "\n";
+		}
 		return data;
+	}
+	
+	public void updateCardStatistics(Card c, Boolean correct) {
+		//Update Card Statistics
+		dataHelper.moveCard(correct, c.getId());
 	}
 	
 	/**
