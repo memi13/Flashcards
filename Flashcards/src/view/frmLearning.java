@@ -28,7 +28,7 @@ public class frmLearning extends JFrame implements ActionListener {
 	private ProgramController pController;
 	private JButton btnCheck;
 	private JTextField txtAnswer;
-	private JLabel lblCorrrectAnswer;
+	private JLabel lblMessage;
 	private JLabel lblOrigin;
 	private JLabel lblResult;
 	
@@ -48,7 +48,7 @@ public class frmLearning extends JFrame implements ActionListener {
 	private void initComponents() {
 		btnCheck = new JButton("Check");
 		txtAnswer = new JTextField("");
-		lblCorrrectAnswer = new JLabel("");
+		lblMessage = new JLabel("");
 		lblOrigin = new JLabel("");
 		nextCard();
 		lblResult = new JLabel("");
@@ -75,9 +75,9 @@ public class frmLearning extends JFrame implements ActionListener {
 		
 		learningPanel.setLayout(new GridLayout(5, 1));
 		learningPanel.setBorder(new EmptyBorder(0,0,0,0));
+		learningPanel.add(lblMessage);
 		learningPanel.add(lblOrigin);
 		learningPanel.add(txtAnswer);
-		learningPanel.add(lblCorrrectAnswer);
 		learningPanel.add(btnCheck);
 		learningPanel.add(lblResult);
 		mainPanel.add(learningPanel, BorderLayout.CENTER);
@@ -94,7 +94,6 @@ public class frmLearning extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		JButton btn = (JButton)e.getSource();
 		if(btn.getText() == "Check"){
-			resetLabels();
 			if(cards.get(cardCount).getdText() == null) {
 				System.out.println("EMPTY STRING");
 			}else {
@@ -104,14 +103,19 @@ public class frmLearning extends JFrame implements ActionListener {
 					nextCard();
 					//send statistics correct
 					pController.updateCardStatistics(cards.get(cardCount), true);
+					resetLabels();
 				}else{
+					System.out.println(cards.get(cardCount).getdText() + " - " + txtAnswer.getText());
 					System.out.println("FALSE");
-					lblCorrrectAnswer.setText("Correct Answer: \n" + cards.get(cardCount).getdText());
+					//lblCorrrectAnswer.setText("Correct Answer: \n" + cards.get(cardCount).getdText());
+					lblMessage.setText("Anser incorrect!");
+					txtAnswer.setText("Correct Answer: \n" + cards.get(cardCount).getdText());
 					btnCheck.setText("Next");
 					//send statistics false
 					pController.updateCardStatistics(cards.get(cardCount), false);
 				}
 			}
+			
 			System.out.println("Check - " + cardCount);
 			
 		}else if(btn.getText() == "Next") {
@@ -123,7 +127,7 @@ public class frmLearning extends JFrame implements ActionListener {
 	}
 	
 	private void resetLabels() {
-		this.lblCorrrectAnswer.setText("");
+		this.lblMessage.setText("");
 		this.lblResult.setText("");
 		this.txtAnswer.setText("");
 	}

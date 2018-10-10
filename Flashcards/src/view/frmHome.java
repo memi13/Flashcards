@@ -60,11 +60,11 @@ public class frmHome extends JFrame implements ActionListener {
 		
 		setSize(500,500);
 		
-		tempButtonPanel.setLayout(new GridLayout(6, 1));
+		tempButtonPanel.setLayout(new GridLayout(5, 1));
 		tempButtonPanel.setBorder(new EmptyBorder(0,0,0,0));
 		tempButtonPanel.add(cbLanguageBox);
 		tempButtonPanel.add(btnLearningOverview);
-		tempButtonPanel.add(btnSettings);
+		//tempButtonPanel.add(btnSettings);
 		tempButtonPanel.add(btnNewLanguageBox);
 		tempButtonPanel.add(btnAllCards);
 		tempButtonPanel.add(btnStatistics);

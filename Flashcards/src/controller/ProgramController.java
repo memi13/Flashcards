@@ -190,7 +190,7 @@ public class ProgramController {
 	
 	public void updateCardStatistics(Card c, Boolean correct) {
 		//Update Card Statistics
-		
+		dataHelper.moveCard(correct, c.getId());
 	}
 	
 	/**
