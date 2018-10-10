@@ -120,7 +120,10 @@ public class DataHelper implements IDataHelper{
 		Card card=new Card(idCard);
 		if(card!=null)
 		{
-			card.setBoxNumber(card.getBoxNumber()+100);
+			if(card.getBoxNumber()>=5)
+				card.setBoxNumber(card.getBoxNumber()+100);
+			else
+				card.setBoxNumber(card.getBoxNumber()+1);
 			card.setCountLearned(card.getCountLearned()+1);
 			card.setLastCorrected(new java.sql.Date(nowDate.getTime()));
 			card.setLastLearned(new java.sql.Date(nowDate.getTime()));
@@ -128,6 +131,7 @@ public class DataHelper implements IDataHelper{
 			{
 				card.setHighestBox(card.getBoxNumber());
 			}
+			card.save();
 			return true;
 		}
 		return false;
@@ -142,6 +146,7 @@ public class DataHelper implements IDataHelper{
 			card.setCountLearned(card.getCountLearned()+1);
 			card.setCountWrong(card.getCountWrong()+1);
 			card.setLastLearned(new java.sql.Date(nowDate.getTime()));
+			card.save();
 			return true;
 		}
 		return false;
