@@ -182,10 +182,15 @@ public class ProgramController {
 	 */
 	public String loadBoxStatistics(int comp) {
 		String data = "";
-		/*for(String line : dataHelper.getStatisticDataBox(u.getId(), comp)) {
-			data = data + line + "/n";
-		}*/
+		for(String line : dataHelper.getStatisticDataBox(languageBoxId, comp)) {
+			data = data + line + "\n";
+		}
 		return data;
+	}
+	
+	public void updateCardStatistics(Card c, Boolean correct) {
+		//Update Card Statistics
+		
 	}
 	
 	/**

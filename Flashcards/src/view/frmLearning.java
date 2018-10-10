@@ -48,10 +48,10 @@ public class frmLearning extends JFrame implements ActionListener {
 	private void initComponents() {
 		btnCheck = new JButton("Check");
 		txtAnswer = new JTextField("");
-		lblCorrrectAnswer = new JLabel("-Answer-");
-		lblOrigin = new JLabel("Origin Word");
+		lblCorrrectAnswer = new JLabel("");
+		lblOrigin = new JLabel("");
 		nextCard();
-		lblResult = new JLabel("-Result-");
+		lblResult = new JLabel("");
 	}
 	
 	private void nextCard() {
@@ -103,11 +103,13 @@ public class frmLearning extends JFrame implements ActionListener {
 					correctAnswers++;
 					nextCard();
 					//send statistics correct
-				}else {
+					pController.updateCardStatistics(cards.get(cardCount), true);
+				}else{
 					System.out.println("FALSE");
 					lblCorrrectAnswer.setText("Correct Answer: \n" + cards.get(cardCount).getdText());
 					btnCheck.setText("Next");
 					//send statistics false
+					pController.updateCardStatistics(cards.get(cardCount), false);
 				}
 			}
 			System.out.println("Check - " + cardCount);
