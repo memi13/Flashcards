@@ -40,7 +40,6 @@ public class User implements IDBFunctions
 	 * @param idUser id to search
 	 */
 	public User(int idUser) {
-		this.id=idUser;
 		getUser(idUser);
 	}
 	/**
@@ -48,7 +47,6 @@ public class User implements IDBFunctions
 	 * @param username usernmae to search
 	 */
 	public User(String username) {
-		this.username=username;
 		getUser(username);
 	}
 	
@@ -187,11 +185,11 @@ public class User implements IDBFunctions
 	 * @return the encoded value
 	 */
 	private String createMd5(String value)
-	{
+	{ 
 		try 
 		{
 			MessageDigest md = MessageDigest.getInstance("MD5");			
-			byte[] hashInBytes = md.digest("Hallo".getBytes(StandardCharsets.UTF_8));
+			byte[] hashInBytes = md.digest(value.getBytes(StandardCharsets.UTF_8));
 			StringBuilder sb = new StringBuilder();
 	        for (byte b : hashInBytes) 
 	        {
@@ -282,7 +280,8 @@ public class User implements IDBFunctions
 	         rs.next();
 	         this.id=rs.getInt("id");
 	         this.username=rs.getString("username");
-	         this.pwCounter=rs.getInt("username");
+	         this.password=rs.getString("password");
+	         this.pwCounter=rs.getInt("pwCounter");
 	         int enabele=rs.getInt("enabled");
 	         this.enabled=(enabele != 0);
 	         if(rs.next())
@@ -307,5 +306,11 @@ public class User implements IDBFunctions
 			 System.out.println(e.getMessage());
 		}	 
 		 return false;		
+	}
+	public boolean isNotEmpty()
+	{
+		if((password!=null && password.length()>0) || (username!=null && username.length()>0))
+			return true;
+		return false;
 	}
 }
