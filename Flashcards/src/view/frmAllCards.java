@@ -29,11 +29,14 @@ public class frmAllCards extends JFrame implements ActionListener {
 	private ProgramController pController;
 	
 	private JButton btnCancle;
+	private JButton btnSave;
 	private JTextField[] txtFields;
 	private JButton[] btnButtons;
 	private JLabel lblOrigin;
 	private JLabel lblDestination;
 	private ArrayList<Card> cards;
+	private ArrayList<Card> cardsDelete;
+	private ArrayList<Card> cardsUpdate;
 	
 	private ArrayList<JComponent> components;
 	
@@ -54,6 +57,9 @@ public class frmAllCards extends JFrame implements ActionListener {
 		txtFields = new JTextField[cards.size()*2];
 		btnButtons = new JButton[cards.size()];
 		components = new ArrayList<JComponent>();
+		cardsDelete = new ArrayList<Card>();
+		cardsUpdate = new ArrayList<Card>();
+		btnSave = new JButton("Save");
 		
 		int i = 0;
 		int j = 0;
@@ -80,6 +86,7 @@ public class frmAllCards extends JFrame implements ActionListener {
 		setSize(500,500);
 		
 		mainPanel.add(btnCancle, BorderLayout.NORTH);
+		mainPanel.add(btnSave, BorderLayout.SOUTH);
 	
 		//Grid Control
 		GridLayout dynGrid = new GridLayout(cards.size(), 2);
@@ -89,12 +96,6 @@ public class frmAllCards extends JFrame implements ActionListener {
 		for(JComponent c : components) {
 			tablePanel.add(c);
 		}
-		
-		/*for(int i = 0; i < components.size(); i++) {
-			System.out.println("TEXTFIELD");
-			tablePanel.add(txtFields[i]);
-			
-		}*/
 		
 		mainPanel.add(tablePanel, BorderLayout.CENTER);
 		this.add(mainPanel);
@@ -115,14 +116,23 @@ public class frmAllCards extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton btn = (JButton)e.getSource();
-		if(btn.getText() == "Cancle") {
+		switch(btn.getText()){
+		case "Cancle":
 			System.out.println("click - Cancle");
 			pController.openHome();
 			this.dispose();
+			break;
+		case "Save":
+			System.out.println("click - Save");
+			if(cardsDelete.size()>0) {
+				pController.deleteCardArray(cardsDelete);
+			}
+			break;
+		case "X":		
+			System.out.println("added to Del" + e.getActionCommand());
+			cardsDelete.add(cards.get(Integer.parseInt(e.getActionCommand())));
+			break;	
 		}
-		System.out.println("");
-		String action = e.getActionCommand();
-		System.out.println(action);		
 	}
 	
 }

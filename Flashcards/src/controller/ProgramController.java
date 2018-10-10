@@ -132,6 +132,14 @@ public class ProgramController {
 		System.out.println("LEARNING FORM");
 	}
 
+	public boolean deleteCardArray(ArrayList<Card> toDel) {
+		for(Card c : toDel) {
+			c.delete();
+			System.out.println("Deleted " + c.getId());
+		}
+		return true;
+	}
+	
 	/**
 	 * Checks your answers
 	 * @param t1 String one
