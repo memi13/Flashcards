@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 
 import model.User;
 import view.dlgNewLanguageBox;
+import view.frmAllCards;
 import view.frmHome;
 import view.frmLearning;
 import view.frmLogin;
@@ -118,7 +119,7 @@ public class ProgramController {
 	 */
 	public void openAllCards() {
 		//Open AllCards Form
-		
+		frmAllCards frmA = new frmAllCards(this);
 		System.out.println("ALLCARDS FORM");
 	}
 	
