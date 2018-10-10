@@ -8,6 +8,7 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -44,6 +45,7 @@ public class frmLearning extends JFrame implements ActionListener {
 			c = new ArrayList<Card>();
 		}
 		this.cards = c;
+		Collections.shuffle(cards);
 		initComponents();
 		bindListener();
 		initGui();
