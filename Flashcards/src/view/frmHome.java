@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,6 +20,7 @@ import javax.swing.border.EmptyBorder;
 import com.sun.prism.paint.Color;
 
 import controller.ProgramController;
+import model.LanguageBox;
 
 public class frmHome extends JFrame implements ActionListener {
 
@@ -28,7 +30,7 @@ public class frmHome extends JFrame implements ActionListener {
 	private JButton btnNewLanguageBox;
 	private JButton btnAllCards;
 	private JButton btnStatistics;
-	
+	private JComboBox<LanguageBox> cbLanguageBox;
 	
 	public frmHome(ProgramController pc) throws HeadlessException {
 		// TODO Auto-generated constructor stub
@@ -45,7 +47,7 @@ public class frmHome extends JFrame implements ActionListener {
 		btnNewLanguageBox = new JButton("New Language Box");
 		btnAllCards = new JButton("Modify Cards");
 		btnStatistics = new JButton("Statistics");
-		
+		cbLanguageBox = new JComboBox(pController.loadLanguageBoxes().toArray());
 	}
 	
 	private void initGui() {
@@ -57,8 +59,9 @@ public class frmHome extends JFrame implements ActionListener {
 		
 		setSize(500,500);
 		
-		tempButtonPanel.setLayout(new GridLayout(5, 1));
+		tempButtonPanel.setLayout(new GridLayout(6, 1));
 		tempButtonPanel.setBorder(new EmptyBorder(0,0,0,0));
+		tempButtonPanel.add(cbLanguageBox);
 		tempButtonPanel.add(btnLearningOverview);
 		tempButtonPanel.add(btnSettings);
 		tempButtonPanel.add(btnNewLanguageBox);
@@ -96,16 +99,35 @@ public class frmHome extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton btn = (JButton)e.getSource();
-		/*if(btn.getText() == "Login") {
-			System.out.println("click");
-			if(pController.login(txtUser.getText(), new String(txtPW.getPassword()))) {
-				this.dispose();
-			}else {
-				showError();
-			}
-		}*/
-		System.out.println("click - " + btn.getText());
-		
+		switch(btn.getText()) {
+		case "Learning":
+			System.out.println("click - " + btn.getText());
+			pController.openOverview();
+			this.dispose();
+			break;
+		case "Settings":
+			System.out.println("click - " + btn.getText());
+			pController.openSettings();
+			this.dispose();
+			break;
+		case "New Language Box":
+			System.out.println("click - " + btn.getText());
+			pController.openNewLanguageBox();
+			this.dispose();
+			break;
+		case "Modify Cards":
+			System.out.println("click - " + btn.getText());
+			pController.openAllCards();
+			this.dispose();
+			break;
+		case "Statistics":
+			System.out.println("click - " + btn.getText());
+			pController.openStatistics();
+			this.dispose();
+			break;
+		default:
+			System.out.println("Button not found");
+		}
 	}
 
 }

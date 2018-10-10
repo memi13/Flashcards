@@ -72,7 +72,14 @@ public class ProgramController {
 	 * @return
 	 */
 	public ArrayList<LanguageBox> loadLanguageBoxes() {
-		return dataHelper.getLanguageBoxes(u.getId());
+		ArrayList<LanguageBox> alL = new ArrayList<LanguageBox>();
+		alL.add(new LanguageBox("hallo", 1));
+		alL.add(new LanguageBox("hallo2", 1));
+		alL.add(new LanguageBox("hallo3", 1));
+		
+		return alL;
+		
+		//return dataHelper.getLanguageBoxes(u.getId());
 	}
 
 	/**
