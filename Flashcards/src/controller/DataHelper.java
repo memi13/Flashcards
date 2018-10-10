@@ -183,7 +183,7 @@ public class DataHelper implements IDataHelper{
 		Date nowDate = java.util.Calendar.getInstance().getTime();
 		for(Card card:cards)
 		{
-			Date cardDay=card.getLastLearned();
+			Date cardDay=card.getLastLearned(); 
 			if(cardDay!=null)
 			{
 				switch (card.getBoxNumber()) 
