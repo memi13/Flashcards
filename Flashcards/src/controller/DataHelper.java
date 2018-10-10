@@ -23,7 +23,7 @@ public class DataHelper implements IDataHelper{
 	@Override
 	public boolean checkLogin(String user, String pw) { 
 		User u= getUser(user);
-		if(user!=null)
+		if(u!=null)
 		{
 			String pwEncode=createMd5(pw);
 			if(u.getUsername().equals(u.getUsername()) && u.getPassword().equals(pwEncode))
