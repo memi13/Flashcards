@@ -105,7 +105,7 @@ public class DataHelper implements IDataHelper{
 	}
 
 	@Override
-	public boolean moveCard(int correct) {
+	public boolean moveCard(int correct,int idCard) {
 		// TODO Auto-generated method stub
 		return false;
 	}
