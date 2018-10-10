@@ -141,7 +141,7 @@ public class Card implements IDBFunctions {
 			Statement stmt = conn.createStatement();
 			if(stmt.executeUpdate(sql) == 1) {
 				closeConnection(conn);
-				return true;
+				return updateStatistic();
 			}else {
 				closeConnection(conn);
 				return false;
@@ -208,7 +208,7 @@ public class Card implements IDBFunctions {
 	 */
 	private boolean createRecord() {
 		Connection conn = connectDB(connURL);
-		String sql = "Insert into Card (sText, dText, boxNumber, createdOn) Values ('"+this.sText+"', '"+this.dText+"', "+this.boxNumber+", " + (int)new utilDate().getTime() + ")";
+		String sql = "Insert into Card (sText, dText, boxNumber, createdOn) Values ('"+this.sText+"', '"+this.dText+"', "+this.boxNumber+", " + (long)new utilDate().getTime() + ")";
 		String sql2 = "";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);

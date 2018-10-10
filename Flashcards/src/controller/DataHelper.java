@@ -8,7 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 
+import javafx.scene.chart.PieChart.Data;
 import model.Card;
 import model.IDBFunctions;
 import model.LanguageBox;
@@ -41,9 +43,36 @@ public class DataHelper implements IDataHelper{
 	}
 
 	@Override
-	public ArrayList<Card> getCards(int languageBox, int comp) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Card> getCards(int languageBox, int comp) 
+	{
+		ArrayList<Card> cards=new ArrayList<Card>();
+		for(Card card:getAllCards(languageBox, comp))
+		{
+			Date nowDate = java.util.Calendar.getInstance().getTime();
+			Date lastLenredDay =card.getLastLearned();		
+			if(lastLenredDay==null|| nowDate.getTime()>lastLenredDay.getTime())
+			{
+				cards.add(card);
+			}
+		}	
+		if(cards.size()==0)
+			return null;
+		return cards;
+	}
+	private ArrayList<Card> getAllCards(int languageBox, int comp)
+	{
+		LanguageBox l=new LanguageBox(languageBox);
+		ArrayList<Card> cards=new ArrayList<Card>();
+		for(Card card:l.getCards())
+		{
+			if(comp==-1 || comp==card.getBoxNumber())
+			{
+				cards.add(card);
+			}
+		}
+		if(cards.size()==0)
+			return null;
+		return cards;
 	}
 
 	@Override
