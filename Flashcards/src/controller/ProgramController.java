@@ -8,6 +8,7 @@ import model.User;
 import view.dlgNewLanguageBox;
 import view.frmHome;
 import view.frmLogin;
+import view.frmOverview;
 import model.Card;
 import model.IDBFunctions;
 import model.LanguageBox;
@@ -21,12 +22,12 @@ public class ProgramController {
 
 	private DataHelper dataHelper;
 	private User u;
-	private LanguageBox lb;
-	
+	private int languageBoxId;
+
 	public ProgramController(DataHelper dh) {
 		this.dataHelper = dh;
 		u = null;
-		lb = null;
+		languageBoxId = -1;
 	}
 	
 //Start---------------------------------------------------------------------------------------------------------------
@@ -85,9 +86,11 @@ public class ProgramController {
 
 	/**
 	 * opens the OVERVIEW Form
+	 * @param lb Object of the selected LanguageBox
 	 */
 	public void openOverview() {
 		//Open Overview Form
+		frmOverview frmO = new frmOverview(this, languageBoxId);
 		System.out.println("OVERVIEW FORM");
 	}
 	
@@ -109,11 +112,28 @@ public class ProgramController {
 	}
 	
 	/**
-	 * opens the ALLCARDS Form
+	 * Opens the ALLCards Form
 	 */
 	public void openAllCards() {
 		//Open AllCards Form
+		
 		System.out.println("ALLCARDS FORM");
+	}
+	
+	/**
+	 * opens the Learning Form
+	 */
+	public void openLearning(int index) {
+		int boxId;
+		if(index != 0) {
+			boxId = index;
+		}else {
+			boxId = -1;
+		}
+		
+		//Open Learning form
+		
+		System.out.println("LEARNING FORM");
 	}
 
 
@@ -169,8 +189,33 @@ public class ProgramController {
 	 * @param comp witch compartment (-1 = all compartments)
 	 */
 	public void loadCards(int comp) {
-		ArrayList<Card> cards = dataHelper.getCards(this.lb.getId(), comp);
+		ArrayList<Card> cards = dataHelper.getCards(this.languageBoxId, comp);
 	}
 	
-	
+	public User getU() {
+		return u;
+	}
+
+	public void setU(User u) {
+		this.u = u;
+	}
+
+	public int getLanguageBox() {
+		return languageBoxId;
+	}
+
+	/**
+	 * Set LanguageBox id
+	 * @param lb languageboxid
+	 */
+	public void setLanguageBox(int lb) {
+		this.languageBoxId = lb;
+	}
+	/**
+	 * Set LanguageBox id
+	 * @param lb languagebox object
+	 */
+	public void setLanguageBox(LanguageBox lb) {
+		this.languageBoxId = lb.getId();
+	}
 }

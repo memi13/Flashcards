@@ -81,25 +81,11 @@ public class frmHome extends JFrame implements ActionListener {
 		btnAllCards.addActionListener(this);
 		btnStatistics.addActionListener(this);
 	}
-	
-	public frmHome(GraphicsConfiguration gc) {
-		super(gc);
-		// TODO Auto-generated constructor stub
-	}
-
-	public frmHome(String title) throws HeadlessException {
-		super(title);
-		// TODO Auto-generated constructor stub
-	}
-
-	public frmHome(String title, GraphicsConfiguration gc) {
-		super(title, gc);
-		// TODO Auto-generated constructor stub
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton btn = (JButton)e.getSource();
+		pController.setLanguageBox((LanguageBox)cbLanguageBox.getSelectedItem());
 		switch(btn.getText()) {
 		case "Learning":
 			System.out.println("click - " + btn.getText());
