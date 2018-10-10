@@ -88,6 +88,12 @@ public class DataHelper implements IDataHelper{
 			return null;
 		return cards;
 	}
+	/**
+	 * Get all Cards from a LanguageBox and a compartment.
+	 * @param languageBox The LangageBox from the Card
+	 * @param comp in witch compartment is the Card, for all -1, exist compartment(1-100)
+	 * @return A List with Card whit in this box and compartment
+	 */
 	private ArrayList<Card> getAllCards(int languageBox, int comp)
 	{
 		LanguageBox l=new LanguageBox(languageBox);
@@ -99,6 +105,7 @@ public class DataHelper implements IDataHelper{
 				cards.add(card);
 			}
 		}
+		// check if it has Card if not retrun null
 		if(cards.size()==0)
 			return null;
 		return cards;
@@ -113,7 +120,12 @@ public class DataHelper implements IDataHelper{
 			return incorrecCard(correct,idCard);
 			
 	}
-	
+	/**
+	 * Set the Card to the next Compartment and set all statistic Property 
+	 * @param correct is the answer correct 
+	 * @param idCard the id from the Card
+	 * @return has save on DB
+	 */
 	private boolean correcCard(boolean correct,int idCard)
 	{
 		Date nowDate = java.util.Calendar.getInstance().getTime();
@@ -136,6 +148,12 @@ public class DataHelper implements IDataHelper{
 		}
 		return false;
 	}
+	/**
+	 * Set the Card to the next Compartment and set all statistic Property 
+	 * @param correct is the answer correct 
+	 * @param idCard the id from the Card
+	 * @return has save on DB
+	 */
 	private boolean incorrecCard(boolean correct,int idCard)
 	{
 		Date nowDate = java.util.Calendar.getInstance().getTime();
@@ -157,6 +175,12 @@ public class DataHelper implements IDataHelper{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	/**
+	 * Get a textes for with ifos about the compartment
+	 * @param languageBox the LangageBox for the info
+	 * @param comp compartment for the info
+	 * @return an Arrary whit infos
+	 */
 	public String[]  getStatisticDataBox(int languageBox, int comp) {
 		ArrayList<Card> allCards=getAllCards(languageBox, comp);
 		ArrayList<Card> toLearn=getCards(languageBox, comp);
@@ -199,7 +223,11 @@ public class DataHelper implements IDataHelper{
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	/**
+	 * Get the user which this name
+	 * @param username the username which is search
+	 * @return a user
+	 */
 	public User getUser(String username) {
 		// TODO Auto-generated method stub
 		User u =new User(username);
@@ -207,6 +235,11 @@ public class DataHelper implements IDataHelper{
 			return new User(username);
 		return null;
 	}
+	/**
+	 * a encode mh5 hasch
+	 * @param value the value to anecode
+	 * @return
+	 */
 	private String createMd5(String value)
 	{
 		try  
@@ -226,6 +259,11 @@ public class DataHelper implements IDataHelper{
 		}
 		return "";
 	}
+	/**
+	 * get the time wenn is the next lernign time
+	 * @param cards
+	 * @return
+	 */
 	private String Learning(ArrayList<Card> cards)
 	{
 		Date nextLearnigTime=null;
@@ -270,12 +308,24 @@ public class DataHelper implements IDataHelper{
 		}
 		return nextLearnigTime.toString();
 	}
+	/**
+	 * add a days to a date
+	 * @param date the state day 
+	 * @param days number of the to remove 
+	 * @return the new Date
+	 */
 	public static Date addDays(Date date, int days) {
 		GregorianCalendar cal = new GregorianCalendar();
 		cal.setTime(date);
 		cal.add(Calendar.DATE, days);			
 		return cal.getTime();
 	}
+	/**
+	 * removes a days to a date
+	 * @param date the state day 
+	 * @param days number of the to remove 
+	 * @return the new Date
+	 */
 	public static Date subtractDays(Date date, int days) {
 		GregorianCalendar cal = new GregorianCalendar();
 		cal.setTime(date);
