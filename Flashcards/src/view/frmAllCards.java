@@ -1,14 +1,17 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GraphicsConfiguration;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 import com.sun.prism.paint.Color;
 
 import controller.ProgramController;
+import model.Card;
 
 public class frmAllCards extends JFrame implements ActionListener {
 
@@ -26,8 +30,12 @@ public class frmAllCards extends JFrame implements ActionListener {
 	
 	private JButton btnCancle;
 	private JTextField[] txtFields;
+	private JButton[] btnButtons;
+	private JLabel lblOrigin;
+	private JLabel lblDestination;
+	private ArrayList<Card> cards;
 	
-	private int cards;
+	private ArrayList<JComponent> components;
 	
 
 	public frmAllCards(ProgramController pc) throws HeadlessException {
@@ -40,12 +48,24 @@ public class frmAllCards extends JFrame implements ActionListener {
 	}
 
 	private void initComponents() {
+		//Load all Cards
+		cards = pController.loadCards(-1);
 		btnCancle = new JButton("Cancle");
-		txtFields = new JTextField[6];
-		for(int i = 0; i < txtFields.length; i++) {
-			System.out.println("TEXTFIELD Initialized");
-			txtFields[i] = new JTextField("-");
-			
+		txtFields = new JTextField[cards.size()*2];
+		btnButtons = new JButton[cards.size()];
+		components = new ArrayList<JComponent>();
+		
+		int i = 0;
+		int j = 0;
+		while(i<txtFields.length) {
+			txtFields[i] = new JTextField(cards.get(j).getsText());
+			txtFields[i+1] = new JTextField(cards.get(j).getdText());
+			btnButtons[j] = new JButton("X");
+			components.add(txtFields[i]);
+			components.add(txtFields[i+1]);
+			components.add(btnButtons[j]);
+			i+=2;
+			j+=1;
 		}
 	}
 	
@@ -62,19 +82,19 @@ public class frmAllCards extends JFrame implements ActionListener {
 		mainPanel.add(btnCancle, BorderLayout.NORTH);
 	
 		//Grid Control
-		int numRows = 0;
-		if((txtFields.length % 2) == 0) {
-			
-		}
-		GridLayout dynGrid = new GridLayout(txtFields.length/2, 2);
+		GridLayout dynGrid = new GridLayout(cards.size(), 2);
 		tablePanel.setLayout(dynGrid);
 		tablePanel.setBorder(new EmptyBorder(0,0,0,0));
 		this.validate();
-		for(int i = 0; i < txtFields.length; i++) {
+		for(JComponent c : components) {
+			tablePanel.add(c);
+		}
+		
+		/*for(int i = 0; i < components.size(); i++) {
 			System.out.println("TEXTFIELD");
 			tablePanel.add(txtFields[i]);
 			
-		}
+		}*/
 		
 		mainPanel.add(tablePanel, BorderLayout.CENTER);
 		this.add(mainPanel);
@@ -84,6 +104,12 @@ public class frmAllCards extends JFrame implements ActionListener {
 	
 	private void bindListener() {
 		btnCancle.addActionListener(this);
+		int i = 0;
+		for(JButton btn : btnButtons) {
+			btn.addActionListener(this);
+			btn.setActionCommand("" + i);
+			i++;
+		}
 	}
 
 	@Override
@@ -91,9 +117,12 @@ public class frmAllCards extends JFrame implements ActionListener {
 		JButton btn = (JButton)e.getSource();
 		if(btn.getText() == "Cancle") {
 			System.out.println("click - Cancle");
+			pController.openHome();
 			this.dispose();
 		}
-		
+		System.out.println("");
+		String action = e.getActionCommand();
+		System.out.println(action);		
 	}
-
+	
 }
