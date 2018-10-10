@@ -323,5 +323,8 @@ public class Card implements IDBFunctions {
 	public void setHighestBox(int highestBox) {
 		this.highestBox = highestBox;
 	}
-
+	@Override
+	public String toString() {
+		return "Card [sText=" + sText + "]";
+	}
 }

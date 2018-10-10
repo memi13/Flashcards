@@ -104,7 +104,8 @@ public class frmOverview extends JFrame implements ActionListener {
 			System.out.println(btn.getText());
 			if(btn.getText() == "Ok") {
 				setStatisticsLable(cbBox.getSelectedIndex());
-				pController.openLearning(cbBox.getSelectedIndex());
+				pController.setBoxId(cbBox.getSelectedIndex());
+				pController.openLearning();
 				this.dispose();
 			}else if(btn.getText() == "Cancle") {
 				pController.openHome();
@@ -117,10 +118,10 @@ public class frmOverview extends JFrame implements ActionListener {
 	private void setStatisticsLable(int index) {
 		if(index != 0) {
 			System.out.println(index);
-			lblStatistics.setText("Boxnummer: " + index);
+			lblStatistics.setText(pController.loadBoxStatistics(index));
 		}else {
 			System.out.println(-1);
-			lblStatistics.setText("Boxnummer: Alle (-1)");
+			lblStatistics.setText(pController.loadBoxStatistics(-1));
 		}
 	}
 
