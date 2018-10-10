@@ -48,9 +48,7 @@ public class ProgramController {
 	 * @param pw Password from Login
 	 */
 	public boolean login(String user, String pw) {
-		openHome();
-		return true;
-		/*
+
 		if(dataHelper.checkLogin(user, pw)) {
 			//open HOME Form and close LOGIN Form
 			System.out.println("Login succesful");
@@ -63,7 +61,7 @@ public class ProgramController {
 			System.out.println("Login not correct");
 			return false;
 		}		
-		*/
+		
 	}
 	
 //-------------------------------------------------------------------------------------------------------------------
