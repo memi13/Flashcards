@@ -54,9 +54,9 @@ public class frmLearning extends JFrame implements ActionListener {
 	}
 	
 	private void nextCard() {
-		if(cardCount<cards.size()) {
+		if(cardCount<cards.size()-1) {
 			cardCount++;
-			lblOrigin.setText(cards.get(cardCount).toString());
+			lblOrigin.setText(cards.get(cardCount).getsText());
 		}else {
 			//finish programm
 		}
@@ -91,7 +91,12 @@ public class frmLearning extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton btn = (JButton)e.getSource();
-		if(btn.getText() == "Check") {
+		if(btn.getText() == "Check"){
+			if(pController.checkCardAnswer(cards.get(cardCount).getdText(), txtAnswer.getText())) {
+				System.out.println("CORRECT");
+			}else {
+				System.out.println("FALSE");
+			}
 			nextCard();
 			System.out.println("Check - " + cardCount);
 			

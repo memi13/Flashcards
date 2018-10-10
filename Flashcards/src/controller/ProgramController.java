@@ -131,6 +131,19 @@ public class ProgramController {
 		System.out.println("LEARNING FORM");
 	}
 
+	/**
+	 * Checks your answers
+	 * @param t1 String one
+	 * @param t2 String two
+	 * @return
+	 */
+	public boolean checkCardAnswer(String t1, String t2) {
+		if(t1.equals(t2)) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 
 //--------------------------------------------------------------------------------------------------------------------
 	
