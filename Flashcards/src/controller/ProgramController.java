@@ -18,7 +18,6 @@ import model.LanguageBox;
 /**
  * ProgramController controlls all Forms and uses the DataHelper to get Data from the DB to the Forms
  * @author linus
- *
  */
 public class ProgramController {
 
@@ -27,32 +26,31 @@ public class ProgramController {
 	private int languageBoxId;
 	private int boxId;
 
+	/**
+	 * Constructor for ProgramController
+	 * @param dh Instance of the DataHelper
+	 */
 	public ProgramController(DataHelper dh) {
 		this.dataHelper = dh;
 		u = null;
 		languageBoxId = -1;
 	}
 	
-//Start---------------------------------------------------------------------------------------------------------------
 	/**
 	 * Initializes GUI with Login Form
 	 */
 	public void initGUI() {
 		//start with LoginGUI
 		frmLogin fLogin = new frmLogin(this);
-		System.out.println("LOGIN FORM");
-	
+		System.out.println("LOGIN FORM");	
 	}
-//-------------------------------------------------------------------------------------------------------------------
-	
-//Login--------------------------------------------------------------------------------------------------------------
+
 	/**
 	 * Called from GUI "LOGIN" -> checks login data and opens the HOME Form
 	 * @param user Username from Login
 	 * @param pw Password from Login
 	 */
 	public boolean login(String user, String pw) {
-
 		if(dataHelper.checkLogin(user, pw)) {
 			//open HOME Form and close LOGIN Form
 			System.out.println("Login succesful");
@@ -68,9 +66,6 @@ public class ProgramController {
 		
 	}
 	
-//-------------------------------------------------------------------------------------------------------------------
-	
-//HOME---------------------------------------------------------------------------------------------------------------
 	/**
 	 * Opens the STATISTICS Form
 	 */
@@ -99,6 +94,7 @@ public class ProgramController {
 	
 	/**
 	 * opens the NEWLANGUAGEBOX Form
+	 * @param jf Parent JFrame for Dialog
 	 */
 	public void openNewLanguageBox(JFrame jf) {
 		//Open newLangaugeBox Form
@@ -111,11 +107,11 @@ public class ProgramController {
 	 */
 	public void openSettings() {
 		//Open Settings Form
-		System.out.println("SETTINGS FORM");
+		System.out.println("NO SETTINGS IMPLEMENTED");
 	}
 	
 	/**
-	 * Opens the ALLCards Form
+	 * Opens the ALLCards Form (Modify Cards)
 	 */
 	public void openAllCards() {
 		//Open AllCards Form
@@ -128,15 +124,27 @@ public class ProgramController {
 	 */
 	public void openLearning() {
 		frmLearning frmL = new frmLearning(this, dataHelper.getCards(this.languageBoxId, this.boxId));
-		
 		System.out.println("LEARNING FORM");
 	}
 
 	/**
-	 * Checks your answers
-	 * @param t1 String one
-	 * @param t2 String two
-	 * @return
+	 * Deletes an ArrayList of Cards
+	 * @param toDel ArrayList of Cards to be deleted
+	 * @return true if succesfull
+	 */
+	public boolean deleteCardArray(ArrayList<Card> toDel) {
+		for(Card c : toDel) {
+			c.delete();
+			System.out.println("Deleted " + c.getId());
+		}
+		return true;
+	}
+	
+	/**
+	 * Checks if the Answer is correct
+	 * @param t1 Source one
+	 * @param t2 Answer two
+	 * @return true if answer is correct
 	 */
 	public boolean checkCardAnswer(String t1, String t2) {
 		if(t1.equals(t2)) {
@@ -145,11 +153,6 @@ public class ProgramController {
 			return false;
 		}
 	}
-
-//--------------------------------------------------------------------------------------------------------------------
-	
-	
-//New Language Box Dialog --------------------------------------------------------------------------------------------
 
 	/**
 	 * Create a new LanguageBox
@@ -165,10 +168,8 @@ public class ProgramController {
 		}
 	}
 	
-//--------------------------------------------------------------------------------------------------------------------
-	
 	/**
-	 * opens the HOME menu (Please close the open JFrame)
+	 * opens the HOME menu
 	 */
 	public void openHome() {
 		//Open HOME Form
@@ -189,6 +190,11 @@ public class ProgramController {
 		return data;
 	}
 	
+	/**
+	 * Updates the Statistics of a Card
+	 * @param c Card
+	 * @param correct true if the answer was correct
+	 */
 	public void updateCardStatistics(Card c, Boolean correct) {
 		//Update Card Statistics
 		dataHelper.moveCard(correct, c.getId());
@@ -202,10 +208,18 @@ public class ProgramController {
 		return dataHelper.getCards(this.languageBoxId, comp);
 	}
 	
+	/**
+	 * GetUser
+	 * @return
+	 */
 	public User getU() {
 		return u;
 	}
 
+	/**
+	 * Set User
+	 * @param u
+	 */
 	public void setU(User u) {
 		this.u = u;
 	}
@@ -215,14 +229,15 @@ public class ProgramController {
 	}
 
 	/**
-	 * Set LanguageBox id
+	 * Set LanguageBox per id
 	 * @param lb languageboxid
 	 */
 	public void setLanguageBox(int lb) {
 		this.languageBoxId = lb;
 	}
+	
 	/**
-	 * Set LanguageBox id
+	 * Set LanguageBox per LanguageBox Object
 	 * @param lb languagebox object
 	 */
 	public void setLanguageBox(LanguageBox lb) {
@@ -232,6 +247,7 @@ public class ProgramController {
 	public int getBoxId() {
 		return this.boxId;
 	}
+	
 	public void setBoxId(int b) {
 		if(b != 0) {
 			this.boxId = b;

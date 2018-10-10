@@ -24,6 +24,7 @@ import javax.swing.border.EmptyBorder;
 import controller.ProgramController;
 
 /**
+ * Dialog to create a new LanguageBox
  * @author linus
  *
  */
@@ -33,8 +34,10 @@ public class dlgNewLanguageBox extends JDialog implements ActionListener{
 	private JButton btnCancle;
 	private JButton btnOk;
 	private JTextField txtName;
-	/**
-	 * @param owner
+	
+	/** Constructor for custom Dialog
+	 * @param owner Parent JFrame
+	 * @param pc ProgramController
 	 */
 	public dlgNewLanguageBox(JFrame owner, ProgramController pc) {
 		super(owner, "New Language Box");
@@ -44,6 +47,9 @@ public class dlgNewLanguageBox extends JDialog implements ActionListener{
 		initGui();
 	}
 
+	/**
+	 * Initialize Components
+	 */
 	private void initComponents() {
 		// TODO Auto-generated method stub
 		btnOk = new JButton("Ok");
@@ -51,8 +57,10 @@ public class dlgNewLanguageBox extends JDialog implements ActionListener{
 		txtName = new JTextField("example: Englisch <-> Deutsch");
 	}
 	
+	/**
+	 * Initialize GUI
+	 */
 	private void initGui() {
-		// TODO Auto-generated method stub
 		JPanel mainPanel = new JPanel();
 		JPanel languageboxPanel = new JPanel();
 		
@@ -73,6 +81,9 @@ public class dlgNewLanguageBox extends JDialog implements ActionListener{
 		setVisible(true);
 	}
 
+	/**
+	 * Bind Listeners
+	 */
 	private void bindListener() {
 		// TODO Auto-generated method stub
 		btnOk.addActionListener(this);
