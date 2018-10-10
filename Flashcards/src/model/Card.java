@@ -184,7 +184,7 @@ public class Card implements IDBFunctions {
 	 */
 	public boolean updateStatistic() {
 		Connection conn = connectDB(connURL);
-		String sql = "Update CardStatistic set countLearned = " + this.countLearned + ", countWrong = " + this.countWrong + ", highestBox = " + this.highestBox + ", lastCorrect = " + this.lastCorrect + ", lastLearned = " + this.lastLearned + " where fkCard = " + this.id;
+		String sql = "Update CardStatistic set countLearned = " + this.countLearned + ", countWrong = " + this.countWrong + ", highestBox = " + this.highestBox + ", lastCorrect = " + this.lastCorrect.getTime() + ", lastLearned = " + this.lastLearned.getTime() + " where fkCard = " + this.id;
 		try {
 			Statement stmt = conn.createStatement();
 			if(stmt.executeUpdate(sql) == 1) {
