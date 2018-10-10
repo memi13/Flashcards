@@ -80,15 +80,7 @@ public class ProgramController {
 	 * @return Returns an ArrayList with LanguageBoxes
 	 */
 	public ArrayList<LanguageBox> loadLanguageBoxes() {
-		
-		ArrayList<LanguageBox> alL = new ArrayList<LanguageBox>();
-		alL.add(new LanguageBox("hallo", 1));
-		alL.add(new LanguageBox("hallo2", 1));
-		alL.add(new LanguageBox("hallo3", 1));
-		
-		return alL;
-		
-		//return dataHelper.getLanguageBoxes(u.getId());
+		return dataHelper.getLanguageBoxes(u.getId());
 	}
 
 	/**
@@ -137,7 +129,7 @@ public class ProgramController {
 	 */
 	public boolean createNewLanguageBox(String n) {
 		//check if name already exists -> in dataHelper?
-		if(dataHelper.newLanguageBox(n)) {
+		if(dataHelper.newLanguageBox(n, u.getId())) {
 			return true;
 		}else {
 			return false;

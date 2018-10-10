@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -113,6 +114,8 @@ public class frmHome extends JFrame implements ActionListener {
 		case "New Language Box":
 			System.out.println("click - " + btn.getText());
 			pController.openNewLanguageBox(this);
+			cbLanguageBox = new JComboBox(pController.loadLanguageBoxes().toArray());
+			cbLanguageBox.repaint();
 			break;
 		case "Modify Cards":
 			System.out.println("click - " + btn.getText());
