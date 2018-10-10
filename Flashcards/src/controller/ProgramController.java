@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import model.User;
 import view.dlgNewLanguageBox;
 import view.frmHome;
+import view.frmLearning;
 import view.frmLogin;
 import view.frmOverview;
 import model.Card;
@@ -23,6 +24,7 @@ public class ProgramController {
 	private DataHelper dataHelper;
 	private User u;
 	private int languageBoxId;
+	private int boxId;
 
 	public ProgramController(DataHelper dh) {
 		this.dataHelper = dh;
@@ -123,19 +125,25 @@ public class ProgramController {
 	/**
 	 * opens the Learning Form
 	 */
-	public void openLearning(int index) {
-		int boxId;
-		if(index != 0) {
-			boxId = index;
-		}else {
-			boxId = -1;
-		}
-		
-		//Open Learning form
+	public void openLearning() {
+		frmLearning frmL = new frmLearning(this, dataHelper.getCards(this.languageBoxId, this.boxId));
 		
 		System.out.println("LEARNING FORM");
 	}
 
+	/**
+	 * Checks your answers
+	 * @param t1 String one
+	 * @param t2 String two
+	 * @return
+	 */
+	public boolean checkCardAnswer(String t1, String t2) {
+		if(t1.equals(t2)) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 
 //--------------------------------------------------------------------------------------------------------------------
 	
@@ -174,25 +182,18 @@ public class ProgramController {
 	 */
 	public String loadBoxStatistics(int comp) {
 		String data = "";
-				//dataHelper.getStatisticDataBox(u.getId(), comp);
-		
-		return "test";
-	}
-	
-	/**
-	 * Opens the Main Learning Form
-	 */
-	public void openLearning() {
-		//Opens Learning Form 
-		System.out.println("LEARNING FORM");
+		/*for(String line : dataHelper.getStatisticDataBox(u.getId(), comp)) {
+			data = data + line + "/n";
+		}*/
+		return data;
 	}
 	
 	/**
 	 * Load all Cards in a Compartment
 	 * @param comp witch compartment (-1 = all compartments)
 	 */
-	public void loadCards(int comp) {
-		ArrayList<Card> cards = dataHelper.getCards(this.languageBoxId, comp);
+	public ArrayList<Card> loadCards(int comp) {
+		return dataHelper.getCards(this.languageBoxId, comp);
 	}
 	
 	public User getU() {
@@ -220,5 +221,16 @@ public class ProgramController {
 	 */
 	public void setLanguageBox(LanguageBox lb) {
 		this.languageBoxId = lb.getId();
+	}
+	
+	public int getBoxId() {
+		return this.boxId;
+	}
+	public void setBoxId(int b) {
+		if(b != 0) {
+			this.boxId = b;
+		}else {
+			this.boxId = -1;
+		}
 	}
 }
