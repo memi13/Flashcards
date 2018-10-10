@@ -86,7 +86,7 @@ public class DataHelper implements IDataHelper{
 		// TODO Auto-generated method stub
 		return null;
 	}
-	public String getStatisticDataBox(int idUser, int box) {
+	public String[] getStatisticDataBox(int idUser, int box) {
 		// TODO Auto-generated method stub
 		return null;
 	}
