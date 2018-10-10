@@ -15,7 +15,7 @@ public interface IDataHelper {
 	public ArrayList<Card> getStatisticData(int idUser);
 	public boolean updateCard(IDBFunctions card);
 	public boolean deleteCard(IDBFunctions card);
-	public boolean newLanguageBox(String name);
+	public boolean newLanguageBox(String name,int user);
 	public boolean saveSetting(IDBFunctions user);
 	
 }

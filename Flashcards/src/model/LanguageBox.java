@@ -209,10 +209,12 @@ public class LanguageBox implements IDBFunctions {
 	private boolean createRecord(int fkUser) 
 	{
 		Connection conn = connectDB(connURL);
-		String sql = "Insert into LanguageBox (LanguageBox, fkUser) Values ('"+this.name+"', "+fkUser + ")";
+		String sql = "Insert into LanguageBox (name, fkUser) Values ('"+this.name+"', "+fkUser + ")";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstmt.executeUpdate();
+			ResultSet keys = pstmt.getGeneratedKeys();
+			this.id = (int)keys.getLong(1);
 			return true;
 			
 		}catch(SQLException e) {
@@ -225,6 +227,12 @@ public class LanguageBox implements IDBFunctions {
 	@Override
 	public String toString() {
 		return this.name;
+	}
+	public boolean equals(LanguageBox l)
+	{
+		if(this.name.equals(l.getName()))
+			return true;
+		return false;
 	}
 
 }

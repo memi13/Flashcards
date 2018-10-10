@@ -75,8 +75,10 @@ public class DataHelper implements IDataHelper{
 	}
 
 	@Override
-	public boolean newLanguageBox(String name) {
-		// TODO Auto-generated method stub
+	public boolean newLanguageBox(String name,int user) {
+		LanguageBox newLangageBox=new LanguageBox(name,user);
+		if(newLangageBox.equals(new LanguageBox(newLangageBox.getId())))
+			return true;
 		return false;
 	}
 
