@@ -185,7 +185,7 @@ public class DataHelper implements IDataHelper{
 		{
 			Date cardDay=card.getLastLearned(); 
 			if(cardDay!=null)
-			{
+			{ 
 				switch (card.getBoxNumber()) 
 				{
 				case 1:
