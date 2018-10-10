@@ -11,7 +11,7 @@ public interface IDataHelper {
 	public boolean checkLogin(String user, String pw);
 	public ArrayList<LanguageBox> getLanguageBoxes(int idUser);
 	public ArrayList<Card> getCards(int languageBox, int comp);
-	public boolean moveCard(int correct); //if card was correct "correct" = 1
+	public boolean moveCard(int correct,int idCard); //if card was correct "correct" = 1
 	public ArrayList<Card> getStatisticData(int idUser);
 	public boolean updateCard(IDBFunctions card);
 	public boolean deleteCard(IDBFunctions card);
