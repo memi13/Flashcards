@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.sun.org.apache.regexp.internal.recompile;
+
 /**
  * @author linus
  *
@@ -326,5 +328,23 @@ public class Card implements IDBFunctions {
 	@Override
 	public String toString() {
 		return sText;
+	}
+	public boolean isNotEmpty()
+	{
+		if(this.sText.length()>0 && this.dText.length()>0)
+			return true;
+		return true;
+	}
+	public boolean staticNoUpdate(Card card)
+	{
+		if
+		(		this.boxNumber==card.getBoxNumber()&& this.countWrong==card.countWrong && this.highestBox == card.getHighestBox() &&
+				this.countLearned==card.countLearned && this.lastLearned.equals(card.getLastLearned()) && 
+				this.lastCorrect.equals(card.getLastCorrected())
+		)
+		{
+			return true;
+		}
+		return false; 
 	}
 }
