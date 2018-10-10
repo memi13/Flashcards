@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -103,8 +104,19 @@ public class frmOverview extends JFrame implements ActionListener {
 			JButton btn = (JButton)e.getSource();
 			System.out.println(btn.getText());
 			if(btn.getText() == "Ok") {
-				setStatisticsLable(cbBox.getSelectedIndex());
-				pController.setBoxId(cbBox.getSelectedIndex());
+				int cbIndex = cbBox.getSelectedIndex();
+				setStatisticsLable(cbIndex);
+				System.out.println(cbIndex);
+				if(cbIndex == 0) {
+					if(pController.loadCards(-1).size()<=0) {
+						showError();
+					}
+				}else {
+					if(pController.loadCards(cbIndex).size()<=0) {
+						showError();
+					}
+				}	
+				pController.setBoxId(cbIndex);
 				pController.openLearning();
 				this.dispose();
 			}else if(btn.getText() == "Cancle") {
@@ -116,13 +128,20 @@ public class frmOverview extends JFrame implements ActionListener {
 	}
 	
 	private void setStatisticsLable(int index) {
-		if(index != 0) {
+		System.out.println(index);
+		if(index != 0 && index < 6) {
 			System.out.println(index);
 			lblStatistics.setText(pController.loadBoxStatistics(index));
 		}else {
 			System.out.println(-1);
 			lblStatistics.setText(pController.loadBoxStatistics(-1));
 		}
+	}
+	
+	private void showError() {
+		JOptionPane.showMessageDialog(this, "There are no Cards to Learn Today!", "No Cards today!", JOptionPane.PLAIN_MESSAGE);
+		this.dispose();
+		pController.openHome();
 	}
 
 }
