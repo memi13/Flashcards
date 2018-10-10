@@ -5,6 +5,7 @@ package model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -21,22 +22,31 @@ public class LanguageBox implements IDBFunctions {
 	private String name;
 	
 	/**
-	 * test
+	 * crate default object
 	 */
 	public LanguageBox() {
-		// TODO Auto-generated constructor stub
+		int id=-1;
+		name="";
+		cards=new ArrayList<Card>();
 	}
+	/**
+	 * crate an object with the date of LanguageBox from the DB
+	 * @param idLanguageBox id of LanguageBox
+	 */
 	public LanguageBox(int idLanguageBox) {
 		//loads per ID
-		GetLanguageBox(idLanguageBox);
+		getLanguageBox(idLanguageBox);
 	}
-	public LanguageBox(String n) {
+	/**
+	 * Create a new LanguageBox
+	 * @param the name of the new LangaugeBox
+	 */
+	public LanguageBox(String n,int idUser) {
 		//new LanguageBox
+		this.name=n;
+		createRecord(idUser);
 	}
 
-	/* (non-Javadoc)
-	 * @see model.IDBFunctions#save()
-	 */
 	@Override
 	public boolean save() {
 		Connection conn = connectDB(connURL);
@@ -60,9 +70,6 @@ public class LanguageBox implements IDBFunctions {
 		
 	}
 
-	/* (non-Javadoc)
-	 * @see model.IDBFunctions#delete()
-	 */
 	@Override
 	public boolean delete() {
 		Connection conn = connectDB(connURL);
@@ -83,11 +90,19 @@ public class LanguageBox implements IDBFunctions {
 			return false;
 		}
 	}
-
+	
+	/**
+	 * All Cards of the LanguageBox
+	 * @return a list of Cards
+	 */
 	public ArrayList<Card> getCards() {
 		return cards;
 	}
 
+	/**
+	 * Set all Cards of The LanguageBox
+	 * @param cards a List of Cards
+	 */
 	public void setCards(ArrayList<Card> cards) {
 		this.cards = cards;
 	}
@@ -96,26 +111,29 @@ public class LanguageBox implements IDBFunctions {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
+	/**
+	 * gets the name of LangaugeBox
+	 * @return name of LangaugeBox
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * set the name of The Language Box
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 	/**
-	 * 
-	 * @param id
-	 * @return
+	 * get Date from the DB, and set the date Felds from the object
+	 * @param id the id of the search object
+	 * @return if it work or not
 	 */
-	private boolean GetLanguageBox(int id)
+	private boolean getLanguageBox(int id)
 	{
-		String sql = "SELECT id,name from LanguageBox where  id="+id;
-		
+		String sql = "SELECT id,name from LanguageBox where  id="+id;		
 		 try
 		 {
 			 Connection conn = connectDB(connURL);
@@ -138,16 +156,18 @@ public class LanguageBox implements IDBFunctions {
             	 if(cards==null)
             		 cards=new ArrayList<Card>();
             	 cards.add(new Card(idCard));
-             }
-	          
+             }       
 		 }
 		 catch (Exception e) {
 			 System.out.println(e.getMessage());
 		}	 
-		 return false;
-		
+		 return false;		
 	}
-	
+	/**
+	 * Open the SQL connection
+	 * @param connURL where is the DB
+	 * @return the DB Connection 
+	 */
 	public Connection connectDB(String connURL) {
         Connection conn = null;
         try {
@@ -162,7 +182,12 @@ public class LanguageBox implements IDBFunctions {
         	return conn; 
         }
     }
-	public boolean closeConnection(Connection conn) {
+	/**
+	 * close the db connection
+	 * @param conn
+	 * @return if it works the true else false
+	 */
+	private boolean closeConnection(Connection conn) {
 		try {
             if (conn != null) {
             	conn.close();
@@ -174,6 +199,26 @@ public class LanguageBox implements IDBFunctions {
             System.out.println("Connection not closed");
             return false;
         }
+	}
+	/**
+	 * 
+	 * @param fkUser id From the user,  belongs to the LangageBox
+	 * @return if the isert Works
+	 */
+	private boolean createRecord(int fkUser) 
+	{
+		Connection conn = connectDB(connURL);
+		String sql = "Insert into LanguageBox (LanguageBox, fkUser) Values ('"+this.name+"', "+fkUser + ")";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstmt.executeUpdate();
+			return true;
+			
+		}catch(SQLException e) {
+			closeConnection(conn);
+			System.out.println(e.getMessage());
+			return false;
+		}
 	}
 
 }

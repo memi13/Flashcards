@@ -3,99 +3,306 @@
  */
 package model;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
  * @author linus
  *
  */
-public class User implements IDBFunctions {
-
+public class User implements IDBFunctions 
+{
+	private static String connURL = "C:/sqlite/db/CardDB.db";
 	private ArrayList<LanguageBox> languageBoxes;
 	private int id;
 	private String username;
 	private String password;
 	private int pwCounter;
 	private boolean enabled;
-	
 	/**
-	 * test
+	 * set to default value
 	 */
 	public User() {
-		// TODO Auto-generated constructor stub
+		id=-1;
+		username="";
+		password=createMd5("123456");
 	}
+	/**
+	 * create a object wiht the value from DB value of this user
+	 * @param idUser id to search
+	 */
 	public User(int idUser) {
-		//gets User
+		getUser(idUser);
 	}
+	/**
+	 * create a object wiht the value from DB value of this user
+	 * @param username usernmae to search
+	 */
 	public User(String username) {
-		//gets User
+		getUser(username);
 	}
 	
-
-	/* (non-Javadoc)
-	 * @see model.IDBFunctions#save()
-	 */
 	@Override
 	public boolean save() {
-		// TODO Auto-generated method stub
-		return false;
+		Connection conn = connectDB(connURL);
+		String sql = "Update LanguageBox set name = '" + 
+					this.password+"', pwCounter = "+this.pwCounter+",enabled = "+this.enabled+ 
+					" where id="+this.id;
+		try {
+			Statement stmt = conn.createStatement();
+			if(stmt.executeUpdate(sql) == 1) {
+				closeConnection(conn);
+				return true;
+			}else {
+				closeConnection(conn);
+				return false;
+			}
+			
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+			return false;  
+		}
+		
 	}
 
-	/* (non-Javadoc)
-	 * @see model.IDBFunctions#delete()
-	 */
 	@Override
 	public boolean delete() {
-		// TODO Auto-generated method stub
-		return false;
+		Connection conn = connectDB(connURL);
+		String sql = "delete from User where id = " + this.id;
+		try {
+			Statement stmt = conn.createStatement();
+			if(stmt.executeUpdate(sql) == 1) {
+				closeConnection(conn);
+				System.out.println("Record deleted");
+				return true;
+			}else {
+				closeConnection(conn);
+				System.out.println("Record not deleted");
+				return false;
+			}
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
 	}
 
+	
+	/**
+	 * get the all AlagaBoxes of the user
+	 * @return
+	 */
 	public ArrayList<LanguageBox> getLanguageBoxes() {
 		return languageBoxes;
 	}
 
+	/**
+	 * set the list of langageBoxes
+	 * @param languageBoxes all LangageBox of the user
+	 */
 	public void setLanguageBoxes(ArrayList<LanguageBox> languageBoxes) {
 		this.languageBoxes = languageBoxes;
 	}
 
+	/**
+	 * get the user id
+	 * @return id of user
+	 */
 	public int getId() {
 		return id;
 	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
+	/**
+	 * get the name of the user
+	 * @return get user name
+	 */
 	public String getUsername() {
 		return username;
 	}
 
+	/**
+	 * get the user name
+	 * @param username the username of the user
+	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
+	/**
+	 * get the Password
+	 * @return passwort
+	 */
 	public String getPassword() {
 		return password;
 	}
-
+	/**
+	 * set the Passwort 
+	 * @param password the new Passwort 
+	 */
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = createMd5(password);
 	}
-
+	/**
+	 * set number of rongPw tries
+	 * @return the number
+	 */
 	public int getPwCounter() {
 		return pwCounter;
 	}
 
+	/**
+	 * set the number of Rong pw sets
+	 * @param pwCounter the new number
+	 */
 	public void setPwCounter(int pwCounter) {
 		this.pwCounter = pwCounter;
 	}
 
+	/**
+	 * get the status of the user
+	 * @return the Status
+	 */
 	public boolean isEnabled() {
 		return enabled;
 	}
 
+	/**
+	 * set the user enabled
+	 * @param enabled
+	 */
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-
+	/**
+	 * encoded the value
+	 * @param value the to encoded value
+	 * @return the encoded value
+	 */
+	private String createMd5(String value)
+	{
+		try 
+		{
+			MessageDigest md = MessageDigest.getInstance("MD5");			
+			byte[] hashInBytes = md.digest("Hallo".getBytes(StandardCharsets.UTF_8));
+			StringBuilder sb = new StringBuilder();
+	        for (byte b : hashInBytes) 
+	        {
+	            sb.append(String.format("%02x", b));
+	        }
+	        return sb.toString();
+		}
+		catch(Exception ex)
+		{
+			
+		}
+		return "";
+	}
+	/**
+	 * Open the SQL connection
+	 * @param connURL where is the DB
+	 * @return the DB Connection 
+	 */
+	public Connection connectDB(String connURL) {
+        Connection conn = null;
+        try {
+            // connection String
+            String url = "jdbc:sqlite:" + connURL;
+            // create a connection to the database
+            conn = DriverManager.getConnection(url);
+            return conn;
+        }catch(SQLException e) {
+        	System.out.println(e.getMessage());
+        	System.out.println("DB could not be connected");
+        	return conn; 
+        }
+    }
+	/**
+	 * close the db connection
+	 * @param conn
+	 * @return if it works the true else false
+	 */
+	private boolean closeConnection(Connection conn) {
+		try {
+            if (conn != null) {
+            	conn.close();
+            	System.out.println("Closed");
+            }
+            return true;
+    	}catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("Connection not closed");
+            return false;
+        }
+	}
+	/**
+	 * 
+	 * @return if the isert Works
+	 */
+	private boolean createRecord() 
+	{
+		Connection conn = connectDB(connURL);
+		String sql = "Insert into User (username,password,pwCounter,enabled) Values+"
+				+" ('"+this.username+"', '"+this.password + "',0,1)";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstmt.executeUpdate();
+			return true;
+			
+		}catch(SQLException e) {
+			closeConnection(conn);
+			System.out.println(e.getMessage());
+			return false;
+		}
+	}
+	private boolean getUser(String user)
+	{
+		return setData("select id,username,password,pwCounter,enabled from User where username='+"+this.username+"'");
+	}
+	private boolean getUser(int user)
+	{
+		return setData("select id,username,password,pwCounter,enabled from User where id=+"+this.id);
+	}
+	
+	private boolean setData(String sqlStatment)
+	{
+		String sql = sqlStatment;//;		
+		 try
+		 {
+			 Connection conn = connectDB(connURL);
+			 Statement stmt  = conn.createStatement();
+	         ResultSet rs    = stmt.executeQuery(sql);
+	         rs.next();
+	         this.id=rs.getInt("id");
+	         this.username=rs.getString("username");
+	         this.pwCounter=rs.getInt("username");
+	         int enabele=rs.getInt("enabled");
+	         this.enabled=(enabele != 0);
+	         if(rs.next())
+	         {
+	        	 throw new Exception("found more date, as allowed");
+	         }
+	         System.out.println(this.username);
+	         System.out.println(this.id);
+	         System.out.println(this.pwCounter);
+	         System.out.println(this.enabled);
+	         sql="select id from LanguageBox where fkUser="+this.id;
+	         rs = stmt.executeQuery(sql);
+             while (rs.next()) 
+             {
+            	 int idLanguageBox=rs.getInt("id");
+            	 if(languageBoxes==null)
+            		 languageBoxes=new ArrayList<LanguageBox>();
+            	 languageBoxes.add(new LanguageBox(idLanguageBox));
+             }       
+		 }
+		 catch (Exception e) {
+			 System.out.println(e.getMessage());
+		}	 
+		 return false;		
+	}
 }
