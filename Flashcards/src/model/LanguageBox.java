@@ -16,6 +16,7 @@ import java.util.ArrayList;
  *
  */
 public class LanguageBox implements IDBFunctions {
+	
 	private static String connURL = "C:/sqlite/db/CardDB.db";
 	private ArrayList<Card> cards;
 	private int id;
@@ -219,6 +220,11 @@ public class LanguageBox implements IDBFunctions {
 			System.out.println(e.getMessage());
 			return false;
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return this.name;
 	}
 
 }
