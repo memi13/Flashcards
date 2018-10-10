@@ -94,7 +94,7 @@ public class DataHelper implements IDataHelper{
 		ArrayList<Card> cards=new ArrayList<Card>();
 		for(Card card:l.getCards())
 		{
-			if(comp==-1 || comp==card.getBoxNumber())
+			if((comp==-1 || comp==card.getBoxNumber())&& card.getBoxNumber()<100)
 			{
 				cards.add(card);
 			}
@@ -116,10 +116,34 @@ public class DataHelper implements IDataHelper{
 	
 	private boolean correcCard(boolean correct,int idCard)
 	{
+		Date nowDate = java.util.Calendar.getInstance().getTime();
+		Card card=new Card(idCard);
+		if(card!=null)
+		{
+			card.setBoxNumber(card.getBoxNumber()+100);
+			card.setCountLearned(card.getCountLearned()+1);
+			card.setLastCorrected(new java.sql.Date(nowDate.getTime()));
+			card.setLastLearned(new java.sql.Date(nowDate.getTime()));
+			if(card.getBoxNumber()>card.getHighestBox())
+			{
+				card.setHighestBox(card.getBoxNumber());
+			}
+			return true;
+		}
 		return false;
 	}
 	private boolean incorrecCard(boolean correct,int idCard)
 	{
+		Date nowDate = java.util.Calendar.getInstance().getTime();
+		Card card=new Card(idCard);
+		if(card!=null)
+		{
+			card.setBoxNumber(1);
+			card.setCountLearned(card.getCountLearned()+1);
+			card.setCountWrong(card.getCountWrong()+1);
+			card.setLastLearned(new java.sql.Date(nowDate.getTime()));
+			return true;
+		}
 		return false;
 	}
 
