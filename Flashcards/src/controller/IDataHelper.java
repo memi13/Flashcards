@@ -8,7 +8,7 @@ import model.LanguageBox;
 
 public interface IDataHelper {
 
-	public boolean checkLogin(String user, String pw);
+	public boolean checkLogin(String user, String pw); 
 	public ArrayList<LanguageBox> getLanguageBoxes(int idUser);
 	public ArrayList<Card> getCards(int languageBox, int comp);
 	public boolean moveCard(boolean correct,int idCard); //if card was correct "correct" = 1

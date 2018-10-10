@@ -345,6 +345,6 @@ public class Card implements IDBFunctions {
 		{
 			return true;
 		}
-		return false;
+		return false; 
 	}
 }

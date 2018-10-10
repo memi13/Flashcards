@@ -207,7 +207,7 @@ public class DataHelper implements IDataHelper{
 		if(card.staticNoUpdate(cardDB))
 		{
 			cardDB.setsText(card.getsText());
-			cardDB.setdText(card.getdText());
+			cardDB.setdText(card.getdText()); 
 			cardDB.save();
 			return true;
 		}
