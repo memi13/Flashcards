@@ -49,37 +49,41 @@ public class DataHelper implements IDataHelper{
 	{
 		ArrayList<Card> cards=new ArrayList<Card>();
 		Date nowDate = java.util.Calendar.getInstance().getTime();
-		for(Card card:getAllCards(languageBox, comp))
+		ArrayList<Card> selecedcCards= getAllCards(languageBox, comp);
+		if(selecedcCards!=null && selecedcCards.size()>0)
 		{
-			Date nowDateComp=nowDate;
-		
-			switch (card.getBoxNumber()) {
-			case 1:
-				nowDateComp=addDays(nowDate, 1);
-				break;
-			case 2:
-				nowDateComp=addDays(nowDate, 2);
-				break;
-			case 3:
-				nowDateComp=addDays(nowDate, 10);
-				break;
-			case 4:
-				nowDateComp=addDays(nowDate, 30);
-				break;
-			case 5:
-				nowDateComp=addDays(nowDate, 90);
-				break;
-			default:
-				break;
-			}
-			
-			Date lastLenredDay =card.getLastLearned();	
-			
-			if(lastLenredDay==null|| nowDateComp.getTime()>lastLenredDay.getTime())
+			for(Card card:selecedcCards)
 			{
-				cards.add(card);
-			}
-		}	
+				Date nowDateComp=nowDate;
+			
+				switch (card.getBoxNumber()) {
+				case 1:
+					nowDateComp=addDays(nowDate, 1);
+					break;
+				case 2:
+					nowDateComp=addDays(nowDate, 2);
+					break;
+				case 3:
+					nowDateComp=addDays(nowDate, 10);
+					break;
+				case 4:
+					nowDateComp=addDays(nowDate, 30);
+					break;
+				case 5:
+					nowDateComp=addDays(nowDate, 90);
+					break;
+				default:
+					break;
+				}
+				
+				Date lastLenredDay =card.getLastLearned();	
+				
+				if(lastLenredDay==null|| nowDateComp.getTime()>lastLenredDay.getTime())
+				{
+					cards.add(card);
+				}
+			}	
+		}
 		if(cards.size()==0)
 			return null;
 		return cards;
@@ -121,7 +125,10 @@ public class DataHelper implements IDataHelper{
 		String [] data=new String[3];
 		data[0]="In this Box: "+ allCards.size();
 		data[1]="Learning today: "+ toLearn.size();
-		data[2]="Next lernTime: "+ Learning(allCards);
+		if(allCards.size()>0)
+			data[2]="Next lernTime: "+ Learning(allCards);
+		else
+			data[2]="Next lernTime: never";
 		return data;
 	}
 	
