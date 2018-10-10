@@ -17,7 +17,7 @@ import model.LanguageBox;
 
 /**
  * ProgramController controlls all Forms and uses the DataHelper to get Data from the DB to the Forms
- * @author Michael Mégroz, Linus Szokody
+ * @author linus
  */
 public class ProgramController {
 
