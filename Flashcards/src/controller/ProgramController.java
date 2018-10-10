@@ -11,6 +11,7 @@ import view.frmHome;
 import view.frmLearning;
 import view.frmLogin;
 import view.frmOverview;
+import view.frmStatistics;
 import model.Card;
 import model.IDBFunctions;
 import model.LanguageBox;
@@ -71,6 +72,7 @@ public class ProgramController {
 	 */
 	public void openStatistics() {
 		//Open Statistics Form
+		frmStatistics frmS = new frmStatistics(this);
 		System.out.println("STATISTICS FORM");
 	}
 	
