@@ -42,7 +42,6 @@ public class dlgNewLanguageBox extends JDialog implements ActionListener{
 		initComponents();
 		bindListener();
 		initGui();
-		// TODO Auto-generated constructor stub
 	}
 
 	private void initComponents() {
