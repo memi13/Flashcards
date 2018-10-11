@@ -135,10 +135,27 @@ public class ProgramController {
 	 * @return true if succesfull
 	 */
 	public boolean deleteCard(int toDel) {
-		System.out.println("Deleted " + toDel);
-		if(toDel.deleteByID()) {
+		if(dataHelper.deleteCard(toDel)) {
+			System.out.println("Deleted - " + toDel);
 			return true;
 		}else {
+			System.out.println("Cared not deleted - " + toDel);
+			return false;
+		}
+	}
+	
+	/**
+	 * Updates a Cards (SAVE)
+	 * @param toSave ID of the Card
+	 * @param sText Source or Origin Text
+	 * @param dText Destination of Text
+	 */
+	public boolean updateCard(int toSave, String sText, String dText) {
+		if(dataHelper.updateCard(toSave, sText, dText)) {
+			System.out.println("Saved " + toSave);
+			return true;
+		}else {
+			System.out.println("Not Saved " + toSave);
 			return false;
 		}
 	}

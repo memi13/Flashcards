@@ -230,8 +230,6 @@ public class DataHelper implements IDataHelper{
 	public boolean deleteCard(Card card) {
 		// TODO Auto-generated method stub
 		Card dbCard=new Card(card.getId());
-		if(dbCard.isNotEmpty())
-			return false;
 		dbCard.delete();
 		dbCard=new Card(card.getId());
 		if(dbCard.isNotEmpty())

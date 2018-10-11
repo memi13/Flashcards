@@ -75,7 +75,7 @@ public class frmAllCards extends JFrame implements ActionListener {
 			btnButtonsDel[j].addActionListener(this);
 			btnButtonsDel[j].setActionCommand("del-" + cards.get(j).getId());
 			btnButtonsSave[j].addActionListener(this);
-			btnButtonsSave[j].setActionCommand("save-" + cards.get(j).getId());
+			btnButtonsSave[j].setActionCommand("sav-" + cards.get(j).getId());
 			
 			components.add(txtFields[i]);
 			components.add(txtFields[i+1]);
@@ -135,14 +135,21 @@ public class frmAllCards extends JFrame implements ActionListener {
 			//}
 			break;
 		case "X":		
-			System.out.println(e.getActionCommand());
-			pController.deleteCard(Integer.parseInt(e.getActionCommand()));
+			System.out.println(getCardID(e));
+			pController.deleteCard(getCardID(e));
 			//cardsDelete.add(cards.get(Integer.parseInt(e.getActionCommand())));
 			break;	
 		case "Save":
 			System.out.println(e.getActionCommand());
+			
 			break;
 		}
+	}
+	
+	private int getCardID(ActionEvent e) {
+		String strID = e.getActionCommand();
+		strID = strID.substring(4);
+		return Integer.parseInt(strID);
 	}
 	
 }
