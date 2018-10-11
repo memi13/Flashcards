@@ -96,11 +96,11 @@ public class frmStatistics extends JFrame implements ActionListener {
 			h2=value2*100/completValue;
 		}
 		
-		r.setText("Grenn: right :"+h1+" %");
-		w.setText("Red: right :"+h2+" %");
+		r.setText("Grenn: right :"+h1+" %    ");
+		w.setText("Red: right :"+h2+" %      ");
 		info.setLayout(new FlowLayout());
 		info.add(r);
-		info.add(w);
+		info.add(w); 
 	}
 	private void initGrafic(int type)
 	{
