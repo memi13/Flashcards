@@ -316,4 +316,10 @@ public class ProgramController {
 		//else
 			//return "100,50";
 	}
+	
+	public static String convertToMultiline(String orig)
+	{
+	    return "<html>" + orig.replaceAll("\n", "<br>");
+	}
+	
 }

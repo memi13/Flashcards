@@ -80,7 +80,7 @@ public class frmOverview extends JFrame implements ActionListener {
 		
 		setSize(500,500);
 		
-		learnPanel.setLayout(new GridLayout(4, 1));
+		learnPanel.setLayout(new GridLayout(4, 1, 10, 10));
 		learnPanel.setBorder(new EmptyBorder(0,0,0,0));
 		learnPanel.add(cbBox);
 		learnPanel.add(lblStatistics);
@@ -136,10 +136,10 @@ public class frmOverview extends JFrame implements ActionListener {
 		System.out.println(index);
 		if(index != 0 && index < 6) {
 			System.out.println(index);
-			lblStatistics.setText(pController.loadBoxStatistics(index));
+			lblStatistics.setText(pController.convertToMultiline(pController.loadBoxStatistics(index)));
 		}else {
 			System.out.println(-1);
-			lblStatistics.setText(pController.loadBoxStatistics(-1));
+			lblStatistics.setText(pController.convertToMultiline(pController.loadBoxStatistics(-1)));
 		}
 	}
 	

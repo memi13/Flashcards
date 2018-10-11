@@ -71,7 +71,7 @@ public class dlgNewLanguageBox extends JDialog implements ActionListener{
 		
 		setSize(500,500);
 		
-		languageboxPanel.setLayout(new GridLayout(3, 1));
+		languageboxPanel.setLayout(new GridLayout(3, 1, 10, 10));
 		languageboxPanel.setBorder(new EmptyBorder(0,0,0,0));
 		languageboxPanel.add(txtName);
 		languageboxPanel.add(btnOk);

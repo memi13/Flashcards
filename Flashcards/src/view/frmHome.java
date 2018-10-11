@@ -80,11 +80,11 @@ public class frmHome extends JFrame implements ActionListener {
 		JPanel buttonPanel = new JPanel();
 		
 		mainPanel.setLayout(new BorderLayout());
-		mainPanel.setBorder(new EmptyBorder(50,50,50,50));
+		mainPanel.setBorder(new EmptyBorder(120,50,120,50));
 		
 		setSize(500,500);
 		
-		buttonPanel.setLayout(new GridLayout(5, 1));
+		buttonPanel.setLayout(new GridLayout(5, 1, 10, 10));
 		buttonPanel.setBorder(new EmptyBorder(0,0,0,0));
 		buttonPanel.add(lblTitle);
 		buttonPanel.add(cbLanguageBox);

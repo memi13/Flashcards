@@ -52,12 +52,12 @@ public class frmLogin extends JFrame implements ActionListener {
 		JPanel loginPanel = new JPanel();
 		
 		mainPanel.setLayout(new BorderLayout());
-		mainPanel.setBorder(new EmptyBorder(150,50,200,50));
+		mainPanel.setBorder(new EmptyBorder(120,50,200,50));
 		
 		setSize(500,500);
 		
 		mainPanel.add(lblError, BorderLayout.NORTH);
-		loginPanel.setLayout(new GridLayout(3, 1));
+		loginPanel.setLayout(new GridLayout(3, 1, 10, 10));
 		loginPanel.setBorder(new EmptyBorder(0,0,0,0));
 		loginPanel.add(txtUser);
 		loginPanel.add(txtPW);
