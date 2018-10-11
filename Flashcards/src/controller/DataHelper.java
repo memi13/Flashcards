@@ -207,7 +207,7 @@ public class DataHelper implements IDataHelper{
 		Card newCard=new Card(cardId);
 		newCard.setsText(sText);
 		newCard.setdText(dText);
-		return updateCard(newCard);
+		return updateCard(newCard); 
 	}
 	@Override
 	public boolean updateCard(Card card) 
