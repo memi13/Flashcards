@@ -40,7 +40,7 @@ public class frmOverview extends JFrame implements ActionListener {
 
 	/**
 	 * Constructor of frmOverview
-	 * @param pc ProgramController
+	 * @param pc ProgramController 
 	 * @param languageBox Selected LanguageBox ID
 	 * @throws HeadlessException
 	 */
@@ -136,10 +136,10 @@ public class frmOverview extends JFrame implements ActionListener {
 				pController.setBoxId(cbIndex);
 				pController.openLearning();
 				this.dispose();
+				}
 			}else if(btn.getText() == "Cancle") {
 				pController.openHome();
 				this.dispose();
-			}
 			}
 		}
 	}
