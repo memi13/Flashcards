@@ -125,7 +125,7 @@ public class ProgramController {
 	 * opens the Learning Form
 	 */
 	public void openLearning() {
-		frmLearning frmL = new frmLearning(this, dataHelper.getCards(this.languageBoxId, this.boxId));
+		frmLearning frmL = new frmLearning(this, dataHelper.getCards(this.languageBoxId, this.boxId, false));
 		System.out.println("LEARNING FORM");
 	}
 
@@ -232,9 +232,15 @@ public class ProgramController {
 	 * @param comp witch compartment (-1 = all compartments)
 	 */
 	public ArrayList<Card> loadCards(int comp) {
-		return dataHelper.getCards(this.languageBoxId, comp);
+		return dataHelper.getCards(this.languageBoxId, comp, false);
 	}
-	
+	/**
+	 * Load all Cards in a Compartment
+	 * @param comp witch compartment (-1 = all compartments)
+	 */
+	public ArrayList<Card> loadCardsAll(int comp) {
+		return dataHelper.getCards(this.languageBoxId, comp, true);
+	}
 	/**
 	 * GetUser
 	 * @return

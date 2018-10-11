@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.GraphicsConfiguration;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
+import java.awt.ScrollPane;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -48,7 +49,6 @@ public class frmAllCards extends JFrame implements ActionListener {
 	JPanel mainPanel = new JPanel();	
 	//scrollable?
 	JPanel tablePanel = new JPanel();
-	JScrollPane scrollPane =  new JScrollPane();
 	GridLayout dynGrid = new GridLayout(1, 4);
 	BorderLayout brdLayout = new BorderLayout();
 	EmptyBorder brdEmpty = new EmptyBorder(20,50,20,50);
@@ -68,7 +68,7 @@ public class frmAllCards extends JFrame implements ActionListener {
 		//Load all Cards
 
 		try{
-			cards = pController.loadCards(-1);
+			cards = pController.loadCardsAll(-1);
 			cardCount = cards.size();
 		}catch(Exception ex) {
 			System.out.println("Error");
