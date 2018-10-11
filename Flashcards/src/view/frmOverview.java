@@ -136,10 +136,10 @@ public class frmOverview extends JFrame implements ActionListener {
 				pController.setBoxId(cbIndex);
 				pController.openLearning();
 				this.dispose();
+				}
 			}else if(btn.getText() == "Cancle") {
 				pController.openHome();
 				this.dispose();
-			}
 			}
 		}
 	}
