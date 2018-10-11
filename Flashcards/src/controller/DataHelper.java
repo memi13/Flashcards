@@ -12,6 +12,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import javax.swing.text.StyledEditorKit.BoldAction;
+
 import com.sun.corba.se.impl.orbutil.RepositoryIdUtility;
 
 import javafx.scene.chart.PieChart.Data;
@@ -200,6 +202,13 @@ public class DataHelper implements IDataHelper{
 		return data;
 	}
 	
+	public boolean updateCard(int cardId,String sText,String dText)
+	{
+		Card newCard=new Card(cardId);
+		newCard.setsText(sText);
+		newCard.setdText(dText);
+		return updateCard(newCard);
+	}
 	@Override
 	public boolean updateCard(Card card) 
 	{
