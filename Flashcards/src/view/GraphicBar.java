@@ -3,6 +3,8 @@ package view;
 import java.awt.Canvas;
 import java.awt.Color;
 
+import javax.swing.JLabel;
+
 public class GraphicBar extends Canvas{
 	
 	public GraphicBar(int h,int x,int y,Color b)

@@ -31,8 +31,12 @@ public class frmStatistics extends JFrame implements ActionListener {
 
 	private JPanel grafic;
 	private JPanel chooes;
+	private JPanel info;
 	private JButton btnCancle;
 	private JComboBox drpStatitic;
+	JLabel r;
+	JLabel w;
+	
 	
 	public frmStatistics(ProgramController pc) throws HeadlessException {
 		super("Statistics");
@@ -44,9 +48,12 @@ public class frmStatistics extends JFrame implements ActionListener {
 
 	private void initComponents() 
 	{
+		info=new JPanel();
 		grafic=new JPanel();
-		chooes =new JPanel();
+		chooes =new JPanel();	
 		btnCancle = new JButton("Cancle");
+		w=new JLabel("");
+		r=new JLabel("");
 		String[]textes=new String[2];
 		textes[0]="right wrong today";
 		textes[1]="right wrong complete";
@@ -57,9 +64,10 @@ public class frmStatistics extends JFrame implements ActionListener {
 		JPanel mainPanel = new JPanel();
 		
 		mainPanel.setLayout(new BorderLayout());
-		mainPanel.setBorder(new EmptyBorder(50,50,20,50));
+		mainPanel.setBorder(new EmptyBorder(20,50,20,20));
 		
 		setSize(500,500);
+		initInfo(1);
 		initGrafic(1);
 		initChooes();
 		mainPanel.add(chooes,BorderLayout.NORTH);
@@ -71,6 +79,28 @@ public class frmStatistics extends JFrame implements ActionListener {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		setVisible(true);
+	}
+	
+	private void initInfo(int type)
+	{
+		String result= pController.getStatitcData(type);
+		String[] r2= result.split(",");
+		int value1=Integer.parseInt(r2[0]) ;
+		int value2=Integer.parseInt(r2[1]) ;
+		int completValue=value1+value2;
+		int h1=0;
+		int h2=0;
+		if(completValue!=0)
+		{
+			h1=value1*100/completValue;
+			h2=value2*100/completValue;
+		}
+		
+		r.setText("Grenn: right :"+h1+" %");
+		w.setText("Red: right :"+h2+" %");
+		info.setLayout(new FlowLayout());
+		info.add(r);
+		info.add(w);
 	}
 	private void initGrafic(int type)
 	{
@@ -85,7 +115,7 @@ public class frmStatistics extends JFrame implements ActionListener {
 		{
 			h1=value1*100/completValue;
 			h2=value2*100/completValue;
-		}
+		}	
 		grafic.setLayout(null);
 		grafic.add(new GraphicBar(h1,100,110-h1,java.awt.Color.GREEN));
 		grafic.add(new GraphicBar(h2,200,110-h2,java.awt.Color.RED));
@@ -96,8 +126,10 @@ public class frmStatistics extends JFrame implements ActionListener {
 		chooes.setLayout(new FlowLayout(FlowLayout.CENTER,0,50));
  	
  		chooes.add(drpStatitic);
+ 		chooes.add(info);
  		
 	}
+	
 	private void bindListener() 
 	{
 		btnCancle.addActionListener(this);
@@ -110,8 +142,12 @@ public class frmStatistics extends JFrame implements ActionListener {
 		if(e.getSource() == drpStatitic) 
 		{
 			grafic.removeAll();
-			initGrafic(drpStatitic.getSelectedIndex()+1);
+			info.removeAll();
+			int selectValue=drpStatitic.getSelectedIndex()+1;
+			initGrafic(selectValue);
+			initInfo(selectValue);
 			grafic.repaint();
+			info.repaint();
 		}
 		else
 		{
