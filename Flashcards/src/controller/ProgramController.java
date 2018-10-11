@@ -277,7 +277,7 @@ public class ProgramController {
 	}
 	public String getStatitcData(int type)
 	{
-		//dataHelper.getStatisticData(u.getId(), type);
+		// dataHelper.getStatisticData(u.getId(), type);
 		if(type==1)
 		return "5,1";
 		else
