@@ -67,6 +67,8 @@ public class frmHome extends JFrame implements ActionListener {
 			cbLanguageBox = new JComboBox<>();
 		}else {
 			cbLanguageBox = new JComboBox(alLanguageBox.toArray());
+			pController.setLanguageBox((LanguageBox)cbLanguageBox.getSelectedItem());
+			
 		}
 		
 		menuBar = new JMenuBar();

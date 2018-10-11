@@ -46,6 +46,7 @@ public class frmAllCards extends JFrame implements ActionListener {
 	private ArrayList<JComponent> components;
 	private int cardCount;
 	
+	
 	JPanel mainPanel = new JPanel();	
 	//scrollable?
 	JPanel tablePanel = new JPanel();
@@ -53,7 +54,7 @@ public class frmAllCards extends JFrame implements ActionListener {
 	BorderLayout brdLayout = new BorderLayout();
 	EmptyBorder brdEmpty = new EmptyBorder(20,50,20,50);
 	EmptyBorder brdEmpty2 = new EmptyBorder(0,0,0,0);
-	
+	JPanel fullPanel = new JPanel();
 
 	public frmAllCards(ProgramController pc) throws HeadlessException {
 		// TODO Auto-generated constructor stub
@@ -66,7 +67,6 @@ public class frmAllCards extends JFrame implements ActionListener {
 
 	private void initComponents() {
 		//Load all Cards
-
 		try{
 			cards = pController.loadCardsAll(-1);
 			cardCount = cards.size();
@@ -87,9 +87,14 @@ public class frmAllCards extends JFrame implements ActionListener {
 		int j = 0;
 		while(i<txtFields.length) {
 			txtFields[i] = new JTextField(cards.get(j).getsText());
+			txtFields[i].setPreferredSize(new Dimension(112, 25));
 			txtFields[i+1] = new JTextField(cards.get(j).getdText());
+			txtFields[i+1].setPreferredSize(new Dimension(112, 25));
 			btnButtonsDel[j] = new JButton("X");
+			btnButtonsDel[j].setPreferredSize(new Dimension(46, 25));
 			btnButtonsSave[j] = new JButton("Save");
+			btnButtonsSave[j].setPreferredSize(new Dimension(70, 25));
+			
 			//Should be in bindListeners
 			btnButtonsDel[j].addActionListener(this);
 			btnButtonsDel[j].setActionCommand("del-" + cards.get(j).getId());
@@ -114,16 +119,21 @@ public class frmAllCards extends JFrame implements ActionListener {
 		mainPanel.add(btnNew, BorderLayout.NORTH);
 		mainPanel.add(btnCancle, BorderLayout.SOUTH);
 	
+		fullPanel.setPreferredSize(new Dimension(367, cardCount*30));
+		
 		//Grid Control
 		dynGrid.setRows(cards.size());
 		tablePanel.setLayout(dynGrid);
 		tablePanel.setBorder(brdEmpty2);
 		this.validate();
 		for(JComponent c : components) {
-			tablePanel.add(c);
+			//tablePanel.add(c);
+			fullPanel.add(c);
 		}
 		//scrollpane
-		mainPanel.add(tablePanel, BorderLayout.CENTER);
+		//mainPanel.add(tablePanel, BorderLayout.CENTER);
+		mainPanel.add(new JScrollPane(fullPanel), BorderLayout.CENTER);
+		
 		this.add(mainPanel);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
