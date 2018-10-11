@@ -37,6 +37,7 @@ public class frmHome extends JFrame implements ActionListener {
 	private JButton btnAllCards;
 	private JButton btnStatistics;
 	private JComboBox<LanguageBox> cbLanguageBox;
+	private JLabel lblTitle;
 	
 	//Menu
 	private JMenuBar menuBar;
@@ -60,6 +61,7 @@ public class frmHome extends JFrame implements ActionListener {
 		btnNewLanguageBox = new JButton("New Language Box");
 		btnAllCards = new JButton("Modify Cards");
 		btnStatistics = new JButton("Statistics");
+		lblTitle = new JLabel("Select a Language Box:");
 		ArrayList<LanguageBox> alLanguageBox = pController.loadLanguageBoxes();
 		if(alLanguageBox == null) {
 			cbLanguageBox = new JComboBox<>();
@@ -75,28 +77,29 @@ public class frmHome extends JFrame implements ActionListener {
 	
 	private void initGui() {
 		JPanel mainPanel = new JPanel();
-		JPanel tempButtonPanel = new JPanel();
+		JPanel buttonPanel = new JPanel();
 		
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.setBorder(new EmptyBorder(50,50,50,50));
 		
 		setSize(500,500);
 		
-		tempButtonPanel.setLayout(new GridLayout(5, 1));
-		tempButtonPanel.setBorder(new EmptyBorder(0,0,0,0));
-		tempButtonPanel.add(cbLanguageBox);
-		tempButtonPanel.add(btnLearningOverview);
+		buttonPanel.setLayout(new GridLayout(5, 1));
+		buttonPanel.setBorder(new EmptyBorder(0,0,0,0));
+		buttonPanel.add(lblTitle);
+		buttonPanel.add(cbLanguageBox);
+		buttonPanel.add(btnLearningOverview);
 		//tempButtonPanel.add(btnSettings);
 		//tempButtonPanel.add(btnNewLanguageBox);
 		//tempButtonPanel.add(btnAllCards);
-		tempButtonPanel.add(btnStatistics);
+		buttonPanel.add(btnStatistics);
 		
 		menuBar.add(menuSettings);
 		menuSettings.add(menuModify);
 		menuSettings.add(menuNewLanguageBox);
 		this.setJMenuBar(menuBar);
 		
-		mainPanel.add(tempButtonPanel, BorderLayout.CENTER);
+		mainPanel.add(buttonPanel, BorderLayout.CENTER);
 		this.add(mainPanel);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(false);

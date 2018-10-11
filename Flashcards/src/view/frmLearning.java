@@ -111,9 +111,9 @@ public class frmLearning extends JFrame implements ActionListener {
 				if(pController.checkCardAnswer(cards.get(cardCount).getdText(), txtAnswer.getText())) {
 					System.out.println("CORRECT");
 					correctAnswers++;
-					nextCard();
 					//send statistics correct
 					pController.updateCardStatistics(cards.get(cardCount), true);
+					nextCard();
 					resetLabels();
 				}else{
 					System.out.println(cards.get(cardCount).getdText() + " - " + txtAnswer.getText());
