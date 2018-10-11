@@ -100,7 +100,7 @@ public class frmStatistics extends JFrame implements ActionListener {
 		w.setText("Red: right :"+h2+" %      ");
 		info.setLayout(new FlowLayout());
 		info.add(r);
-		info.add(w);
+		info.add(w); 
 	}
 	private void initGrafic(int type)
 	{
