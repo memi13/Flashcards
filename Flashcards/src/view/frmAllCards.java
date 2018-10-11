@@ -161,7 +161,7 @@ public class frmAllCards extends JFrame implements ActionListener {
 			}
 		}
 		
-		txtFields;
+		txtFields; //text
 		btnButtonsDel;
 		btnButtonsSave;
 		
