@@ -137,13 +137,13 @@ public class frmAllCards extends JFrame implements ActionListener {
 			break;
 		case "New":
 			System.out.println("click - Save");
-			addNewCard();
+			addNewCard(e);
 			//Open a Dialog to create a new Card
 			break;
 		case "X":		
 			System.out.println(getCardID(e));
 			pController.deleteCard(getCardID(e));
-			removeFields(e);
+			updateForm(e);
 			break;	
 		case "Save":
 			System.out.println(e.getActionCommand());
@@ -152,25 +152,9 @@ public class frmAllCards extends JFrame implements ActionListener {
 		}
 	}
 	
-	private void removeFields(ActionEvent e) {
-		/*int id = 0;
-		for(int i = 0; i< btnButtonsDel.length; i++) {
-			if(i!=0) {
-				id = i*4;
-			}else {
-				id = 0;
-			}
-			if(btnButtonsDel[i] == e.getSource()) {
-				components.remove(id);
-				components.remove(id+1);
-				components.remove(id+2);
-				components.remove(id+3);	
-			}
-		}*/
-		
-		initComponents();
-		initGui();
-		bindListener();
+	private void updateForm(ActionEvent e) {		
+		this.dispose();
+		frmAllCards frm = new frmAllCards(pController);
 	}
 	
 	private void setCardUpdate(ActionEvent e) {
@@ -203,7 +187,10 @@ public class frmAllCards extends JFrame implements ActionListener {
 		return Integer.parseInt(strID);
 	}
 	
-	private void addNewCard() {
+	/**
+	 * Creates a small dialog to create a new Card
+	 */
+	private void addNewCard(ActionEvent e) {
 		JTextField txtSource = new JTextField();
 		JTextField txtDestination = new JTextField();
 		//Textfelder in einen Array vom Dtentyp Object
@@ -213,12 +200,11 @@ public class frmAllCards extends JFrame implements ActionListener {
 		JOptionPane dlgNew = new JOptionPane();
 		int response = dlgNew.showConfirmDialog(this, message, "New Card", JOptionPane.OK_CANCEL_OPTION);
 		dlgNew.setVisible(true);
-		//dlgNew.getV
 		
-		//if(dlgNew == JOptionPane.YES_OPTION)
 		//Werte auslesen
 		if(response == JOptionPane.OK_OPTION) {
 			pController.createCard(txtSource.getText(), txtDestination.getText());
+			updateForm(e);
 			System.out.println("Eingabe: " + txtSource.getText() + ", Eingabe: " + txtDestination.getText());
 		}
 	}
