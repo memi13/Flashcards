@@ -231,10 +231,10 @@ public class DataHelper implements IDataHelper{
 		// TODO Auto-generated method stub
 		Card dbCard=new Card(card.getId());
 		dbCard.delete();
-		dbCard=new Card(card.getId());
-		if(dbCard.isNotEmpty())
+		//dbCard=new Card(card.getId());
+		//if(dbCard.isNotEmpty())
 			return true;	
-		return false;
+		//return false;
 	}
 
 	@Override
