@@ -30,6 +30,7 @@ public class frmStatistics extends JFrame implements ActionListener {
 	private JPanel grafic;
 	private JPanel chooes;
 	private JButton btnCancle;
+	private JComboBox drpStatitic;
 	
 	public frmStatistics(ProgramController pc) throws HeadlessException {
 		super("Statistics");
@@ -44,6 +45,10 @@ public class frmStatistics extends JFrame implements ActionListener {
 		grafic=new JPanel();
 		chooes =new JPanel();
 		btnCancle = new JButton("Cancle");
+		String[]textes=new String[2];
+		textes[0]="right wrong today";
+		textes[1]="right wrong complete";
+		drpStatitic=new JComboBox<>(textes);
 	}
 	
 	private void initGui() {
@@ -53,7 +58,7 @@ public class frmStatistics extends JFrame implements ActionListener {
 		mainPanel.setBorder(new EmptyBorder(50,50,20,50));
 		
 		setSize(500,500);
-		initGrafic();
+		initGrafic(1);
 		initChooes();
 		mainPanel.add(chooes,BorderLayout.NORTH);
 		mainPanel.add(grafic,BorderLayout.CENTER);
@@ -62,39 +67,54 @@ public class frmStatistics extends JFrame implements ActionListener {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
-	private void initGrafic()
+	private void initGrafic(int type)
 	{
-		int h1=80;
-		int h2=100;
+		String r= pController.getStatitcData(type);
+		String[] r2= r.split(",");
+		int value1=Integer.parseInt(r2[0]) ;
+		int value2=Integer.parseInt(r2[1]) ;
+		int completValue=value1+value2;
+
+		int h1=value1*100/completValue;
+		int h2=value2*100/completValue;
 		grafic.setLayout(null);
-		grafic.add(new GraphicBar(h1,100,110-h1,java.awt.Color.RED));
-		grafic.add(new GraphicBar(h2,200,110-h2,java.awt.Color.BLUE));
+		grafic.add(new GraphicBar(h1,100,110-h1,java.awt.Color.GREEN));
+		grafic.add(new GraphicBar(h2,200,110-h2,java.awt.Color.RED));
 	}
 	private void initChooes()
 	{
-		String[]textes=new String[2];
-		textes[0]="right wrong today";
-		textes[1]="right wrong complete";
+
 		chooes.setLayout(new FlowLayout(FlowLayout.CENTER,0,50));
- 		JComboBox drpStatitics= new JComboBox(textes);
- 		chooes.add(drpStatitics);
+ 	
+ 		chooes.add(drpStatitic);
  		
 	}
 	private void bindListener() 
 	{
 		btnCancle.addActionListener(this);
+		drpStatitic.addActionListener(this);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) 
-	{		
-		JButton btn = (JButton)e.getSource();
-		switch(btn.getText()){
-		case "Cancle":
-			System.out.println("click - Cancle");
-			pController.openHome();
-			this.dispose();
-			break;
+	{
+		if(e.getSource() == drpStatitic) 
+		{
+			grafic.removeAll();
+			initGrafic(drpStatitic.getSelectedIndex()+1);
+			grafic.repaint();
+		}
+		else
+		{
+			JButton btn = (JButton)e.getSource();
+			switch(btn.getText())
+			{
+			case "Cancle":
+				System.out.println("click - Cancle");
+				pController.openHome();
+				this.dispose();
+				break;
+			}
 		}
 	}
 

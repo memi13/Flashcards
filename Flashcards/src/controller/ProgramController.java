@@ -284,10 +284,36 @@ public class ProgramController {
 	}
 	public String getStatitcData(int type)
 	{
-		// dataHelper.getStatisticData(u.getId(), type);
-		if(type==1)
-		return "5,1";
-		else
-			return "100,50";
+		ArrayList<Card> cards= dataHelper.getStatisticData(u.getId(), type);
+		int countCorrect=0;
+		int countWrong=0;
+		for(Card card:cards)
+		{
+			if(type==2)
+			{
+				countCorrect=+card.getCountLearned()-card.getCountWrong();
+				countWrong=+card.getCountWrong();
+			}
+			else
+			{
+				if(card.getBoxNumber()==1)
+				{
+					countWrong++;
+				}
+				else
+				{
+					countCorrect++;
+				}
+			}
+		}
+		if(countCorrect==0)
+			countCorrect=1;
+		if(countWrong==0)
+			countWrong=1;
+		return countCorrect+","+countWrong;
+		//if(type==1)
+			//return "5,4";
+		//else
+			//return "100,50";
 	}
 }

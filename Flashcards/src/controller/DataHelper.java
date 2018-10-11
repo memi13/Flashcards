@@ -102,11 +102,16 @@ public class DataHelper implements IDataHelper{
 	{
 		LanguageBox l=new LanguageBox(languageBox);
 		ArrayList<Card> cards=new ArrayList<Card>();
-		for(Card card:l.getCards())
+		ArrayList<Card> allCars=new ArrayList<Card>();
+		allCars=l.getCards();
+		if(allCars!=null)
 		{
-			if((comp==-1 || comp==card.getBoxNumber())&& card.getBoxNumber()<100)
+			for(Card card:l.getCards())
 			{
-				cards.add(card);
+				if((comp==-1 || comp==card.getBoxNumber())&& card.getBoxNumber()<100)
+				{
+					cards.add(card);
+				}
 			}
 		}
 		// check if it has Card if not retrun null
@@ -194,7 +199,9 @@ public class DataHelper implements IDataHelper{
 		User u =new User(idUser);
 		for(LanguageBox langBox:u.getLanguageBoxes())
 		{
-			all.addAll(getAllCards(langBox.getId(), -1));
+			ArrayList<Card> tempAllcardBox=getAllCards(langBox.getId(), -1);
+			if(tempAllcardBox!=null)
+				all.addAll(tempAllcardBox);
 		}
 		switch (type) {
 		case 1:
