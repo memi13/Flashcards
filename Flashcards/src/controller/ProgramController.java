@@ -209,11 +209,14 @@ public class ProgramController {
 	 * @param comp Compartment with Cards
 	 * @return Returns a String with Infos about this compartment
 	 */
-	public String loadBoxStatistics(int comp) {
+	public String loadBoxStatistics(int comp, int index) {
 		String data = "";
-		for(String line : dataHelper.getStatisticDataBox(languageBoxId, comp)) {
-			data = data + line + "\n";
-		}
+		String[] array;
+		array = dataHelper.getStatisticDataBox(languageBoxId, comp);
+		data = array[index];
+		//for(String line : dataHelper.getStatisticDataBox(languageBoxId, comp)) {
+		//	data = data + line + "\n";
+		//}
 		return data;
 	}
 	

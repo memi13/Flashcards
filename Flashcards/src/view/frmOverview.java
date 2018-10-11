@@ -33,6 +33,8 @@ public class frmOverview extends JFrame implements ActionListener {
 	private JButton btnCancle;
 	private JComboBox<String> cbBox ;
 	private JLabel lblStatistics;
+	private JLabel lblStatistics2;
+	private JLabel lblStatistics3;
 	
 	private String[] boxes;
 
@@ -57,6 +59,8 @@ public class frmOverview extends JFrame implements ActionListener {
 		btnOk = new JButton("Ok");
 		btnCancle = new JButton("Cancle");
 		lblStatistics = new JLabel("Select a Box");
+		lblStatistics2 = new JLabel("");
+		lblStatistics3 = new JLabel("");
 		cbBox = new JComboBox<>(boxes);
 		setStatisticsLable(0);
 	}
@@ -76,14 +80,16 @@ public class frmOverview extends JFrame implements ActionListener {
 		JPanel learnPanel = new JPanel();
 		
 		mainPanel.setLayout(new BorderLayout());
-		mainPanel.setBorder(new EmptyBorder(150,50,200,50));
+		mainPanel.setBorder(new EmptyBorder(150,50,150,50));
 		
 		setSize(500,500);
 		
-		learnPanel.setLayout(new GridLayout(4, 1, 10, 10));
+		learnPanel.setLayout(new GridLayout(6, 1, 10, 10));
 		learnPanel.setBorder(new EmptyBorder(0,0,0,0));
 		learnPanel.add(cbBox);
 		learnPanel.add(lblStatistics);
+		learnPanel.add(lblStatistics2);
+		learnPanel.add(lblStatistics3);
 		learnPanel.add(btnOk);
 		learnPanel.add(btnCancle);
 		mainPanel.add(learnPanel, BorderLayout.CENTER);
@@ -134,13 +140,25 @@ public class frmOverview extends JFrame implements ActionListener {
 	
 	private void setStatisticsLable(int index) {
 		System.out.println(index);
+		String s1 = "";
+		String s2 = "";
+		String s3 = "";
+		
 		if(index != 0 && index < 6) {
 			System.out.println(index);
-			lblStatistics.setText(pController.convertToMultiline(pController.loadBoxStatistics(index)));
+			s1 = pController.loadBoxStatistics(index, 0);
+			s2 = pController.loadBoxStatistics(index, 1);
+			s3 = pController.loadBoxStatistics(index, 2);
 		}else {
 			System.out.println(-1);
-			lblStatistics.setText(pController.convertToMultiline(pController.loadBoxStatistics(-1)));
+			s1 = pController.loadBoxStatistics(-1, 0);
+			s2 = pController.loadBoxStatistics(-1, 1);
+			s3 = pController.loadBoxStatistics(-1, 2);
 		}
+		
+		lblStatistics.setText(s1);
+		lblStatistics2.setText(s2);
+		lblStatistics3.setText(s3);
 	}
 	
 	private void showError() {

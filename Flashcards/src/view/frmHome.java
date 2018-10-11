@@ -47,7 +47,6 @@ public class frmHome extends JFrame implements ActionListener {
 	
 	
 	public frmHome(ProgramController pc) throws HeadlessException {
-		// TODO Auto-generated constructor stub
 		super("HOME");
 		this.pController = pc;
 		initComponents();
@@ -91,9 +90,6 @@ public class frmHome extends JFrame implements ActionListener {
 		buttonPanel.add(lblTitle);
 		buttonPanel.add(cbLanguageBox);
 		buttonPanel.add(btnLearningOverview);
-		//tempButtonPanel.add(btnSettings);
-		//tempButtonPanel.add(btnNewLanguageBox);
-		//tempButtonPanel.add(btnAllCards);
 		buttonPanel.add(btnStatistics);
 		
 		menuBar.add(menuSettings);
