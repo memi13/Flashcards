@@ -291,8 +291,8 @@ public class ProgramController {
 		{
 			if(type==2)
 			{
-				countCorrect=+card.getCountLearned()-card.getCountWrong();
-				countWrong=+card.getCountWrong();
+				countCorrect=countCorrect+(card.getCountLearned()-card.getCountWrong());
+				countWrong=countWrong+card.getCountWrong();
 			}
 			else
 			{

@@ -49,11 +49,15 @@ public class DataHelper implements IDataHelper{
 	}
 
 	@Override
-	public ArrayList<Card> getCards(int languageBox, int comp) 
+	public ArrayList<Card> getCards(int languageBox, int comp,boolean all) 
 	{
 		ArrayList<Card> cards=new ArrayList<Card>();
 		Date nowDate = java.util.Calendar.getInstance().getTime();
 		ArrayList<Card> selecedcCards= getAllCards(languageBox, comp);
+		if(all)
+		{
+			return selecedcCards;
+		}
 		if(selecedcCards!=null && selecedcCards.size()>0)
 		{
 			for(Card card:selecedcCards)
@@ -104,6 +108,7 @@ public class DataHelper implements IDataHelper{
 		ArrayList<Card> cards=new ArrayList<Card>();
 		ArrayList<Card> allCars=new ArrayList<Card>();
 		allCars=l.getCards();
+
 		if(allCars!=null)
 		{
 			for(Card card:l.getCards())
