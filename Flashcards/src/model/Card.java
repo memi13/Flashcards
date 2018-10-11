@@ -360,6 +360,11 @@ public class Card implements IDBFunctions {
 			return true;
 		return true;
 	}
+	/**
+	 * Checks if statisticValues have changed
+	 * @param card
+	 * @return
+	 */
 	public boolean staticNoUpdate(Card card)
 	{
 		if

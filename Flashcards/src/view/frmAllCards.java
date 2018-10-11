@@ -37,9 +37,6 @@ public class frmAllCards extends JFrame implements ActionListener {
 	private JLabel lblDestination;
 	
 	private ArrayList<Card> cards;
-	private ArrayList<Card> cardsDelete;
-	private ArrayList<Card> cardsUpdate;
-	
 	private ArrayList<JComponent> components;
 	
 
@@ -60,8 +57,6 @@ public class frmAllCards extends JFrame implements ActionListener {
 		btnButtonsDel = new JButton[cards.size()];
 		btnButtonsSave = new JButton[cards.size()];
 		components = new ArrayList<JComponent>();
-		cardsDelete = new ArrayList<Card>();
-		cardsUpdate = new ArrayList<Card>();
 		btnNew = new JButton("New");
 		
 		int i = 0;
@@ -92,7 +87,7 @@ public class frmAllCards extends JFrame implements ActionListener {
 		JPanel tablePanel = new JPanel();
 		
 		mainPanel.setLayout(new BorderLayout());
-		mainPanel.setBorder(new EmptyBorder(150,50,200,50));
+		mainPanel.setBorder(new EmptyBorder(10,50,100,50));
 		
 		setSize(500,500);
 		
@@ -130,24 +125,72 @@ public class frmAllCards extends JFrame implements ActionListener {
 			break;
 		case "New":
 			System.out.println("click - Save");
-			//if(cardsDelete.size()>0) {
-			//	pController.deleteCardArray(cardsDelete);
-			//}
+			//Open a Dialog to create a new Card
 			break;
 		case "X":		
 			System.out.println(getCardID(e));
 			pController.deleteCard(getCardID(e));
-			//cardsDelete.add(cards.get(Integer.parseInt(e.getActionCommand())));
+			removeFields(e);
 			break;	
 		case "Save":
 			System.out.println(e.getActionCommand());
-			//pController.updateCard(toSave, sText, dText);
+			setCardUpdate(e);
 			break;
 		}
 	}
 	
-	private void setCardUpdate(int cardid) {
+	private void removeFields(ActionEvent e) {
 		
+		int cardID = getCardID(e);
+		int textboxid = 0;
+		for(int i = 0; i< btnButtonsSave.length; i++) {
+			if(i!=0) {
+				textboxid = i*2;
+			}else {
+				textboxid = 0;
+			}
+			if(btnButtonsSave[i] == e.getSource()) {
+				dText = txtFields[textboxid+1].getText();
+				sText = txtFields[textboxid].getText();
+				if(pController.updateCard(cardID, sText, dText)) {
+					System.out.println("Card updated");
+				}else {
+					System.out.println("Card could not be updated");
+				}
+				System.out.println(i + " - " + btnButtonsSave[i].getActionCommand() + " - " + txtFields[textboxid].getText() + " - " + txtFields[textboxid+1].getText());
+			}
+		}
+		
+		txtFields;
+		btnButtonsDel;
+		btnButtonsSave;
+		
+		
+		array = ArrayUtils.removeElement(array, element)
+	}
+	
+	private void setCardUpdate(ActionEvent e) {
+		String dText;
+		String sText;
+		int cardID = getCardID(e);
+		int textboxid = 0;
+		for(int i = 0; i< btnButtonsSave.length; i++) {
+			if(i!=0) {
+				textboxid = i*2;
+			}else {
+				textboxid = 0;
+			}
+			if(btnButtonsSave[i] == e.getSource()) {
+				dText = txtFields[textboxid+1].getText();
+				sText = txtFields[textboxid].getText();
+				if(pController.updateCard(cardID, sText, dText)) {
+					System.out.println("Card updated");
+				}else {
+					System.out.println("Card could not be updated");
+				}
+				System.out.println(i + " - " + btnButtonsSave[i].getActionCommand() + " - " + txtFields[textboxid].getText() + " - " + txtFields[textboxid+1].getText());
+			}
+		}
 	}
 	
 	private int getCardID(ActionEvent e) {
