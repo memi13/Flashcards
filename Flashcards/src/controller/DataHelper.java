@@ -175,9 +175,36 @@ public class DataHelper implements IDataHelper{
 	}
 
 	@Override
-	public ArrayList<Card> getStatisticData(int idUser) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Card> getStatisticData(int idUser,int type) {
+		ArrayList<Card> all=new ArrayList<Card>();
+		ArrayList<Card> resultCard=new ArrayList<Card>();
+		User u =new User(idUser);
+		for(LanguageBox langBox:u.getLanguageBoxes())
+		{
+			all.addAll(getAllCards(langBox.getId(), -1));
+		}
+		switch (type) {
+		case 1:
+			Date nowDate = java.util.Calendar.getInstance().getTime();
+			for(Card card:all)
+			{
+				if(
+				nowDate.getDay()==card.getLastLearned().getDay() &&
+				nowDate.getMonth()==card.getLastLearned().getMonth()  &&
+				nowDate.getYear()==card.getLastLearned().getYear()
+				)
+				{
+					resultCard.add(card);
+				}
+			}
+			break;
+		case 2:
+			resultCard=all;
+			break;
+		default:
+			break;
+		}
+		return resultCard;
 	}
 	/**
 	 * Get a textes for with ifos about the compartment
