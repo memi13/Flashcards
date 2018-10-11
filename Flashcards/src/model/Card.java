@@ -161,6 +161,7 @@ public class Card implements IDBFunctions {
 	 */
 	@Override
 	public boolean delete() {
+		deleteS();
 		Connection conn = connectDB(connURL);
 		String sql = "delete from Card where id = " + this.id;
 		try {
@@ -180,6 +181,30 @@ public class Card implements IDBFunctions {
 		}
 	}
 
+	/**
+	 * Deletes this Cards statistics from the DB
+	 * @see model.IDBFunctions#delete()
+	 */
+	private boolean deleteS() {
+		Connection conn = connectDB(connURL);
+		String sql = "delete from CardStatistics where fkCard = " + this.id;
+		try {
+			Statement stmt = conn.createStatement();
+			if(stmt.executeUpdate(sql) == 1) {
+				closeConnection(conn);
+				System.out.println("Record deleted");
+				return true;
+			}else {
+				closeConnection(conn);
+				System.out.println("Record not deleted");
+				return false;
+			}
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+	}
+	
 	/**
 	 * Updates Statistic Data in DB
 	 * @return
