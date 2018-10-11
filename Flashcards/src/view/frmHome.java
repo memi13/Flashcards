@@ -13,6 +13,9 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -33,6 +36,13 @@ public class frmHome extends JFrame implements ActionListener {
 	private JButton btnStatistics;
 	private JComboBox<LanguageBox> cbLanguageBox;
 	
+	//Menu
+	private JMenuBar menuBar;
+	private JMenu menuSettings;
+	private JMenuItem menuModify;
+	private JMenuItem menuNewLanguageBox;
+	
+	
 	public frmHome(ProgramController pc) throws HeadlessException {
 		// TODO Auto-generated constructor stub
 		super("HOME");
@@ -49,6 +59,11 @@ public class frmHome extends JFrame implements ActionListener {
 		btnAllCards = new JButton("Modify Cards");
 		btnStatistics = new JButton("Statistics");
 		cbLanguageBox = new JComboBox(pController.loadLanguageBoxes().toArray());
+		
+		menuBar = new JMenuBar();
+		menuSettings = new JMenu("Settings");
+		menuModify = new JMenuItem("Modify Cards");
+		menuNewLanguageBox = new JMenuItem("New Language Box");
 	}
 	
 	private void initGui() {
@@ -68,6 +83,12 @@ public class frmHome extends JFrame implements ActionListener {
 		tempButtonPanel.add(btnNewLanguageBox);
 		tempButtonPanel.add(btnAllCards);
 		tempButtonPanel.add(btnStatistics);
+		
+		menuBar.add(menuSettings);
+		menuSettings.add(menuModify);
+		menuSettings.add(menuNewLanguageBox);
+		this.setJMenuBar(menuBar);
+		
 		mainPanel.add(tempButtonPanel, BorderLayout.CENTER);
 		this.add(mainPanel);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -80,41 +101,59 @@ public class frmHome extends JFrame implements ActionListener {
 		btnNewLanguageBox.addActionListener(this);
 		btnAllCards.addActionListener(this);
 		btnStatistics.addActionListener(this);
+		menuModify.addActionListener(this);
+		menuNewLanguageBox.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JButton btn = (JButton)e.getSource();
-		pController.setLanguageBox((LanguageBox)cbLanguageBox.getSelectedItem());
-		switch(btn.getText()) {
-		case "Learning":
-			System.out.println("click - " + btn.getText());
-			pController.openOverview();
+		if(e.getSource() instanceof JButton) {
+			JButton btn = (JButton)e.getSource();
+			pController.setLanguageBox((LanguageBox)cbLanguageBox.getSelectedItem());
+			switch(btn.getText()) {
+			case "Learning":
+				System.out.println("click - " + btn.getText());
+				pController.openOverview();
+				this.dispose();
+				break;
+			case "Settings":
+				System.out.println("click - " + btn.getText());
+				pController.openSettings();
+				this.dispose();
+				break;
+			/*case "New Language Box":
+				System.out.println("click - " + btn.getText());
+				pController.openNewLanguageBox(this);
+				cbLanguageBox = new JComboBox(pController.loadLanguageBoxes().toArray());
+				cbLanguageBox.repaint();
+				break;
+			*/
+			case "Modify Cards":
+				System.out.println("click - " + btn.getText());
+				pController.openAllCards();
+				this.dispose();
+				break;
+				
+			case "Statistics":
+				System.out.println("click - " + btn.getText());
+				pController.openStatistics();
+				this.dispose();
+				break;
+			default:
+				System.out.println("Button not found");
+			}
+		}
+		
+		if(e.getSource() == menuModify) {
+		//THE DISPOSE FUNCTION DOES NOT WORK?
+			System.out.println("click - Menu Modify");
+			pController.openAllCards();
 			this.dispose();
-			break;
-		case "Settings":
-			System.out.println("click - " + btn.getText());
-			pController.openSettings();
-			this.dispose();
-			break;
-		case "New Language Box":
-			System.out.println("click - " + btn.getText());
+		}else if(e.getSource() == menuNewLanguageBox) {
+			System.out.println("click - Menu New LanguageBox");
 			pController.openNewLanguageBox(this);
 			cbLanguageBox = new JComboBox(pController.loadLanguageBoxes().toArray());
 			cbLanguageBox.repaint();
-			break;
-		case "Modify Cards":
-			System.out.println("click - " + btn.getText());
-			pController.openAllCards();
-			this.dispose();
-			break;
-		case "Statistics":
-			System.out.println("click - " + btn.getText());
-			pController.openStatistics();
-			this.dispose();
-			break;
-		default:
-			System.out.println("Button not found");
 		}
 	}
 
