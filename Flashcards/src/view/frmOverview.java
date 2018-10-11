@@ -135,7 +135,6 @@ public class frmOverview extends JFrame implements ActionListener {
 				this.dispose();
 			}
 		}
-			
 	}
 	
 	private void setStatisticsLable(int index) {
