@@ -61,7 +61,13 @@ public class frmAllCards extends JFrame implements ActionListener {
 
 	private void initComponents() {
 		//Load all Cards
-		cards = pController.loadCards(-1);
+
+		try{
+			cards = pController.loadCards(-1);
+		}catch(Exception ex) {
+			cards = new ArrayList<Card>();
+		}
+		
 		btnCancle = new JButton("Cancle");
 		txtFields = new JTextField[cards.size()*2];
 		btnButtonsDel = new JButton[cards.size()];

@@ -36,7 +36,22 @@ public class Card implements IDBFunctions {
 	 * test
 	 */
 	public Card() {
-		// TODO Auto-generated constructor stub
+		setDefaultValues();				
+	}
+	public Card(int idCard) {
+		setDefaultValues();
+		setData(idCard);
+	}
+	public Card(String sT, String dT, int lbNumber) {
+		//creates Record on DB 		String sql = "insert into card (sText, dText, boxNumber) Values ('" + this.sText + "', '" + this.dText+ "', " + this.boxNumber + ")";
+		setDefaultValues();
+		this.sText = sT;
+		this.dText = dT;
+		this.fkLangaugeBox = lbNumber;
+		createRecord();
+	}
+	
+	private void setDefaultValues() {
 		id = -1;
 		sText = "";
 		dText = "";
@@ -46,17 +61,7 @@ public class Card implements IDBFunctions {
 		countLearned = 0;
 		lastLearned = new Date(1999,01,01);
 		lastCorrect = new Date(1999,01,01);
-		highestBox = 0;		
-	}
-	public Card(int idCard) {
-		setData(idCard);
-	}
-	public Card(String sT, String dT, int lbNumber) {
-		//creates Record on DB 		String sql = "insert into card (sText, dText, boxNumber) Values ('" + this.sText + "', '" + this.dText+ "', " + this.boxNumber + ")";
-		this.sText = sT;
-		this.dText = dT;
-		this.fkLangaugeBox = lbNumber;
-		createRecord();
+		highestBox = 0;
 	}
 	
 	/**

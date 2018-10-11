@@ -58,7 +58,12 @@ public class frmHome extends JFrame implements ActionListener {
 		btnNewLanguageBox = new JButton("New Language Box");
 		btnAllCards = new JButton("Modify Cards");
 		btnStatistics = new JButton("Statistics");
-		cbLanguageBox = new JComboBox(pController.loadLanguageBoxes().toArray());
+		ArrayList<LanguageBox> alLanguageBox = pController.loadLanguageBoxes();
+		if(alLanguageBox == null) {
+			cbLanguageBox = new JComboBox<>();
+		}else {
+			cbLanguageBox = new JComboBox(alLanguageBox.toArray());
+		}
 		
 		menuBar = new JMenuBar();
 		menuSettings = new JMenu("Settings");
@@ -80,7 +85,7 @@ public class frmHome extends JFrame implements ActionListener {
 		tempButtonPanel.add(cbLanguageBox);
 		tempButtonPanel.add(btnLearningOverview);
 		//tempButtonPanel.add(btnSettings);
-		tempButtonPanel.add(btnNewLanguageBox);
+		//tempButtonPanel.add(btnNewLanguageBox);
 		tempButtonPanel.add(btnAllCards);
 		tempButtonPanel.add(btnStatistics);
 		
@@ -105,6 +110,11 @@ public class frmHome extends JFrame implements ActionListener {
 		menuNewLanguageBox.addActionListener(this);
 	}
 
+	private void reopenHome() {
+		this.dispose();
+		frmHome frmH = new frmHome(pController);
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() instanceof JButton) {
@@ -121,13 +131,6 @@ public class frmHome extends JFrame implements ActionListener {
 				pController.openSettings();
 				this.dispose();
 				break;
-			/*case "New Language Box":
-				System.out.println("click - " + btn.getText());
-				pController.openNewLanguageBox(this);
-				cbLanguageBox = new JComboBox(pController.loadLanguageBoxes().toArray());
-				cbLanguageBox.repaint();
-				break;
-			*/
 			case "Modify Cards":
 				System.out.println("click - " + btn.getText());
 				pController.openAllCards();
@@ -152,8 +155,9 @@ public class frmHome extends JFrame implements ActionListener {
 		}else if(e.getSource() == menuNewLanguageBox) {
 			System.out.println("click - Menu New LanguageBox");
 			pController.openNewLanguageBox(this);
-			cbLanguageBox = new JComboBox(pController.loadLanguageBoxes().toArray());
-			cbLanguageBox.repaint();
+			//cbLanguageBox = new JComboBox(pController.loadLanguageBoxes().toArray());
+			//cbLanguageBox.repaint();
+			reopenHome();
 		}
 	}
 
