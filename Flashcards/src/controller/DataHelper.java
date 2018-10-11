@@ -202,7 +202,7 @@ public class DataHelper implements IDataHelper{
 			ArrayList<Card> tempAllcardBox=getAllCards(langBox.getId(), -1);
 			if(tempAllcardBox!=null)
 				all.addAll(tempAllcardBox);
-		}
+		} 
 		switch (type) {
 		case 1:
 			Date nowDate = java.util.Calendar.getInstance().getTime();

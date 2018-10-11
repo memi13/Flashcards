@@ -81,7 +81,7 @@ public class frmStatistics extends JFrame implements ActionListener {
 		grafic.add(new GraphicBar(h1,100,110-h1,java.awt.Color.GREEN));
 		grafic.add(new GraphicBar(h2,200,110-h2,java.awt.Color.RED));
 	}
-	private void initChooes()
+	private void initChooes() 
 	{
 
 		chooes.setLayout(new FlowLayout(FlowLayout.CENTER,0,50));
