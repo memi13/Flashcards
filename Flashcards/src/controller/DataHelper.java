@@ -239,7 +239,7 @@ public class DataHelper implements IDataHelper{
 	 */
 	public String[]  getStatisticDataBox(int languageBox, int comp) {
 		ArrayList<Card> allCards=getAllCards(languageBox, comp);
-		ArrayList<Card> toLearn=getCards(languageBox, comp);
+		ArrayList<Card> toLearn=getCards(languageBox, comp,false);
 		if(allCards==null)
 			allCards=new ArrayList<Card>();
 		if(toLearn==null)
