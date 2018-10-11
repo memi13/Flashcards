@@ -111,36 +111,35 @@ public class frmOverview extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == cbBox) {
 			setStatisticsLable(cbBox.getSelectedIndex());
-		}else {
-			JButton btn = (JButton)e.getSource();
-			System.out.println(btn.getText());
-			if(btn.getText() == "Ok") {
-				int cbIndex = cbBox.getSelectedIndex();
-				setStatisticsLable(cbIndex);
-				System.out.println(cbIndex);
-				if(cbIndex == 0) {
-					if(pController.loadCards(-1) == null) {
+		}
+		JButton btn = (JButton)e.getSource();
+		System.out.println(btn.getText());
+		if(btn.getText() == "Ok") {
+			int cbIndex = cbBox.getSelectedIndex();
+			setStatisticsLable(cbIndex);
+			System.out.println(cbIndex);
+			if(cbIndex == 0) {
+				if(pController.loadCards(-1) == null) {
+					showError();
+					return;
+				}else{
+					if(pController.loadCards(-1).size()<=0) {
 						showError();
 						return;
-					}else {
-						if(pController.loadCards(-1).size()<=0) {
-							showError();
-							return;
-						}else {
-							if(pController.loadCards(cbIndex).size()<=0) {
-								showError();
-								return;
-							}
-						}
-					}	
-				pController.setBoxId(cbIndex);
-				pController.openLearning();
-				this.dispose();
+					}
 				}
-			}else if(btn.getText() == "Cancle") {
-				pController.openHome();
-				this.dispose();
-			}
+			}else{
+				if(pController.loadCards(cbIndex).size()<=0) {
+					showError();
+					return;
+				}
+			}	
+			pController.setBoxId(cbIndex);
+			pController.openLearning();
+			this.dispose();
+		}else if(btn.getText() == "Cancle") {
+			pController.openHome();
+			this.dispose();
 		}
 	}
 	
