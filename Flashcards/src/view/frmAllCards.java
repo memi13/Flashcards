@@ -207,6 +207,11 @@ public class frmAllCards extends JFrame implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Translates the Row to a Card ID
+	 * @param e ActionEvent (can be from a textfield or button)
+	 * @return ID of the Card
+	 */
 	private int getCardID(ActionEvent e) {
 		String strID = e.getActionCommand();
 		strID = strID.substring(4);
