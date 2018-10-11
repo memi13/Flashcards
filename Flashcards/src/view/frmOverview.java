@@ -144,7 +144,7 @@ public class frmOverview extends JFrame implements ActionListener {
 	}
 	
 	/**
-	 * Sets the Statistics on 3 different Labels
+	 * Sets the Statistics on 3 different Labels 
 	 * @param index Row of the Label (0-2)
 	 */
 	private void setStatisticsLable(int index) {
