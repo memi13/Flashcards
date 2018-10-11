@@ -75,7 +75,7 @@ public class frmHome extends JFrame implements ActionListener {
 		menuSettings = new JMenu("Settings");
 		menuModify = new JMenuItem("Modify Cards");
 		menuNewLanguageBox = new JMenuItem("New Language Box");
-	}
+	}//
 	
 	private void initGui() {
 		JPanel mainPanel = new JPanel();
