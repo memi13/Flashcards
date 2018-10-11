@@ -62,19 +62,19 @@ public class DataHelper implements IDataHelper{
 			
 				switch (card.getBoxNumber()) {
 				case 1:
-					nowDateComp=addDays(nowDate, 1);
+					nowDateComp=addDays(card.getLastLearned(), 1);
 					break;
 				case 2:
-					nowDateComp=addDays(nowDate, 2);
+					nowDateComp=addDays(card.getLastLearned(), 2);
 					break;
 				case 3:
-					nowDateComp=addDays(nowDate, 10);
+					nowDateComp=addDays(card.getLastLearned(), 10);
 					break;
 				case 4:
-					nowDateComp=addDays(nowDate, 30);
+					nowDateComp=addDays(card.getLastLearned(), 30);
 					break;
 				case 5:
-					nowDateComp=addDays(nowDate, 90);
+					nowDateComp=addDays(card.getLastLearned(), 90);
 					break;
 				default:
 					break; 
@@ -82,7 +82,7 @@ public class DataHelper implements IDataHelper{
 				
 				Date lastLenredDay =card.getLastLearned();	
 				
-				if(lastLenredDay==null|| nowDateComp.getTime()>lastLenredDay.getTime())
+				if(lastLenredDay==null|| nowDateComp.getTime()<nowDate.getTime())
 				{
 					cards.add(card);
 				}
