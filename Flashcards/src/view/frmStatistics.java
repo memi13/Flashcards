@@ -79,9 +79,13 @@ public class frmStatistics extends JFrame implements ActionListener {
 		int value1=Integer.parseInt(r2[0]) ;
 		int value2=Integer.parseInt(r2[1]) ;
 		int completValue=value1+value2;
-
-		int h1=value1*100/completValue;
-		int h2=value2*100/completValue;
+		int h1=0;
+		int h2=0;
+		if(completValue!=0)
+		{
+			h1=value1*100/completValue;
+			h2=value2*100/completValue;
+		}
 		grafic.setLayout(null);
 		grafic.add(new GraphicBar(h1,100,110-h1,java.awt.Color.GREEN));
 		grafic.add(new GraphicBar(h2,200,110-h2,java.awt.Color.RED));
