@@ -39,6 +39,10 @@ public class frmAllCards extends JFrame implements ActionListener {
 	private ArrayList<Card> cards;
 	private ArrayList<JComponent> components;
 	
+	JPanel mainPanel = new JPanel();	
+	//scrollable?
+	JPanel tablePanel = new JPanel();
+	
 
 	public frmAllCards(ProgramController pc) throws HeadlessException {
 		// TODO Auto-generated constructor stub
@@ -82,10 +86,6 @@ public class frmAllCards extends JFrame implements ActionListener {
 	}
 	
 	private void initGui() {
-		JPanel mainPanel = new JPanel();	
-		//scrollable?
-		JPanel tablePanel = new JPanel();
-		
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.setBorder(new EmptyBorder(10,50,100,50));
 		
@@ -107,6 +107,10 @@ public class frmAllCards extends JFrame implements ActionListener {
 		this.add(mainPanel);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
+		
+		this.validate();
+		this.repaint();
+		this.validate();
 	}
 	
 	private void bindListener() {
@@ -140,33 +144,22 @@ public class frmAllCards extends JFrame implements ActionListener {
 	}
 	
 	private void removeFields(ActionEvent e) {
-		
-		int cardID = getCardID(e);
-		int textboxid = 0;
-		for(int i = 0; i< btnButtonsSave.length; i++) {
+		/*int id = 0;
+		for(int i = 0; i< btnButtonsDel.length; i++) {
 			if(i!=0) {
-				textboxid = i*2;
+				id = i*4;
 			}else {
-				textboxid = 0;
+				id = 0;
 			}
-			if(btnButtonsSave[i] == e.getSource()) {
-				dText = txtFields[textboxid+1].getText();
-				sText = txtFields[textboxid].getText();
-				if(pController.updateCard(cardID, sText, dText)) {
-					System.out.println("Card updated");
-				}else {
-					System.out.println("Card could not be updated");
-				}
-				System.out.println(i + " - " + btnButtonsSave[i].getActionCommand() + " - " + txtFields[textboxid].getText() + " - " + txtFields[textboxid+1].getText());
+			if(btnButtonsDel[i] == e.getSource()) {
+				components.remove(id);
+				components.remove(id+1);
+				components.remove(id+2);
+				components.remove(id+3);	
 			}
-		}
-		
-		txtFields; //text
-		btnButtonsDel;
-		btnButtonsSave;
-		
-		
-		array = ArrayUtils.removeElement(array, element)
+		}*/
+		initComponents();
+		initGui();
 	}
 	
 	private void setCardUpdate(ActionEvent e) {
