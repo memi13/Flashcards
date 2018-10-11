@@ -77,11 +77,11 @@ public class frmLearning extends JFrame implements ActionListener {
 		JPanel learningPanel = new JPanel();
 		
 		mainPanel.setLayout(new BorderLayout());
-		mainPanel.setBorder(new EmptyBorder(150,50,200,50));
+		mainPanel.setBorder(new EmptyBorder(150,50,150,50));
 		
 		setSize(500,500);
 		
-		learningPanel.setLayout(new GridLayout(5, 1));
+		learningPanel.setLayout(new GridLayout(5, 1, 10, 10));
 		learningPanel.setBorder(new EmptyBorder(0,0,0,0));
 		learningPanel.add(lblMessage);
 		learningPanel.add(lblOrigin);
