@@ -29,11 +29,13 @@ public class frmAllCards extends JFrame implements ActionListener {
 	private ProgramController pController;
 	
 	private JButton btnCancle;
-	private JButton btnSave;
+	private JButton btnNew;
 	private JTextField[] txtFields;
-	private JButton[] btnButtons;
+	private JButton[] btnButtonsDel;
+	private JButton[] btnButtonsSave;
 	private JLabel lblOrigin;
 	private JLabel lblDestination;
+	
 	private ArrayList<Card> cards;
 	private ArrayList<Card> cardsDelete;
 	private ArrayList<Card> cardsUpdate;
@@ -55,21 +57,30 @@ public class frmAllCards extends JFrame implements ActionListener {
 		cards = pController.loadCards(-1);
 		btnCancle = new JButton("Cancle");
 		txtFields = new JTextField[cards.size()*2];
-		btnButtons = new JButton[cards.size()];
+		btnButtonsDel = new JButton[cards.size()];
+		btnButtonsSave = new JButton[cards.size()];
 		components = new ArrayList<JComponent>();
 		cardsDelete = new ArrayList<Card>();
 		cardsUpdate = new ArrayList<Card>();
-		btnSave = new JButton("Save");
+		btnNew = new JButton("New");
 		
 		int i = 0;
 		int j = 0;
 		while(i<txtFields.length) {
 			txtFields[i] = new JTextField(cards.get(j).getsText());
 			txtFields[i+1] = new JTextField(cards.get(j).getdText());
-			btnButtons[j] = new JButton("X");
+			btnButtonsDel[j] = new JButton("X");
+			btnButtonsSave[j] = new JButton("Save");
+			//Should be in bindListeners
+			btnButtonsDel[j].addActionListener(this);
+			btnButtonsDel[j].setActionCommand("del-" + cards.get(j).getId());
+			btnButtonsSave[j].addActionListener(this);
+			btnButtonsSave[j].setActionCommand("save-" + cards.get(j).getId());
+			
 			components.add(txtFields[i]);
 			components.add(txtFields[i+1]);
-			components.add(btnButtons[j]);
+			components.add(btnButtonsDel[j]);
+			components.add(btnButtonsSave[j]);
 			i+=2;
 			j+=1;
 		}
@@ -86,10 +97,10 @@ public class frmAllCards extends JFrame implements ActionListener {
 		setSize(500,500);
 		
 		mainPanel.add(btnCancle, BorderLayout.NORTH);
-		mainPanel.add(btnSave, BorderLayout.SOUTH);
+		mainPanel.add(btnNew, BorderLayout.SOUTH);
 	
 		//Grid Control
-		GridLayout dynGrid = new GridLayout(cards.size(), 2);
+		GridLayout dynGrid = new GridLayout(cards.size(), 4);
 		tablePanel.setLayout(dynGrid);
 		tablePanel.setBorder(new EmptyBorder(0,0,0,0));
 		this.validate();
@@ -105,12 +116,7 @@ public class frmAllCards extends JFrame implements ActionListener {
 	
 	private void bindListener() {
 		btnCancle.addActionListener(this);
-		int i = 0;
-		for(JButton btn : btnButtons) {
-			btn.addActionListener(this);
-			btn.setActionCommand("" + i);
-			i++;
-		}
+		btnNew.addActionListener(this);
 	}
 
 	@Override
@@ -122,16 +128,20 @@ public class frmAllCards extends JFrame implements ActionListener {
 			pController.openHome();
 			this.dispose();
 			break;
-		case "Save":
+		case "New":
 			System.out.println("click - Save");
-			if(cardsDelete.size()>0) {
-				pController.deleteCardArray(cardsDelete);
-			}
+			//if(cardsDelete.size()>0) {
+			//	pController.deleteCardArray(cardsDelete);
+			//}
 			break;
 		case "X":		
-			System.out.println("added to Del" + e.getActionCommand());
-			cardsDelete.add(cards.get(Integer.parseInt(e.getActionCommand())));
+			System.out.println(e.getActionCommand());
+			pController.deleteCard(Integer.parseInt(e.getActionCommand()));
+			//cardsDelete.add(cards.get(Integer.parseInt(e.getActionCommand())));
 			break;	
+		case "Save":
+			System.out.println(e.getActionCommand());
+			break;
 		}
 	}
 	
