@@ -30,6 +30,7 @@ public class Card implements IDBFunctions {
 	private Date lastLearned;
 	private Date lastCorrect;
 	private int highestBox;
+	private int fkLangaugeBox;
 	
 	/**
 	 * test
@@ -50,11 +51,11 @@ public class Card implements IDBFunctions {
 	public Card(int idCard) {
 		setData(idCard);
 	}
-	public Card(String sT, String dT, int bNumber) {
+	public Card(String sT, String dT, int lbNumber) {
 		//creates Record on DB 		String sql = "insert into card (sText, dText, boxNumber) Values ('" + this.sText + "', '" + this.dText+ "', " + this.boxNumber + ")";
 		this.sText = sT;
 		this.dText = dT;
-		this.boxNumber = bNumber;
+		this.fkLangaugeBox = lbNumber;
 		createRecord();
 	}
 	
@@ -235,7 +236,7 @@ public class Card implements IDBFunctions {
 	 */
 	private boolean createRecord() {
 		Connection conn = connectDB(connURL);
-		String sql = "Insert into Card (sText, dText, boxNumber, createdOn) Values ('"+this.sText+"', '"+this.dText+"', "+this.boxNumber+", " + (long)new utilDate().getTime() + ")";
+		String sql = "Insert into Card (sText, dText, fkLanguageBox, createdOn) Values ('"+this.sText+"', '"+this.dText+"', "+this.fkLangaugeBox+", " + (long)new utilDate().getTime() + ")";
 		String sql2 = "";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);

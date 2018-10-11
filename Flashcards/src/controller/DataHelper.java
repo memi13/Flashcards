@@ -114,6 +114,19 @@ public class DataHelper implements IDataHelper{
 			return null;
 		return cards;
 	}
+	
+	/**
+	 * Creates a new Card (missing errorhandling)
+	 * @param sText
+	 * @param dText
+	 * @param lbNumber
+	 * @return
+	 */
+	public boolean createNewCard(String sText, String dText, int lbNumber) {
+		Card c = new Card(sText, dText, lbNumber);
+		return true;
+	}
+	
 
 	@Override
 	public boolean moveCard(boolean correct,int idCard) 

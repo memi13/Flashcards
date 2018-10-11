@@ -173,6 +173,13 @@ public class ProgramController {
 			return false;
 		}
 	}
+	
+	public boolean createCard(String sText, String dText) {
+		if(dataHelper.createNewCard(sText, dText, this.languageBoxId)) {
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * Create a new LanguageBox

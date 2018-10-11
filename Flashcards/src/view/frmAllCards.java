@@ -218,7 +218,7 @@ public class frmAllCards extends JFrame implements ActionListener {
 		//if(dlgNew == JOptionPane.YES_OPTION)
 		//Werte auslesen
 		if(response == JOptionPane.OK_OPTION) {
-			pController.
+			pController.createCard(txtSource.getText(), txtDestination.getText());
 			System.out.println("Eingabe: " + txtSource.getText() + ", Eingabe: " + txtDestination.getText());
 		}
 	}
