@@ -11,9 +11,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -42,6 +44,10 @@ public class frmAllCards extends JFrame implements ActionListener {
 	JPanel mainPanel = new JPanel();	
 	//scrollable?
 	JPanel tablePanel = new JPanel();
+	GridLayout dynGrid = new GridLayout(1, 4);
+	BorderLayout brdLayout = new BorderLayout();
+	EmptyBorder brdEmpty = new EmptyBorder(10,50,100,50);
+	EmptyBorder brdEmpty2 = new EmptyBorder(0,0,0,0);
 	
 
 	public frmAllCards(ProgramController pc) throws HeadlessException {
@@ -86,8 +92,8 @@ public class frmAllCards extends JFrame implements ActionListener {
 	}
 	
 	private void initGui() {
-		mainPanel.setLayout(new BorderLayout());
-		mainPanel.setBorder(new EmptyBorder(10,50,100,50));
+		mainPanel.setLayout(brdLayout);
+		mainPanel.setBorder(brdEmpty);
 		
 		setSize(500,500);
 		
@@ -95,9 +101,11 @@ public class frmAllCards extends JFrame implements ActionListener {
 		mainPanel.add(btnNew, BorderLayout.SOUTH);
 	
 		//Grid Control
-		GridLayout dynGrid = new GridLayout(cards.size(), 4);
+		//GridLayout dynGrid = new GridLayout(cards.size(), 4);
+		dynGrid.setRows(cards.size());
+		//dynGrid.setColumns(4);
 		tablePanel.setLayout(dynGrid);
-		tablePanel.setBorder(new EmptyBorder(0,0,0,0));
+		tablePanel.setBorder(brdEmpty2);
 		this.validate();
 		for(JComponent c : components) {
 			tablePanel.add(c);
@@ -129,6 +137,7 @@ public class frmAllCards extends JFrame implements ActionListener {
 			break;
 		case "New":
 			System.out.println("click - Save");
+			addNewCard();
 			//Open a Dialog to create a new Card
 			break;
 		case "X":		
@@ -158,8 +167,10 @@ public class frmAllCards extends JFrame implements ActionListener {
 				components.remove(id+3);	
 			}
 		}*/
+		
 		initComponents();
 		initGui();
+		bindListener();
 	}
 	
 	private void setCardUpdate(ActionEvent e) {
@@ -190,6 +201,26 @@ public class frmAllCards extends JFrame implements ActionListener {
 		String strID = e.getActionCommand();
 		strID = strID.substring(4);
 		return Integer.parseInt(strID);
+	}
+	
+	private void addNewCard() {
+		JTextField txtSource = new JTextField();
+		JTextField txtDestination = new JTextField();
+		//Textfelder in einen Array vom Dtentyp Object
+		Object[] message = {"Source Text: ", txtSource, "Target Text: ", txtDestination};
+		
+		//Dialog erstellen
+		JOptionPane dlgNew = new JOptionPane();
+		int response = dlgNew.showConfirmDialog(this, message, "New Card", JOptionPane.OK_CANCEL_OPTION);
+		dlgNew.setVisible(true);
+		//dlgNew.getV
+		
+		//if(dlgNew == JOptionPane.YES_OPTION)
+		//Werte auslesen
+		if(response == JOptionPane.OK_OPTION) {
+			pController.
+			System.out.println("Eingabe: " + txtSource.getText() + ", Eingabe: " + txtDestination.getText());
+		}
 	}
 	
 }
