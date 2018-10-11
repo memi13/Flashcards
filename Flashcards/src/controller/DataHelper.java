@@ -213,7 +213,10 @@ public class DataHelper implements IDataHelper{
 		}
 		return false;
 	}
-
+	public boolean deleteCard(int cardid)
+	{
+		return deleteCard(new Card(cardid));
+	}
 	@Override
 	public boolean deleteCard(Card card) {
 		// TODO Auto-generated method stub
