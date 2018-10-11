@@ -270,7 +270,7 @@ public class ProgramController {
 	
 	public void setBoxId(int b) {
 		if(b != 0) {
-			this.boxId = b;
+			this.boxId = b; 
 		}else {
 			this.boxId = -1;
 		}
