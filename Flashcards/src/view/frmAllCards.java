@@ -42,6 +42,7 @@ public class frmAllCards extends JFrame implements ActionListener {
 	
 	private ArrayList<Card> cards;
 	private ArrayList<JComponent> components;
+	private int cardCount;
 	
 	JPanel mainPanel = new JPanel();	
 	//scrollable?
@@ -66,14 +67,17 @@ public class frmAllCards extends JFrame implements ActionListener {
 
 		try{
 			cards = pController.loadCards(-1);
+			cardCount = cards.size();
 		}catch(Exception ex) {
+			System.out.println("Error");
 			cards = new ArrayList<Card>();
+			cardCount = 0;
 		}
 		
 		btnCancle = new JButton("Cancle");
-		txtFields = new JTextField[cards.size()*2];
-		btnButtonsDel = new JButton[cards.size()];
-		btnButtonsSave = new JButton[cards.size()];
+		txtFields = new JTextField[cardCount*2];
+		btnButtonsDel = new JButton[cardCount];
+		btnButtonsSave = new JButton[cardCount];
 		components = new ArrayList<JComponent>();
 		btnNew = new JButton("New");
 		

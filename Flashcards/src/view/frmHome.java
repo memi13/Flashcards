@@ -88,7 +88,7 @@ public class frmHome extends JFrame implements ActionListener {
 		tempButtonPanel.add(btnLearningOverview);
 		//tempButtonPanel.add(btnSettings);
 		//tempButtonPanel.add(btnNewLanguageBox);
-		tempButtonPanel.add(btnAllCards);
+		//tempButtonPanel.add(btnAllCards);
 		tempButtonPanel.add(btnStatistics);
 		
 		menuBar.add(menuSettings);
@@ -154,9 +154,7 @@ public class frmHome extends JFrame implements ActionListener {
 		
 		if(e.getSource() == menuModify) {
 		//THE DISPOSE FUNCTION DOES NOT WORK?
-			System.out.println("click - Menu Modify");
-			pController.openAllCards();
-			this.dispose();
+			openFormAllCards();
 		}else if(e.getSource() == menuNewLanguageBox) {
 			System.out.println("click - Menu New LanguageBox");
 			pController.openNewLanguageBox(this);
@@ -166,4 +164,11 @@ public class frmHome extends JFrame implements ActionListener {
 		}
 	}
 
+	private void openFormAllCards() {
+		System.out.println("click");
+		pController.openAllCards();
+		//this
+		this.dispose();
+	}
+	
 }
