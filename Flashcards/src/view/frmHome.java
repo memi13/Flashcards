@@ -116,6 +116,7 @@ public class frmHome extends JFrame implements ActionListener {
 		btnStatistics.addActionListener(this);
 		menuModify.addActionListener(this);
 		menuNewLanguageBox.addActionListener(this);
+		cbLanguageBox.addActionListener(this);
 	}
 
 	private void reopenHome() {
@@ -125,6 +126,9 @@ public class frmHome extends JFrame implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == cbLanguageBox) {
+			pController.setLanguageBox((LanguageBox)cbLanguageBox.getSelectedItem());
+		}
 		if(e.getSource() instanceof JButton) {
 			JButton btn = (JButton)e.getSource();
 			pController.setLanguageBox((LanguageBox)cbLanguageBox.getSelectedItem());

@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -47,9 +48,10 @@ public class frmAllCards extends JFrame implements ActionListener {
 	JPanel mainPanel = new JPanel();	
 	//scrollable?
 	JPanel tablePanel = new JPanel();
+	JScrollPane scrollPane =  new JScrollPane();
 	GridLayout dynGrid = new GridLayout(1, 4);
 	BorderLayout brdLayout = new BorderLayout();
-	EmptyBorder brdEmpty = new EmptyBorder(10,50,100,50);
+	EmptyBorder brdEmpty = new EmptyBorder(20,50,20,50);
 	EmptyBorder brdEmpty2 = new EmptyBorder(0,0,0,0);
 	
 
@@ -74,7 +76,7 @@ public class frmAllCards extends JFrame implements ActionListener {
 			cardCount = 0;
 		}
 		
-		btnCancle = new JButton("Cancle");
+		btnCancle = new JButton("Close");
 		txtFields = new JTextField[cardCount*2];
 		btnButtonsDel = new JButton[cardCount];
 		btnButtonsSave = new JButton[cardCount];
@@ -109,20 +111,18 @@ public class frmAllCards extends JFrame implements ActionListener {
 		
 		setSize(500,500);
 		
-		mainPanel.add(btnCancle, BorderLayout.NORTH);
-		mainPanel.add(btnNew, BorderLayout.SOUTH);
+		mainPanel.add(btnNew, BorderLayout.NORTH);
+		mainPanel.add(btnCancle, BorderLayout.SOUTH);
 	
 		//Grid Control
-		//GridLayout dynGrid = new GridLayout(cards.size(), 4);
 		dynGrid.setRows(cards.size());
-		//dynGrid.setColumns(4);
 		tablePanel.setLayout(dynGrid);
 		tablePanel.setBorder(brdEmpty2);
 		this.validate();
 		for(JComponent c : components) {
 			tablePanel.add(c);
 		}
-		
+		//scrollpane
 		mainPanel.add(tablePanel, BorderLayout.CENTER);
 		this.add(mainPanel);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -146,7 +146,7 @@ public class frmAllCards extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		JButton btn = (JButton)e.getSource();
 		switch(btn.getText()){
-		case "Cancle":
+		case "Close":
 			System.out.println("click - Cancle");
 			pController.openHome();
 			this.dispose();
