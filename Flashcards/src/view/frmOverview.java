@@ -40,7 +40,7 @@ public class frmOverview extends JFrame implements ActionListener {
 
 	/**
 	 * Constructor of frmOverview
-	 * @param pc ProgramController
+	 * @param pc ProgramController 
 	 * @param languageBox Selected LanguageBox ID
 	 * @throws HeadlessException
 	 */
