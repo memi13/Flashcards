@@ -130,16 +130,17 @@ public class ProgramController {
 	}
 
 	/**
-	 * Deletes an ArrayList of Cards
-	 * @param toDel ArrayList of Cards to be deleted
+	 * Deletes a Cards
+	 * @param toDel Cardid to be deleted
 	 * @return true if succesfull
 	 */
-	public boolean deleteCardArray(ArrayList<Card> toDel) {
-		for(Card c : toDel) {
-			c.delete();
-			System.out.println("Deleted " + c.getId());
+	public boolean deleteCard(int toDel) {
+		System.out.println("Deleted " + toDel);
+		if(toDel.deleteByID()) {
+			return true;
+		}else {
+			return false;
 		}
-		return true;
 	}
 	
 	/**
