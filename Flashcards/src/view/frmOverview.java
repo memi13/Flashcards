@@ -119,20 +119,27 @@ public class frmOverview extends JFrame implements ActionListener {
 				setStatisticsLable(cbIndex);
 				System.out.println(cbIndex);
 				if(cbIndex == 0) {
-					if(pController.loadCards(-1).size()<=0) {
+					if(pController.loadCards(-1) == null) {
 						showError();
-					}
-				}else {
-					if(pController.loadCards(cbIndex).size()<=0) {
-						showError();
-					}
-				}	
+						return;
+					}else {
+						if(pController.loadCards(-1).size()<=0) {
+							showError();
+							return;
+						}else {
+							if(pController.loadCards(cbIndex).size()<=0) {
+								showError();
+								return;
+							}
+						}
+					}	
 				pController.setBoxId(cbIndex);
 				pController.openLearning();
 				this.dispose();
 			}else if(btn.getText() == "Cancle") {
 				pController.openHome();
 				this.dispose();
+			}
 			}
 		}
 	}
