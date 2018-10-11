@@ -312,10 +312,6 @@ public class ProgramController {
 				}
 			} 
 		}
-		if(countCorrect==0)
-			countCorrect=1;
-		if(countWrong==0)
-			countWrong=1;
 		return countCorrect+","+countWrong;
 		//if(type==1)
 			//return "5,4";
