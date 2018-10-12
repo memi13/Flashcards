@@ -112,34 +112,31 @@ public class frmOverview extends JFrame implements ActionListener {
 		if(e.getSource() == cbBox) {
 			setStatisticsLable(cbBox.getSelectedIndex());
 		}
-		JButton btn = (JButton)e.getSource();
-		System.out.println(btn.getText());
-		if(btn.getText() == "Ok") {
-			int cbIndex = cbBox.getSelectedIndex();
-			setStatisticsLable(cbIndex);
-			System.out.println(cbIndex);
-			if(cbIndex == 0) {
-				if(pController.loadCards(-1) == null) {
-					showError();
-					return;
-				}else{
-					if(pController.loadCards(-1).size()<=0) {
+		if(e.getSource() instanceof JButton) {
+			JButton btn = (JButton)e.getSource();
+			System.out.println(btn.getText());
+			if(btn == btnOk) {
+				int cbIndex = cbBox.getSelectedIndex();
+				setStatisticsLable(cbIndex);
+				System.out.println(cbIndex);
+				if(cbIndex == 0) {
+					if(pController.loadCards(-1) == null || pController.loadCards(-1).size()<=0) {
 						showError();
 						return;
 					}
-				}
-			}else{
-				if(pController.loadCards(cbIndex).size()<=0) {
-					showError();
-					return;
-				}
-			}	
-			pController.setBoxId(cbIndex);
-			pController.openLearning();
-			this.dispose();
-		}else if(btn.getText() == "Cancle") {
-			pController.openHome();
-			this.dispose();
+				}else{
+					if(pController.loadCards(cbIndex) == null || pController.loadCards(cbIndex).size()<= 0) {
+						showError();
+						return;
+					}
+				}	
+				pController.setBoxId(cbIndex);
+				pController.openLearning();
+				this.dispose();
+			}else if(btn.getText() == "Cancle") {
+				pController.openHome();
+				this.dispose();
+			}
 		}
 	}
 	
@@ -172,8 +169,8 @@ public class frmOverview extends JFrame implements ActionListener {
 	
 	private void showError() {
 		JOptionPane.showMessageDialog(this, "There are no Cards to Learn Today!", "No Cards today!", JOptionPane.PLAIN_MESSAGE);
-		this.dispose();
-		pController.openHome();
+		//this.dispose();
+		//pController.openHome();
 	}
 
 }
