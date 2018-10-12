@@ -1,22 +1,9 @@
 package controller;
-
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-
-import javax.swing.text.StyledEditorKit.BoldAction;
-
-import com.sun.corba.se.impl.orbutil.RepositoryIdUtility;
-
-import javafx.scene.chart.PieChart.Data;
+import Helper.DateHelper;
+import Helper.EncodingHelper;
+import enums.LeitnerNumbers;
 import model.Card;
 import model.IDBFunctions;
 import model.LanguageBox;
@@ -33,7 +20,7 @@ public class DataHelper implements IDataHelper{
 		User u= getUser(user);
 		if(u!=null)
 		{
-			String pwEncode=createMd5(pw);
+			String pwEncode=EncodingHelper.createMd5(pw);
 			if(u.getUsername().equals(u.getUsername()) && u.getPassword().equals(pwEncode))
 			{
 				return true;
@@ -66,19 +53,19 @@ public class DataHelper implements IDataHelper{
 			
 				switch (card.getBoxNumber()) {
 				case 1:
-					nowDateComp=addDays(card.getLastLearned(), 1);
+					nowDateComp=DateHelper.addDays(card.getLastLearned(), LeitnerNumbers.Fach1.getValue());
 					break;
 				case 2:
-					nowDateComp=addDays(card.getLastLearned(), 2);
+					nowDateComp=DateHelper.addDays(card.getLastLearned(), LeitnerNumbers.Fach2.getValue());
 					break;
 				case 3:
-					nowDateComp=addDays(card.getLastLearned(), 10);
+					nowDateComp=DateHelper.addDays(card.getLastLearned(), LeitnerNumbers.Fach4.getValue());
 					break;
 				case 4:
-					nowDateComp=addDays(card.getLastLearned(), 30);
+					nowDateComp=DateHelper.addDays(card.getLastLearned(), LeitnerNumbers.Fach4.getValue());
 					break;
 				case 5:
-					nowDateComp=addDays(card.getLastLearned(), 90);
+					nowDateComp=DateHelper.addDays(card.getLastLearned(), LeitnerNumbers.Fach5.getValue());
 					break;
 				default:
 					break; 
@@ -253,7 +240,13 @@ public class DataHelper implements IDataHelper{
 			data[2]="Next lernTime: never";
 		return data;
 	}
-	
+	/**
+	 * update the Card
+	 * @param cardId the id of the Card
+	 * @param sText value form the SourText
+	 * @param dText value from the destination Text
+	 * @return has it work
+	 */
 	public boolean updateCard(int cardId,String sText,String dText)
 	{
 		Card newCard=new Card(cardId);
@@ -274,6 +267,11 @@ public class DataHelper implements IDataHelper{
 		}
 		return false;
 	}
+	/**
+	 * Delete the Card
+	 * @param cardid the id of the Card
+	 * @return has it work
+	 */
 	public boolean deleteCard(int cardid)
 	{
 		return deleteCard(new Card(cardid));
@@ -314,30 +312,7 @@ public class DataHelper implements IDataHelper{
 			return new User(username);
 		return null;
 	}
-	/**
-	 * a encode mh5 hasch
-	 * @param value the value to anecode
-	 * @return
-	 */
-	private String createMd5(String value)
-	{
-		try  
-		{
-			MessageDigest md = MessageDigest.getInstance("MD5");			
-			byte[] hashInBytes = md.digest(value.getBytes(StandardCharsets.UTF_8));
-			StringBuilder sb = new StringBuilder();
-	        for (byte b : hashInBytes) 
-	        {
-	            sb.append(String.format("%02x", b));
-	        }
-	        return sb.toString();
-		}
-		catch(Exception ex)
-		{
-			
-		}
-		return "";
-	}
+
 	/**
 	 * get the time wenn is the next lernign time
 	 * @param cards
@@ -355,19 +330,19 @@ public class DataHelper implements IDataHelper{
 				switch (card.getBoxNumber()) 
 				{
 				case 1:
-					cardDay=addDays(cardDay, 1);
+					cardDay=DateHelper.addDays(cardDay, LeitnerNumbers.Fach1.getValue());
 					break;
 				case 2:
-					cardDay=addDays(cardDay, 2);
+					cardDay=DateHelper.addDays(cardDay, LeitnerNumbers.Fach2.getValue());
 					break;
 				case 3:
-					cardDay=addDays(cardDay, 10);
+					cardDay=DateHelper.addDays(cardDay, LeitnerNumbers.Fach3.getValue());
 					break;
 				case 4:
-					cardDay=addDays(cardDay, 30);
+					cardDay=DateHelper.addDays(cardDay, LeitnerNumbers.Fach4.getValue());
 					break;
 				case 5:
-					cardDay=addDays(cardDay, 90);
+					cardDay=DateHelper.addDays(cardDay, LeitnerNumbers.Fach5.getValue());
 					break;
 				default:
 					break;
@@ -387,31 +362,5 @@ public class DataHelper implements IDataHelper{
 		}
 		return nextLearnigTime.toString();
 	}
-	/**
-	 * add a days to a date
-	 * @param date the state day 
-	 * @param days number of the to remove 
-	 * @return the new Date
-	 */
-	public static Date addDays(Date date, int days) {
-		GregorianCalendar cal = new GregorianCalendar();
-		cal.setTime(date);
-		cal.add(Calendar.DATE, days);			
-		return cal.getTime();
-	}
-	/**
-	 * removes a days to a date
-	 * @param date the state day 
-	 * @param days number of the to remove 
-	 * @return the new Date
-	 */
-	public static Date subtractDays(Date date, int days) {
-		GregorianCalendar cal = new GregorianCalendar();
-		cal.setTime(date);
-		cal.add(Calendar.DATE, -days);
-				
-		return cal.getTime();
-	}
-
 }
 

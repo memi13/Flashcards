@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import Helper.EncodingHelper;
+
 /**
  * @author linus
  *
@@ -31,7 +33,7 @@ public class User implements IDBFunctions
 	public User() {
 		id=-1;
 		username="";
-		password=createMd5("123456");
+		password=EncodingHelper.createMd5("123456");
 		languageBoxes=new ArrayList<LanguageBox>();
 	}
 	/**
@@ -145,7 +147,7 @@ public class User implements IDBFunctions
 	 * @param password the new Passwort 
 	 */
 	public void setPassword(String password) {
-		this.password = createMd5(password);
+		this.password = EncodingHelper.createMd5(password);
 	}
 	/**
 	 * set number of rongPw tries
@@ -178,30 +180,7 @@ public class User implements IDBFunctions
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-	/**
-	 * encoded the value
-	 * @param value the to encoded value
-	 * @return the encoded value
-	 */
-	private String createMd5(String value)
-	{ 
-		try 
-		{
-			MessageDigest md = MessageDigest.getInstance("MD5");			
-			byte[] hashInBytes = md.digest(value.getBytes(StandardCharsets.UTF_8));
-			StringBuilder sb = new StringBuilder();
-	        for (byte b : hashInBytes) 
-	        {
-	            sb.append(String.format("%02x", b));
-	        }
-	        return sb.toString();
-		}
-		catch(Exception ex)
-		{
-			
-		}
-		return "";
-	}
+
 
 	/**
 	 * 
