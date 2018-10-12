@@ -17,7 +17,6 @@ import java.util.ArrayList;
  */
 public class LanguageBox implements IDBFunctions {
 	
-	private static String connURL = "C:/sqlite/db/CardDB.db";
 	private ArrayList<Card> cards;
 	private int id;
 	private String name;
@@ -50,17 +49,17 @@ public class LanguageBox implements IDBFunctions {
 
 	@Override
 	public boolean save() {
-		Connection conn = connectDB(connURL);
+		Connection conn = DBConnect.connectDB();
 		String sql = "Update LanguageBox set name = '" + 
 					this.name + 
 					"' where id="+this.id;
 		try {
 			Statement stmt = conn.createStatement();
 			if(stmt.executeUpdate(sql) == 1) {
-				closeConnection(conn);
+				DBConnect.closeConnection(conn);
 				return true;
 			}else {
-				closeConnection(conn);
+				DBConnect.closeConnection(conn);
 				return false;
 			}
 			
@@ -73,16 +72,16 @@ public class LanguageBox implements IDBFunctions {
 
 	@Override
 	public boolean delete() {
-		Connection conn = connectDB(connURL);
+		Connection conn = DBConnect.connectDB();
 		String sql = "delete from LanguageBox where id = " + this.id;
 		try {
 			Statement stmt = conn.createStatement();
 			if(stmt.executeUpdate(sql) == 1) {
-				closeConnection(conn);
+				DBConnect.closeConnection(conn);
 				System.out.println("Record deleted");
 				return true;
 			}else {
-				closeConnection(conn);
+				DBConnect.closeConnection(conn);
 				System.out.println("Record not deleted");
 				return false;
 			}
@@ -137,7 +136,7 @@ public class LanguageBox implements IDBFunctions {
 		String sql = "SELECT id,name from LanguageBox where  id="+id;		
 		 try
 		 {
-			 Connection conn = connectDB(connURL);
+			 Connection conn = DBConnect.connectDB();
 			 Statement stmt  = conn.createStatement();
 	         ResultSet rs    = stmt.executeQuery(sql);
 	         rs.next();
@@ -164,43 +163,7 @@ public class LanguageBox implements IDBFunctions {
 		}	 
 		 return false;		
 	}
-	/**
-	 * Open the SQL connection
-	 * @param connURL where is the DB
-	 * @return the DB Connection 
-	 */
-	public Connection connectDB(String connURL) {
-        Connection conn = null;
-        try {
-            // connection String
-            String url = "jdbc:sqlite:" + connURL;
-            // create a connection to the database
-            conn = DriverManager.getConnection(url);
-            return conn;
-        }catch(SQLException e) {
-        	System.out.println(e.getMessage());
-        	System.out.println("DB could not be connected");
-        	return conn; 
-        }
-    }
-	/**
-	 * close the db connection
-	 * @param conn
-	 * @return if it works the true else false
-	 */
-	private boolean closeConnection(Connection conn) {
-		try {
-            if (conn != null) {
-            	conn.close();
-            	System.out.println("Closed");
-            }
-            return true;
-    	}catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            System.out.println("Connection not closed");
-            return false;
-        }
-	}
+	
 	/**
 	 * 
 	 * @param fkUser id From the user,  belongs to the LangageBox
@@ -208,7 +171,7 @@ public class LanguageBox implements IDBFunctions {
 	 */
 	private boolean createRecord(int fkUser) 
 	{
-		Connection conn = connectDB(connURL);
+		Connection conn = DBConnect.connectDB();
 		String sql = "Insert into LanguageBox (name, fkUser) Values ('"+this.name+"', "+fkUser + ")";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -218,7 +181,7 @@ public class LanguageBox implements IDBFunctions {
 			return true;
 			
 		}catch(SQLException e) {
-			closeConnection(conn);
+			DBConnect.closeConnection(conn);
 			System.out.println(e.getMessage());
 			return false;
 		}

@@ -19,7 +19,6 @@ import com.sun.org.apache.regexp.internal.recompile;
  */
 public class Card implements IDBFunctions {
 
-	private static String connURL = "C:/sqlite/db/CardDB.db";
 	private int id;
 	private String sText;
 	private String dText;
@@ -65,50 +64,12 @@ public class Card implements IDBFunctions {
 	}
 	
 	/**
-	 * Opens Connection to DB
-	 * @param connURL
-	 * @return
-	 */
-	public static Connection connectDB(String connURL) {
-        Connection conn = null;
-        try {
-            // connection String
-            String url = "jdbc:sqlite:" + connURL;
-            // create a connection to the database
-            conn = DriverManager.getConnection(url);
-            return conn;
-        }catch(SQLException e) {
-        	System.out.println(e.getMessage());
-        	System.out.println("DB could not be connected");
-        	return conn;
-        }
-    }
-	/**
-	 * Closes Connection
-	 * @param conn
-	 * @return
-	 */
-	public boolean closeConnection(Connection conn) {
-		try {
-            if (conn != null) {
-            	conn.close();
-            	System.out.println("Closed");
-            }
-            return true;
-    	}catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            System.out.println("Connection not closed");
-            return false;
-        }
-	}
-
-	/**
 	 * Gets Data from DB to fill the Object
 	 * @param idCard Id of the Card
 	 * @return true if successful
 	 */
 	private boolean setData(int idCard) {
-		Connection conn = connectDB(connURL);
+		Connection conn = DBConnect.connectDB();
 		String sql = "select Card.id, Card.sText, Card.dText, Card.boxNumber, Card.createdOn, CardStatistic.countLearned, CardStatistic.countWrong, CardStatistic.highestBox, CardStatistic.lastCorrect, CardStatistic.lastLearned from Card LEFT Join CardStatistic on Card.id = CardStatistic.fkCard where Card.id = " + idCard;
 		try {
 			Statement stmt = conn.createStatement();
@@ -130,7 +91,7 @@ public class Card implements IDBFunctions {
 		
 		System.out.println(id + " - " + sText);
 		
-		if(closeConnection(conn)) {
+		if(DBConnect.closeConnection(conn)) {
 			return true;
 		}else {
 			return false;
@@ -143,15 +104,15 @@ public class Card implements IDBFunctions {
 	 */
 	@Override
 	public boolean save() {
-		Connection conn = connectDB(connURL);
+		Connection conn = DBConnect.connectDB();
 		String sql = "Update Card set sText = '" + this.sText + "', dText = '" + this.dText + "', boxNumber = " + this.boxNumber + " where Card.id = " + this.id;
 		try {
 			Statement stmt = conn.createStatement();
 			if(stmt.executeUpdate(sql) == 1) {
-				closeConnection(conn);
+				DBConnect.closeConnection(conn);
 				return updateStatistic();
 			}else {
-				closeConnection(conn);
+				DBConnect.closeConnection(conn);
 				return false;
 			}
 			
@@ -168,16 +129,16 @@ public class Card implements IDBFunctions {
 	@Override
 	public boolean delete() {
 		deleteS();
-		Connection conn = connectDB(connURL);
+		Connection conn = DBConnect.connectDB();
 		String sql = "delete from Card where id = " + this.id;
 		try {
 			Statement stmt = conn.createStatement();
 			if(stmt.executeUpdate(sql) == 1) {
-				closeConnection(conn);
+				DBConnect.closeConnection(conn);
 				System.out.println("Record deleted");
 				return true;
 			}else {
-				closeConnection(conn);
+				DBConnect.closeConnection(conn);
 				System.out.println("Record not deleted");
 				return false;
 			}
@@ -192,16 +153,16 @@ public class Card implements IDBFunctions {
 	 * @see model.IDBFunctions#delete()
 	 */
 	private boolean deleteS() {
-		Connection conn = connectDB(connURL);
+		Connection conn = DBConnect.connectDB();
 		String sql = "delete from CardStatistics where fkCard = " + this.id;
 		try {
 			Statement stmt = conn.createStatement();
 			if(stmt.executeUpdate(sql) == 1) {
-				closeConnection(conn);
+				DBConnect.closeConnection(conn);
 				System.out.println("Record deleted");
 				return true;
 			}else {
-				closeConnection(conn);
+				DBConnect.closeConnection(conn);
 				System.out.println("Record not deleted");
 				return false;
 			}
@@ -216,15 +177,15 @@ public class Card implements IDBFunctions {
 	 * @return
 	 */
 	public boolean updateStatistic() {
-		Connection conn = connectDB(connURL);
+		Connection conn = DBConnect.connectDB();
 		String sql = "Update CardStatistic set countLearned = " + this.countLearned + ", countWrong = " + this.countWrong + ", highestBox = " + this.highestBox + ", lastCorrect = " + this.lastCorrect.getTime() + ", lastLearned = " + this.lastLearned.getTime() + " where fkCard = " + this.id;
 		try {
 			Statement stmt = conn.createStatement();
 			if(stmt.executeUpdate(sql) == 1) {
-				closeConnection(conn);
+				DBConnect.closeConnection(conn);
 				return true;
 			}else {
-				closeConnection(conn);
+				DBConnect.closeConnection(conn);
 				return false;
 			}
 			
@@ -240,7 +201,7 @@ public class Card implements IDBFunctions {
 	 * @return
 	 */
 	private boolean createRecord() {
-		Connection conn = connectDB(connURL);
+		Connection conn = DBConnect.connectDB();
 		String sql = "Insert into Card (sText, dText, fkLanguageBox, createdOn) Values ('"+this.sText+"', '"+this.dText+"', "+this.fkLangaugeBox+", " + (long)new utilDate().getTime() + ")";
 		String sql2 = "";
 		try {
@@ -255,22 +216,22 @@ public class Card implements IDBFunctions {
 						"(" + this.id + ", " + this.countLearned + ", " + this.countWrong + ", " + this.highestBox + ", " + this.lastCorrect + ", " + this.lastLearned + ")";
 						
 				if(stmt.executeUpdate(sql2) == 1) {
-					closeConnection(conn);
+					DBConnect.closeConnection(conn);
 					System.out.println("Record created");
 					return true;	
 				}else {
-					closeConnection(conn);
+					DBConnect.closeConnection(conn);
 					System.out.println("Records not created");
 					return false;
 				}
 			}else {
-				closeConnection(conn);
+				DBConnect.closeConnection(conn);
 				System.out.println("Record not created");
 				return false;
 			}
 			
 		}catch(SQLException e) {
-			closeConnection(conn);
+			DBConnect.closeConnection(conn);
 			System.out.println(e.getMessage());
 			return false;
 		}

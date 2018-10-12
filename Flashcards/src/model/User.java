@@ -19,7 +19,6 @@ import java.util.ArrayList;
  */
 public class User implements IDBFunctions 
 {
-	private static String connURL = "C:/sqlite/db/CardDB.db";
 	private ArrayList<LanguageBox> languageBoxes;
 	private int id;
 	private String username;
@@ -52,17 +51,17 @@ public class User implements IDBFunctions
 	
 	@Override
 	public boolean save() {
-		Connection conn = connectDB(connURL);
+		Connection conn = DBConnect.connectDB();
 		String sql = "Update User set password = '" + 
 					this.password+"', pwCounter = "+this.pwCounter+",enabled = "+this.enabled+ 
 					" where id="+this.id;
 		try {
 			Statement stmt = conn.createStatement();
 			if(stmt.executeUpdate(sql) == 1) {
-				closeConnection(conn);
+				DBConnect.closeConnection(conn);
 				return true;
 			}else {
-				closeConnection(conn);
+				DBConnect.closeConnection(conn);
 				return false;
 			}
 			
@@ -75,16 +74,16 @@ public class User implements IDBFunctions
 
 	@Override
 	public boolean delete() {
-		Connection conn = connectDB(connURL);
+		Connection conn = DBConnect.connectDB();
 		String sql = "delete from User where id = " + this.id;
 		try {
 			Statement stmt = conn.createStatement();
 			if(stmt.executeUpdate(sql) == 1) {
-				closeConnection(conn);
+				DBConnect.closeConnection(conn);
 				System.out.println("Record deleted");
 				return true;
 			}else {
-				closeConnection(conn);
+				DBConnect.closeConnection(conn);
 				System.out.println("Record not deleted");
 				return false;
 			}
@@ -203,50 +202,14 @@ public class User implements IDBFunctions
 		}
 		return "";
 	}
-	/**
-	 * Open the SQL connection
-	 * @param connURL where is the DB
-	 * @return the DB Connection 
-	 */
-	public Connection connectDB(String connURL) {
-        Connection conn = null;
-        try {
-            // connection String
-            String url = "jdbc:sqlite:" + connURL;
-            // create a connection to the database
-            conn = DriverManager.getConnection(url);
-            return conn;
-        }catch(SQLException e) {
-        	System.out.println(e.getMessage());
-        	System.out.println("DB could not be connected");
-        	return conn; 
-        }
-    }
-	/**
-	 * close the db connection
-	 * @param conn
-	 * @return if it works the true else false
-	 */
-	private boolean closeConnection(Connection conn) {
-		try {
-            if (conn != null) {
-            	conn.close();
-            	System.out.println("Closed");
-            }
-            return true;
-    	}catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            System.out.println("Connection not closed");
-            return false;
-        }
-	}
+
 	/**
 	 * 
 	 * @return if the isert Works
 	 */
 	private boolean createRecord() 
 	{
-		Connection conn = connectDB(connURL);
+		Connection conn = DBConnect.connectDB();
 		String sql = "Insert into User (username,password,pwCounter,enabled) Values+"
 				+" ('"+this.username+"', '"+this.password + "',0,1)";
 		try {
@@ -255,7 +218,7 @@ public class User implements IDBFunctions
 			return true;
 			
 		}catch(SQLException e) {
-			closeConnection(conn);
+			DBConnect.closeConnection(conn);
 			System.out.println(e.getMessage());
 			return false;
 		}
@@ -274,7 +237,7 @@ public class User implements IDBFunctions
 		String sql = sqlStatment;//;		
 		 try
 		 {
-			 Connection conn = connectDB(connURL);
+			 Connection conn = DBConnect.connectDB();
 			 Statement stmt  = conn.createStatement();
 	         ResultSet rs    = stmt.executeQuery(sql);
 	         rs.next();
