@@ -80,7 +80,7 @@ public class frmOverview extends JFrame implements ActionListener {
 		JPanel learnPanel = new JPanel();
 		
 		mainPanel.setLayout(new BorderLayout());
-		mainPanel.setBorder(new EmptyBorder(150,50,150,50));
+		mainPanel.setBorder(new EmptyBorder(120,50,120,50));
 		
 		setSize(500,500);
 		
