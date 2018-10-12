@@ -68,7 +68,6 @@ public class frmAllCards extends JFrame implements ActionListener {
 		btnButtonsDel = new JButton[cardCount];
 		btnButtonsSave = new JButton[cardCount];
 		components = new ArrayList<JComponent>();
-		components.removeAll(components);
 		btnNew = new JButton("New");
 		
 		int i = 0;
@@ -165,11 +164,55 @@ public class frmAllCards extends JFrame implements ActionListener {
 	}
 	
 	private void updateForm(ActionEvent e) {		
+		
 		/*
-		initComponents();
-		bindListener();
-		initGui();
-		this.repaint();
+		try{
+			cards = pController.loadCardsAll(-1);
+			cardCount = cards.size();
+		}catch(Exception ex) {
+			System.out.println("Error");
+			cards = new ArrayList<Card>();
+			cardCount = 0;
+		}
+		
+		txtFields = new JTextField[cardCount*2];
+		btnButtonsDel = new JButton[cardCount];
+		btnButtonsSave = new JButton[cardCount];
+		components.removeAll(components);
+		
+		int i = 0;
+		int j = 0;
+		while(i<txtFields.length) {
+			txtFields[i] = new JTextField(cards.get(j).getsText());
+			txtFields[i].setPreferredSize(new Dimension(112, 25));
+			txtFields[i+1] = new JTextField(cards.get(j).getdText());
+			txtFields[i+1].setPreferredSize(new Dimension(112, 25));
+			btnButtonsDel[j] = new JButton("X");
+			btnButtonsDel[j].setPreferredSize(new Dimension(46, 25));
+			btnButtonsSave[j] = new JButton("Save");
+			btnButtonsSave[j].setPreferredSize(new Dimension(70, 25));
+			
+			btnButtonsDel[j].addActionListener(this);
+			btnButtonsDel[j].setActionCommand("del-" + cards.get(j).getId());
+			btnButtonsSave[j].addActionListener(this);
+			btnButtonsSave[j].setActionCommand("sav-" + cards.get(j).getId());
+			
+			components.add(txtFields[i]);
+			components.add(txtFields[i+1]);
+			components.add(btnButtonsDel[j]);
+			components.add(btnButtonsSave[j]);
+			i+=2;
+			j+=1;
+		}
+		
+		fullPanel.removeAll();
+		for(JComponent c : components) {
+			//tablePanel.add(c);
+			fullPanel.add(c);
+		}
+		mainPanel.add(new JScrollPane(fullPanel), BorderLayout.CENTER);
+		fullPanel.repaint();
+		mainPanel.repaint();
 		*/
 		this.dispose();
 		frmAllCards frm = new frmAllCards(pController);
