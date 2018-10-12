@@ -1,2 +1,2 @@
 # Flashcards
-# db must exist in C:\SQLite\db\CardDB.db
+# Copy the File CardDB.db into C:\SQLite\db\CardDB.db
