@@ -1,4 +1,4 @@
-package Helper;
+package helper;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

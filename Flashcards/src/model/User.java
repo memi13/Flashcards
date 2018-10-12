@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import Helper.EncodingHelper;
+import helper.EncodingHelper;
 
 /**
  * @author linus
