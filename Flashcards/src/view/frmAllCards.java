@@ -1,31 +1,22 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GraphicsConfiguration;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
-import java.awt.ScrollPane;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-
-import com.sun.prism.paint.Color;
 
 import controller.ProgramController;
 import model.Card;
@@ -39,8 +30,6 @@ public class frmAllCards extends JFrame implements ActionListener {
 	private JTextField[] txtFields;
 	private JButton[] btnButtonsDel;
 	private JButton[] btnButtonsSave;
-	private JLabel lblOrigin;
-	private JLabel lblDestination;
 	
 	private ArrayList<Card> cards;
 	private ArrayList<JComponent> components;
@@ -48,7 +37,6 @@ public class frmAllCards extends JFrame implements ActionListener {
 	
 	
 	JPanel mainPanel = new JPanel();	
-	//scrollable?
 	JPanel tablePanel = new JPanel();
 	GridLayout dynGrid = new GridLayout(1, 4);
 	BorderLayout brdLayout = new BorderLayout();
@@ -57,7 +45,6 @@ public class frmAllCards extends JFrame implements ActionListener {
 	JPanel fullPanel = new JPanel();
 
 	public frmAllCards(ProgramController pc) throws HeadlessException {
-		// TODO Auto-generated constructor stub
 		super("Modify Cards");
 		this.pController = pc;
 		initComponents();
@@ -81,6 +68,7 @@ public class frmAllCards extends JFrame implements ActionListener {
 		btnButtonsDel = new JButton[cardCount];
 		btnButtonsSave = new JButton[cardCount];
 		components = new ArrayList<JComponent>();
+		components.removeAll(components);
 		btnNew = new JButton("New");
 		
 		int i = 0;
@@ -130,8 +118,6 @@ public class frmAllCards extends JFrame implements ActionListener {
 			//tablePanel.add(c);
 			fullPanel.add(c);
 		}
-		//scrollpane
-		//mainPanel.add(tablePanel, BorderLayout.CENTER);
 		mainPanel.add(new JScrollPane(fullPanel), BorderLayout.CENTER);
 		
 		this.add(mainPanel);
@@ -179,6 +165,12 @@ public class frmAllCards extends JFrame implements ActionListener {
 	}
 	
 	private void updateForm(ActionEvent e) {		
+		/*
+		initComponents();
+		bindListener();
+		initGui();
+		this.repaint();
+		*/
 		this.dispose();
 		frmAllCards frm = new frmAllCards(pController);
 	}
