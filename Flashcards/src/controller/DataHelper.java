@@ -345,7 +345,7 @@ public class DataHelper implements IDataHelper{
 					cardDay=DateHelper.addDays(cardDay, LeitnerNumbers.Fach5.getValue());
 					break;
 				default:
-					break; 
+					break;  
 				}
 			}
 			else

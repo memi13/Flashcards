@@ -6,7 +6,7 @@ public enum LeitnerNumbers
 	Fach2(2),
 	Fach3(10),
 	Fach4(30),
-	Fach5(90),;
+	Fach5(90),; 
 	private final int id;
 	LeitnerNumbers(int id) { this.id = id; }
     public int getValue() { return id; }

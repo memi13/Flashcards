@@ -11,7 +11,7 @@ public   class  EncodingHelper
 	 * @return
 	 */
 	public static String createMd5(String value)
-	{
+	{ 
 		try  
 		{
 			MessageDigest md = MessageDigest.getInstance("MD5");			

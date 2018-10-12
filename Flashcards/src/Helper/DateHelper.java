@@ -14,8 +14,8 @@ public class DateHelper {
 	public static Date addDays(Date date, int days) {
 		GregorianCalendar cal = new GregorianCalendar();
 		cal.setTime(date);
-		cal.add(Calendar.DATE, days);			
-		return cal.getTime();
+		cal.add(Calendar.DATE, days);	 		
+		return cal.getTime(); 
 	}
 	/**
 	 * removes a days to a date

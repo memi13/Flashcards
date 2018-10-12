@@ -41,7 +41,7 @@ public class User implements IDBFunctions
 	 * @param idUser id to search
 	 */
 	public User(int idUser) {
-		getUser(idUser);
+		getUser(idUser); 
 	}
 	/**
 	 * create a object wiht the value from DB value of this user
