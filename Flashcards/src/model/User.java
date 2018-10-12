@@ -32,7 +32,7 @@ public class User implements IDBFunctions
 	 */
 	public User() {
 		id=-1;
-		username="";
+		username=""; 
 		password=EncodingHelper.createMd5("123456");
 		languageBoxes=new ArrayList<LanguageBox>();
 	}
